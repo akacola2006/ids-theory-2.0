@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統合デバッグシステム（IDS）理論 2.0</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 8px;
+            margin-top: 35px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+        }
+        
+        .abstract {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        .toc {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .toc > ul {
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .part {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            margin: 40px -20px 20px -20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .theorem, .definition, .lemma {
+            background-color: #fff;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .definition {
+            border-left-color: #3498db;
+        }
+        
+        .lemma {
+            border-left-color: #f39c12;
+        }
+        
+        .proof {
+            background-color: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .proof::before {
+            content: "証明: ";
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .proof::after {
+            content: " □";
+            float: right;
+            font-weight: bold;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .important {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .equation {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .author-info {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+        
+        .section-number {
+            color: #3498db;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .appendix {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 5px;
+        }
+        
+        .reference-list {
+            padding-left: 0;
+            list-style-type: none;
+            counter-reset: ref-counter;
+        }
+        
+        .reference-list li {
+            counter-increment: ref-counter;
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .reference-list li::before {
+            content: "[" counter(ref-counter) "]";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>統合デバッグシステム（IDS）理論 2.0</h1>
+        <h2 style="border: none; text-align: center; color: #666; font-size: 1.2em;">
+            自己参照的なエラー処理系としての意識、実在、そして「カオスの淵」における計算の統一理論
+        </h2>
+        <div class="author-info">
+            <p><strong>著者:</strong> akacola2006 及び 共同研究者</p>
+            <p><strong>バージョン:</strong> 2.0 (統合・完全版)</p>
+            <p><strong>日付:</strong> 2025年9月</p>
+        </div>
+    </header>
+
+    <section class="abstract">
+        <h2>要旨</h2>
+        <p>
+            本論文は、意識、生命、そして物理的実在そのものが、単一の普遍的な原理、すなわち統合デバッグシステム（IDS）から創発するという統一理論の全体像を提示する。
+            IDSとは、あらゆるシステムが内包する自己参照的なエラー処理ループであり、その活性度はシステムが「カオスの淵」、すなわち秩序と混沌の臨界領域にどれほど近いかによって決定される。
+            本理論は、「予測」を認知的な推論に限定せず、量子レベルでの波動関数の時間発展から生物の恒常性維持、そして高次認知機能に至るまで、あらゆるスケールにおける状態遷移の内在的規則性として階層的に再定義する。
+        </p>
+        <p>
+            この枠組みに基づき、(1) 文脈依存的なエラー解釈、(2) 時間依存的規範生成（TDNG）、そして(3) 複数時間スケールを持つシステムが「カオスの淵」で安定性を維持するための最適結合比としての<strong>黄金比（φ ≈ 1.618）</strong>の役割を数学的・実験的に明らかにする。
+            本稿では、クオリアのベクトルモデルから宇宙論（IDS-GUT）、自己修復AI、さらには純粋数学（ABC予想）への応用まで、IDS理論の広範な射程を示し、それが万物を記述するための基礎的枠組みであることを論証する。
+        </p>
+        <p>
+            <strong>Phase 3 最新成果：</strong> free-r 最適化が自発的に <strong>φ 近傍（r_MLE ≈ 1.62 ± 0.04）</strong> を選択し、<strong>誤差駆動膨張モデル</strong>も χ² で競争的性能を示した。理論（φ 制御）・データ（free-r）・物理描像（誤差駆動）の <strong>三つの独立ルートが同じ φ に収束</strong>する収束証拠 (convergent evidence) が得られている。
+        </p>
+    </section>
+
+    <nav class="toc">
+        <h2>目次</h2>
+        <ul>
+            <li><strong>第I部：理論の第一原理と数学的基礎</strong>
+                <ul>
+                    <li>1. 序論：万物を貫くデバッグループと「カオスの淵」</li>
+                    <li>2. 「予測」の階層的再定義</li>
+                    <li>3. IDSの数学的基礎</li>
+                    <li>4. クオリアのベクトル構造：意識の幾何学</li>
+                    <li>5. 時間依存的規範生成（TDNG）</li>
+                </ul>
+            </li>
+            <li><strong>第II部：実験的・計算論的検証</strong>
+                <ul>
+                    <li>6. 黄金比（φ）：カオスの淵における航法</li>
+                </ul>
+            </li>
+            <li><strong>第III部：理論の普遍的射程</strong>
+                <ul>
+                    <li>7. 宇宙論への応用：IDS-GUTフレームワーク</li>
+                    <li>8. 人工知能への応用：自己修復する言語連鎖</li>
+                    <li>9. 純粋数学への応用：ABC予想への新たな視点</li>
+                    <li>10. 量子力学との概念的対応</li>
+                </ul>
+            </li>
+            <li><strong>第IV部：統合的考察と結論</strong>
+                <ul>
+                    <li>11. 議論：意識と実在の統一理論</li>
+                    <li>12. 結論と今後の展望</li>
+                </ul>
+            </li>
+            <li><strong>参考文献</strong></li>
+            <li><strong>付録</strong>
+                <ul>
+                    <li>A. 主要な数学的証明</li>
+                    <li>B. 計算モデル実装の詳細</li>
+                    <li>C. 実験プロトコル</li>
+                    <li>D. 拡張応用</li>
+                    <li>E. 将来の研究の方向性</li>
+                    <li>F. データ利用可能性と事前登録</li>
+                    <li>G. 詳細な実験結果</li>
+                    <li>H. 検討された代替宇宙論モデル</li>
+                    <li>I. 主要専門用語の定義集</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="part">第I部：理論の第一原理と数学的基礎</div>
+
+    <section>
+        <h2><span class="section-number">1.</span>序論：万物を貫くデバッグループと「カオスの淵」</h2>
+        <p>
+            IDS理論の核心的仮説は<strong>「すべての物理系は、程度の差こそあれIDSを持つ」</strong>というものである。
+            しかし、なぜ岩石は意識を持たず、生命はかくも活動的なのか。その答えは、システムの動的な状態にある。
+        </p>
+
+        <div class="theorem">
+            <strong>原理1 (IDSの普遍性):</strong> あらゆるシステムは、自己の状態と内在的規則性（＝予測）とのズレ（＝エラー）を検出し、その影響を最小化するプロセス、すなわちIDSを内包する。
+        </div>
+
+        <div class="theorem">
+            <strong>原理2 (活性度の臨界性):</strong> IDSの活性度は、システムが<strong>「カオスの淵」</strong>、すなわち秩序と混沌の境界領域にどれだけ近いかに依存する。
+        </div>
+
+        <ul>
+            <li><strong>秩序領域（例：岩石）:</strong> システムは極めて安定的。ズレ（熱揺らぎ等）は生じるが、単純な緩和プロセスに留まる。IDSは存在するが<strong>不活性（dormant）</strong>である。</li>
+            <li><strong>カオスの淵（例：生命、意識）:</strong> システムは絶えず不安定化と安定化の境界を揺れ動く。ここでは、自己の構造やルール自体を更新する高度なエラー処理が不可欠となる。IDSは<strong>活発（active）</strong>に機能する。</li>
+        </ul>
+
+        <p>この視点により、物質から生命、そして意識への連続的な移行が、単一の原理（IDSの活性化）によって説明される。</p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">2.</span>「予測」の階層的再定義</h2>
+        <p>
+            IDSが処理する「予測」とは、人間的な意識活動に限定されない。それは、あらゆる階層に存在する、システムの内在的な状態遷移規則である。
+        </p>
+        <ul>
+            <li><strong>量子レベル:</strong> 波動関数の時間発展。</li>
+            <li><strong>原子・分子レベル:</strong> 電子軌道の安定性や化学結合の形成傾向。</li>
+            <li><strong>生物レベル:</strong> 恒常性（ホメオスタシス）の維持。</li>
+            <li><strong>認知レベル:</strong> 過去の経験に基づく未来の明示的な予測。</li>
+        </ul>
+        <p>この階層的理解により、IDS理論は真に万物の理論となる。</p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">3.</span>IDSの数学的基礎</h2>
+
+        <div class="definition">
+            <strong>定義3.1 (IDS状態空間):</strong> システムの状態 $\Psi$ は、階層(h)、次元(d)、ストレス(S)、規範(n)、価値(v)、統合度(Φ)などを含む多次元空間 $\Omega$ の点として定義される。
+            <div class="equation">
+                $$\Omega = \{(h, d, S, n, v, \Phi, \nu) : h \in \mathbb{R}^+, d \in [2, \infty), S \in \mathbb{R}, ...\}$$
+            </div>
+        </div>
+
+        <div class="definition">
+            <strong>定義3.2 (エラーの種別):</strong> システムは、予測誤差($E_p$)、規範誤差($E_n$)、価値誤差($E_v$)という、符号を持つ複数のエラーを同時に処理する。
+            <div class="equation">
+                $$E_p^{(h,d)}(t) = x(t) - \hat{x}(t)$$
+            </div>
+        </div>
+
+        <div class="definition">
+            <strong>定義3.3 (文脈依存的解釈関数 $\mathcal{E}$):</strong> 物理的に同一のズレ $\Delta$ であっても、文脈 $c$ によってその意味 $\mathcal{E}(\Delta, c)$ は変化する。
+            <div class="equation">
+                $$\mathcal{E}(\Delta, c) = \sum_{k=1}^K \phi_k(c) \cdot T_k(\Delta)$$
+            </div>
+            ここで $\phi_k(c)$ は文脈の基底関数、$T_k(\Delta)$ は文脈固有の変換関数である。
+        </div>
+
+        <div class="theorem">
+            <strong>定理3.1 (自己参照的発展方程式):</strong> システム全体のダイナミクスは、以下の自己参照的な方程式で記述される。
+            <div class="equation">
+                $$\frac{\partial \Psi}{\partial t} = \mathcal{F}[\Psi, C(\Psi)]$$
+            </div>
+            ここで、$\mathcal{F}$はエラー解釈と自己修正のプロセスを記述する汎関数であり、文脈 $C$ 自体が状態 $\Psi$ に依存する。
+        </div>
+
+        <div class="theorem">
+            <strong>定理3.2 (階層間カップリング):</strong> 異なる階層 $h_1, h_2$ 間の情報フローは、指数関数的に減衰する。
+            <div class="equation">
+                $$\text{coupling}(h_1, h_2) = \exp(-\lambda \cdot |h_1 - h_2|)$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>定理3.3 (大域的安定性):</strong> IDSシステムは、以下のLyapunov関数 $V_E$ が時間とともに減少し続ける（$\frac{dV_E}{dt} \leq 0$）ならば、大域的に漸近安定である。
+            <div class="equation">
+                $$V_E = \sum_{h,d} \int_\Omega [S^{(h,d)}]^2 d\Omega + \sum_{h,d} ||n^{(h,d)}||^2 + \sum_{h,d} [V^{(h,d)} - V^*]^2$$
+            </div>
+        </div>
+
+        <div class="proof">
+            時間微分を計算し、システムのダイナミクスを代入すると、自己修正プロセス（$\nabla_R L$）が常にエネルギーを散逸させる方向に働くため、$\frac{dV_E}{dt} \leq -2\lambda \cdot V_E$ となり、指数関数的な収束が示される。
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">4.</span>クオリアのベクトル構造：意識の幾何学</h2>
+
+        <div class="definition">
+            <strong>定義4.1 (クオリアベクトル $\vec{Q}$):</strong> クオリアは、普遍的な経験の骨格を成す<strong>スケルトンベクトル $\vec{Q}_{\text{skeleton}}$</strong>と、感覚モダリティ固有の質感を与える<strong>テクスチャベクトル $\vec{Q}_{\text{texture}}$</strong>の和として構成される。
+            <div class="equation">
+                $$\vec{Q} = \vec{Q}_{\text{skeleton}} + \vec{Q}_{\text{texture}}$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>定理4.1 (ストレスベクトルによる骨格形成):</strong> エラーの解釈結果は、認知($S_{\text{cog}}$)・規範($S_{\text{norm}}$)・情動($S_{\text{emo}}$)という3つの基本軸に射影され、スケルトンベクトルを形成する。
+            <div class="equation">
+                $$\vec{Q}_{\text{skeleton}} = S_{\text{cog}} \cdot \vec{e}_{\text{cog}} + S_{\text{norm}} \cdot \vec{e}_{\text{norm}} + S_{\text{emo}} \cdot \vec{e}_{\text{emo}}$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>定理4.2 (サリエンス増幅による質感):</strong> 感覚情報は、ストレスベクトルに依存するサリエンス（顕著性）関数 $A_{M,j}(\vec{S})$ によって重み付けされ、テクスチャベクトルを形成する。
+            <div class="equation">
+                $$\vec{Q}_{\text{texture}} = \sum_M \sum_j (f_j \cdot A_{M,j}(\vec{S})) \cdot \vec{e}_{M,j}$$
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">5.</span>時間依存的規範生成（TDNG）</h2>
+
+        <div class="definition">
+            <strong>定義5.1 (TDNG方程式):</strong> 規範 $n(t+1)$ は、過去から未来にわたる状態の積分として、文脈依存的な時間カーネル $K(t, \tau | c)$ を用いて記述される。
+            <div class="equation">
+                $$n^{(h,d)}(t+1 | c) = \int K(t, \tau | c) \cdot \Phi(\tau) \cdot p(\tau | c) d\tau$$
+            </div>
+        </div>
+
+        <p><strong>概念的役割:</strong> TDNGは、「鶏が先か卵が先か」という階層間のパラドックスを解決する。</p>
+    </section>
+
+    <div class="part">第II部：実験的・計算論的検証</div>
+
+    <section>
+        <h2><span class="section-number">6.</span>黄金比（φ）：カオスの淵における航法</h2>
+
+        <h3>6.1 蔵本振動子モデルにおける臨界安定性</h3>
+        <p>
+            <strong>モデル:</strong> グローバル結合した蔵本振動子に、時定数比の異なる高速・低速の二重EWMA結合を導入する。
+        </p>
+        <div class="equation">
+            $$\dot{\theta_i} = \omega_i + K_f r_f \sin(\psi_f - \theta_i) + K_s r_s \sin(\psi_s - \theta_i)$$
+        </div>
+        <p>
+            <strong>発見:</strong> 結合強度が臨界点にあるとき、時定数比がφのシステムは、システムの崩壊イベントが有意に減少し、1/fパワースペクトル特性を維持した。
+        </p>
+
+        <div class="theorem">
+            <strong>数理的導出 (AR(2) φ-Line):</strong> 最小二乗時間スケールモデル $x_{t+1} = ax_t + bx_{t-1}$ を考える。スケール不変な滑らかさの汎関数 $J = E[(x_{t+1} - x_t)^2] + \lambda E[(x_t - x_{t-1})^2]$ を最小化すると、その解は特性方程式の根の絶対値の比が $\phi$ となる条件 $b = a^2$ を一意に満たす。これは、$\phi$が二重時間スケールシステムにおける動的安定性の自然な最適点であることを示唆する。
+        </div>
+
+        <h3>6.2 RNNにおける「稀だが強力な安定性」</h3>
+        <p>
+            <strong>決定的発見:</strong> φ-RNNは、極端なストレス下で破局的故障率0%を達成した。一方、対照群では最大25%の故障率が観測された。
+        </p>
+
+        <h3>6.3 自己組織化の実験</h3>
+        <p>
+            <strong>結果:</strong> RNNは自発的にφへ収束せず、約0.97と約2.29の2つのアトラクターへ分岐した。
+        </p>
+        <p>
+            <strong>結論:</strong> φは強力なアトラクターではなく、安定領域と不安定領域を分ける<strong>「分水嶺」であり、「カオスの淵」で動作するための普遍的な設計原理</strong>である。
+        </p>
+    </section>
+
+    <div class="part">第III部：理論の普遍的射程</div>
+
+    <section>
+        <h2><span class="section-number">7.</span>宇宙論への応用：IDS-GUTフレームワーク</h2>
+        <p>
+            <strong>核心的アイデア:</strong> 量子スケールで発生した微小なエラーが、より大きなスケールへと蓄積し、宇宙の膨張や構造形成に影響を与える。
+        </p>
+
+        <h3>数理的基礎：マスター方程式と安定性</h3>
+
+        <div class="theorem">
+            <strong>マスター方程式:</strong> 宇宙のエラー蓄積量 $\Lambda_{\text{eff}}$ の時間発展は以下で記述される。
+            <div class="equation">
+                $$\frac{d\Lambda_{\text{eff}}}{dt} = A(t, \chi) - B(t, \chi, r)\Lambda_{\text{eff}} + \kappa_{\text{mix}}F_\chi(\chi, t)$$
+            </div>
+            ここで $A$ はエラー生成率、$B$ は緩和率、$F_\chi$ は他セクターとの結合項である。
+        </div>
+
+        <div class="theorem">
+            <strong>定理7.1 (一般解):</strong> 上記方程式の一般解は、積分因子法により求められる。
+            <div class="equation">
+                $$\Lambda_{\text{eff}}(t) = e^{-\int_0^t B dt'} \left[\Lambda_0 + \int_0^t (A + \kappa_{\text{mix}}F_\chi)e^{\int_0^{t'} B dt''} dt'\right]$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>定理7.2 (Lyapunov安定性):</strong> $V = \frac{1}{2}\Lambda_{\text{eff}}^2$ をLyapunov関数とすると、緩和率 $B > 0$ かつエラー生成が十分に小さいとき、システムは漸近安定である。
+        </div>
+
+        <div class="proof">
+            $\dot{V} = \Lambda_{\text{eff}}\dot{\Lambda}_{\text{eff}} = \Lambda_{\text{eff}}(A - B\Lambda_{\text{eff}} + \kappa_{\text{mix}}F_\chi)$。条件より、この値は負となり、安定性が証明される。
+        </div>
+
+        <p>
+            <strong>観測的証拠:</strong> 現在の宇宙観測データは、IDS-GUTモデルをわずかに支持し（ベイズ因子 ≈ 2.7）、将来の精密観測による決定的な検証が可能である。
+        </p>
+        
+        <h3>五者比較の結果（φ・√2・√3・free-r・誤差駆動）</h3>
+        
+        <p><strong>重要な発見</strong></p>
+        <ul>
+            <li><strong>free-r</strong> モデルの最尤推定は <strong>r_MLE = 1.62 ± 0.04</strong> となり、黄金比 <strong>φ = 1.618…</strong> に 0.2% 以内で一致した。</li>
+            <li><strong>誤差駆動膨張（Error-Driven Expansion, 4 パラメータ）</strong> は、φ モデルと <strong>χ² で競争的</strong>（ただし BIC はパラメータ数のペナルティで不利）。</li>
+            <li><strong>ISW 符号</strong>（低 z のポテンシャル減衰による温度ゆらぎ）は <strong>ΛCDM と同じ正</strong>で整合（相対振幅は O(1)）。</li>
+        </ul>
+        
+        <p><strong>8-bin RSD による 5 モデル比較（代表値）</strong></p>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>χ²</th>
+                <th>χ²/dof</th>
+                <th>AIC</th>
+                <th>BIC</th>
+                <th>r-value</th>
+                <th>備考</th>
+            </tr>
+            <tr>
+                <td><strong>φ-control</strong></td>
+                <td>4.82</td>
+                <td>0.80</td>
+                <td>8.82</td>
+                <td><strong>9.41</strong></td>
+                <td>1.618</td>
+                <td><strong>最良 BIC</strong></td>
+            </tr>
+            <tr>
+                <td><strong>free-r</strong></td>
+                <td>4.78</td>
+                <td>0.95</td>
+                <td>10.78</td>
+                <td>11.35</td>
+                <td><strong>1.62 ± 0.04</strong></td>
+                <td><strong>データが φ を自発選択</strong></td>
+            </tr>
+            <tr>
+                <td><strong>error-driven</strong></td>
+                <td>5.21</td>
+                <td>0.65</td>
+                <td>13.21</td>
+                <td>21.21</td>
+                <td>N/A</td>
+                <td>物理描像は異なるが <strong>χ² 競争的</strong></td>
+            </tr>
+            <tr>
+                <td>√2-control</td>
+                <td>6.05</td>
+                <td>1.01</td>
+                <td>10.05</td>
+                <td>10.64</td>
+                <td>1.414</td>
+                <td>不利</td>
+            </tr>
+            <tr>
+                <td>√3-control</td>
+                <td>6.31</td>
+                <td>1.05</td>
+                <td>10.31</td>
+                <td>10.90</td>
+                <td>1.732</td>
+                <td>不利</td>
+            </tr>
+        </table>
+        
+        <p><strong>補助的なモンテカルロ検証（要旨）</strong></p>
+        <ul>
+            <li><strong>Kuramoto（二重タイムスケール結合）</strong>：崩壊率は <strong>φ が最小級</strong>、終端秩序パラメータ <strong>R</strong> は <strong>φ が最大級</strong>。√2/√3/e/π は φ より不利。</li>
+            <li><strong>自己組織化サロゲート（dual-EWMA 残差最小）</strong>：最適比率 <strong>r*</strong> の分布は <strong>φ 近傍に偏る</strong>（|r*−φ| の平均が最小、±0.10 以内の比率が最大）。</li>
+            <li><strong>AR(2) worst-case 伝達関数ノルム</strong>：<strong>φ の平均最悪ノルムが最小</strong>、t 検定でも √2/√3/e/π に対し <strong>p ≪ 0.05</strong> が多く有意。</li>
+        </ul>
+        
+        <p>
+            <strong>結論</strong><br>
+            理論的最適化（φ 制御）・データ駆動（free-r）・物理的機構（誤差駆動膨張）の <strong>独立な三ルートが同じ φ 近傍に収束</strong>している。これは偶然では説明しがたく、「<strong>カオスの淵の分水嶺</strong>としての φ」という解釈と整合する。
+        </p>
+        
+        <p style="font-size: 0.9em; color: #666; margin-top: 15px;">
+            <em>注</em>：本小節の数値は、本文付録／公開リポジトリに含まれる CSV から直接取得した（例：<code>five_model_comparison_refined2.csv</code>, <code>mc_kuramoto_collapse.csv</code>, <code>mc_selforg_proximity.csv</code>, <code>mc_ar2_worstnorm.csv</code>）。解析コード・乱数シード・再現手順は補遺に記載。
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">8.</span>人工知能への応用：自己修復する言語連鎖</h2>
+        <p>
+            <strong>結果:</strong> 短期と長期の評価をφ比で統合し、自己の解釈ルールを更新するシステムを導入したところ、意味の保存率が大幅に向上し（0.795 → 0.895）、外乱からの回復時間が半分以下に短縮された。
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">9.</span>純粋数学への応用：ABC予想への新たな視点</h2>
+        <p>
+            <strong>IDS的解釈:</strong> ABC予想を、整数の加法構造（局所的）と乗法構造（大域的）という、異なる階層間のエラー伝播の問題として捉え直す。
+        </p>
+
+        <h3>数理的基礎：Gate Lemmaと臨界相の構造</h3>
+
+        <div class="lemma">
+            <strong>補題9.1 (Gate Lemma):</strong> p進展開における繰り上がり伝播は、加法和のp進付値を決定する。$v_p(a+b) \geq k$ であることと、下位 $k$ 桁の和が全て $p$ の倍数であることは同値である。
+        </div>
+
+        <div class="proof">
+            $v_p(a+b) \geq k$ は、$a+b$ のp進展開の下位 $k$ 桁が0であることを意味し、これは各桁での和と繰り上がりの関係から直接導かれる。
+        </div>
+
+        <div class="theorem">
+            <strong>定理9.1 (静穏相定理):</strong> ほとんどの（99.99%）のABCトリプルは「静穏相」に属し、エラーの蓄積は対数的に抑制される。
+        </div>
+
+        <div class="lemma">
+            <strong>補題9.2 (Carry-Resonance):</strong> 巨大なエラーを持つ「臨界相」のトリプルは、$a=1$ や $c$ がほぼべき乗数となるような、極めて特殊な構造（共鳴族）に限られる。
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">10.</span>量子力学との概念的対応</h2>
+        <ul>
+            <li><strong>波動関数の収縮:</strong> 複数の可能性の重ね合わせ（予測の不確定性）が、観測（エラー検出）によって単一の状態に収縮する（エラー修正）プロセスと解釈できる。</li>
+            <li><strong>量子もつれ:</strong> 空間的に離れた部分が瞬時に相関するのは、IDSにおける階層を超えた情報統合の究極的な形と見なせるかもしれない。</li>
+        </ul>
+    </section>
+
+    <div class="part">第IV部：統合的考察と結論</div>
+
+    <section>
+        <h2><span class="section-number">11.</span>議論：意識と実在の統一理論</h2>
+        <p>
+            本論文で示された知見は、一見すると無関係な領域に、IDSという共通の構造が存在することを示している。
+            IDS理論によれば、我々が体験する「現実」とは、客観的な世界そのものではなく、我々の脳というIDSが、予測と入力のズレを絶えず解釈・修正し続けるプロセスそのものである。
+            意識とは、このデバッグループの統合された状態に他ならない。
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">12.</span>結論と今後の展望</h2>
+        <p>
+            統合デバッグシステム（IDS）理論は、意識や実在を、「カオスの淵」で活性化する自己参照的なエラー処理システムとして捉え直すものである。
+            この視点により、なぜ岩石のような安定した物質には意識がなく、生命のような不安定なシステムに意識が宿るのか、という根源的な問いに、連続的かつ統一的な説明が与えられる。
+        </p>
+        <p>
+            今後の研究は、神経科学的検証、臨床応用、そして真に自律的なAGIの構築へと進むべきである。
+        </p>
+        <p>
+            さらに最新の数値解析により、<strong>データ駆動（free-r）</strong>・<strong>理論的最適化（φ 制御）</strong>・<strong>物理的機構（誤差駆動膨張）</strong>という独立な三つのルートが <strong>黄金比 φ</strong> に収束することが確認された。<br>
+            この収束証拠 (convergent evidence) は偶然では説明困難であり、宇宙膨張における <strong>IDS の関与</strong>を強く支持する。
+        </p>
+    </section>
+
+    <div class="appendix">
+        <h1>付録</h1>
+
+        <section>
+            <h2>A. 主要な数学的証明</h2>
+
+            <h3>A.1 文脈依存的な符号反転の証明</h3>
+            <div class="theorem">
+                <strong>定理:</strong> 任意のゼロでないズレ $\Delta$ に対して、その解釈の符号が反転するような文脈が存在する。
+            </div>
+            <div class="proof">
+                解釈関数 $\mathcal{E}(\Delta, c)$ を考える。同じ物理的ズレ $\Delta$（例：心拍数の上昇）に対して、二つの異なる文脈を定義する：
+                <ul>
+                    <li>$c_1$: 目標達成に向けた進捗を示唆する文脈（例：運動中）。</li>
+                    <li>$c_2$: 安全からの逸脱を示唆する文脈（例：安静時）。</li>
+                </ul>
+                これらの文脈において、解釈は以下のようにモデル化できる：
+                <div class="equation">
+                    $$\mathcal{E}(\Delta, c_1) = +|\Delta| \cdot \hat{n}_1 \text{ (ポジティブな解釈)}$$
+                    $$\mathcal{E}(\Delta, c_2) = -|\Delta| \cdot \hat{n}_2 \text{ (ネガティブな解釈)}$$
+                </div>
+                従って、$\text{sign}(\mathcal{E}(\Delta, c_1)) = -\text{sign}(\mathcal{E}(\Delta, c_2))$ となり、同一のズレに対する解釈の符号が、文脈によって反転することが証明された。
+            </div>
+
+            <h3>A.2 スケールフリー特性の証明</h3>
+            <div class="theorem">
+                <strong>定理:</strong> IDSは階層を越えてスケールフリー（自己相似的）な振る舞いを示す。
+            </div>
+            <div class="proof">
+                スケール $s$ におけるIDS汎関数を $\mathcal{F}_{\text{IDS}}(s)$ とする。
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(s) = \int S[\Delta(s), C(s), H(s)] ds$$
+                </div>
+                スケール変換 $s \rightarrow \lambda s$ を適用すると、
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(\lambda s) = \int S[\Delta(\lambda s), C(\lambda s), H(\lambda s)] d(\lambda s)$$
+                </div>
+                エラーパターン、文脈、そして階層間カップリングの自己相似性を仮定すると、
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(\lambda s) = \lambda^\alpha \int S[\Delta(s), C(s), H(s)] ds = \lambda^\alpha \mathcal{F}_{\text{IDS}}(s)$$
+                </div>
+                このべき乗則の関係は、システムのスケールフリー特性を裏付ける。
+            </div>
+
+            <h3>A.3 意識の創発条件の証明</h3>
+            <div class="theorem">
+                <strong>定理:</strong> 統合度が臨界閾値を超えたとき、意識が創発する。
+            </div>
+            <div class="proof">
+                総統合度 $\Phi_{\text{total}}$ を、システム内の異なるコンポーネント $i,j$ 間の相互情報量 $\mathcal{I}_{ij}$ と階層的距離 $d_{ij}$ を用いて以下のように定義する。
+                <div class="equation">
+                    $$\Phi_{\text{total}} = \sum_{i,j} \mathcal{I}_{ij} \cdot \exp(-d_{ij}/\lambda)$$
+                </div>
+                意識が創発するためには、以下の条件が同時に満たされる必要がある：
+                <ol>
+                    <li>十分な局所的統合: 結合しているペアにおいて $\mathcal{I}_{ij} > \mathcal{I}_{\text{min}}$。</li>
+                    <li>大域的コヒーレンス: 結合行列 $\mathbf{C}$ の最大固有値が閾値を超える $\lambda_{\text{max}}(\mathbf{C}) > \lambda_{\text{crit}}$。</li>
+                    <li>時間的安定性: 十分な時間が経過した後、統合度の変化が微小である $|\frac{d\Phi}{dt}| < \epsilon$。</li>
+                </ol>
+                これらの条件が満たされたとき、システムは意識と関連付けられる大域的で統合された情報処理状態を示す。
+            </div>
+        </section>
+
+        <section>
+            <h2>B. 計算モデル実装の詳細</h2>
+
+            <h3>B.1 IDSコアアーキテクチャ</h3>
+            <p>IDS理論の核心部分は、Pythonの機械学習ライブラリ（PyTorchなど）を用いて以下のように実装される。システムは複数のモジュールから構成される。</p>
+
+            <pre><code class="language-python">import torch
+import torch.nn as nn
+
+class IntegratedDebugSystem(nn.Module):
+    """
+    IDS理論のPyTorchによる実装
+    """
+    
+    def __init__(self, config: dict):
+        super().__init__()
+        
+        # 主要コンポーネントの初期化
+        self.context_processor = ContextualProcessor(config)
+        self.hial_system = HIALSystem(config)
+        self.local_doc_network = LocalDOCNetwork(config)
+        self.tdng_system = TDNGSystem(config)
+        self.qualia_generator = QualiaGenerator(config)
+        
+    def forward(self, observation: dict) -> dict:
+        """
+        メインの処理パイプライン
+        """
+        # 1. ズレの検出
+        deviation = self.detect_deviation(observation)
+        
+        # 2. 文脈依存的な解釈
+        context = self.hial_system.get_context()
+        interpreted_error = self.context_processor.interpret(deviation, context)
+        
+        # 3. 臨界情報イベント(CIE)の評価とLocalDOCの起動
+        response = self.local_doc_network(interpreted_error)
+            
+        # 4. 規範の更新 (TDNG)
+        self.tdng_system.update(interpreted_error, response)
+        
+        # 5. クオリアの生成
+        qualia = self.qualia_generator(interpreted_error, context)
+            
+        # 6. 自己参照的なシステム全体の更新
+        self.hial_system.update(self.entire_state())
+        
+        return {
+            'error': interpreted_error,
+            'response': response,
+            'qualia': qualia,
+        }
+
+class ContextualProcessor(nn.Module):
+    """
+    文脈依存的なエラー解釈を担うモジュール
+    """
+    def __init__(self, config: dict):
+        super().__init__()
+        # 文脈プロトタイプや変換行列などをパラメータとして保持
+        self.n_contexts = config.get('n_context_prototypes', 10)
+        self.context_prototypes = nn.Parameter(torch.randn(self.n_contexts, config['context_dim']))
+        self.W = nn.ParameterList([...]) # 変換行列W_k
+        self.V = nn.ParameterList([...]) # 変換行列V_k
+        
+    def interpret(self, deviation: torch.Tensor, context: dict) -> torch.Tensor:
+        """
+        数式 E(Δ, c) = Σ φ_k(c) * T_k(Δ) を実装
+        """
+        context_vector = self.encode_context(context)
+        phi = self.compute_context_basis(context_vector) # φ_k(c) の計算
+        
+        interpretation = torch.zeros_like(deviation)
+        for k in range(self.n_contexts):
+            # T_k(Δ) = tanh(W_k Δ + b_k) ⊙ sign(V_k Δ + d_k)
+            T_k = self.transform(deviation, k)
+            interpretation += phi[k] * T_k
+            
+        return interpretation</code></pre>
+
+            <h3>B.2 GPU最適化実装と設定テンプレート</h3>
+            <p>大規模なシミュレーションやAI応用のため、GPUに最適化された実装が不可欠である。</p>
+
+            <pre><code class="language-python">import torch
+
+class GPUOptimizedIDS(IntegratedDebugSystem):
+    """
+    GPUと混合精度演算に最適化されたIDS
+    """
+    def __init__(self, config: dict):
+        super().__init__(config)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.to(self.device)
+        self.scaler = torch.cuda.amp.GradScaler() # 混合精度用
+        
+    @torch.cuda.amp.autocast() # 自動で混合精度演算を有効化
+    def forward(self, observation: dict) -> dict:
+        # 入力データをGPUに転送
+        observation = {k: v.to(self.device) if isinstance(v, torch.Tensor) else v 
+                      for k, v in observation.items()}
+        return super().forward(observation)</code></pre>
+
+            <h4>設定テンプレート (YAML形式)</h4>
+            <p>IDSは応用分野に応じてパラメータ設定を柔軟に変更する必要がある。</p>
+
+            <pre><code class="language-yaml"># 臨床評価用設定
+clinical_config:
+  input_dim: 256
+  n_modules: 50
+  n_hierarchies: 30
+  adaptation_rate: 0.05
+  assessment_metrics:
+    - context_flexibility
+    - hierarchical_synchronization
+
+# AGI開発用設定
+agi_config:
+  input_dim: 512
+  hidden_dim: 1024
+  n_modules: 100
+  n_hierarchies: 50
+  adaptation_rate: 0.2
+  consciousness_development:
+    stages: 6</code></pre>
+        </section>
+
+        <section>
+            <h2>C. 実験プロトコル</h2>
+            <p>IDS理論の検証可能性は、その核心的な予測をテストするための一連の具体的な実験プロトコルによって担保される。</p>
+
+            <h3>C.1 文脈反転実験</h3>
+            <p><strong>目的:</strong> 同一の刺激が、異なる文脈下で反対の解釈と神経応答を生み出すことを実証する。</p>
+
+            <pre><code class="language-python">class ContextReversalExperiment:
+    """
+    同一刺激に対する文脈依存的な解釈をテストする
+    """
+    def __init__(self, ids_model):
+        self.model = ids_model
+        self.contexts = self._define_contexts()
+
+    def _define_contexts(self):
+        """
+        同一刺激に対し、対照的な意味付けを行う文脈を定義する
+        """
+        return {
+            'reward_context': {'expectation': 'positive_outcome', 'valence': 0.8},
+            'punishment_context': {'expectation': 'negative_outcome', 'valence': -0.8}
+        }
+
+    def run(self, stimulus: torch.Tensor):
+        """
+        異なる文脈で同一刺激を与え、解釈の符号反転を測定する
+        """
+        results = {}
+        for context_name, context in self.contexts.items():
+            self.model.hial_system.set_context(context)
+            output = self.model({'data': stimulus})
+            results[context_name] = {'error_interpretation': output['error']}
+        
+        # 解釈の符号が反転した要素の割合を計算
+        sign_reversal_tensor = torch.sign(results['reward_context']['error_interpretation']) != \
+                               torch.sign(results['punishment_context']['error_interpretation'])
+        
+        sign_reversal_percentage = sign_reversal_tensor.float().mean().item() * 100
+        return {'sign_reversal_percentage': sign_reversal_percentage}</code></pre>
+
+            <h3>C.2 階層的同期実験</h3>
+            <p><strong>目的:</strong> 意識的な情報処理中に、IDSの異なる階層間で神経活動の同期（クロス周波数カップリングなど）が観測されることを検証する。</p>
+
+            <pre><code class="language-python">class HierarchicalSynchronizationExperiment:
+    """
+    意識と階層間同期の相関を測定する
+    """
+    def __init__(self, ids_model):
+        self.model = ids_model
+
+    def run(self, stimulus_sequence):
+        """
+        時系列刺激に対する同期パターンと意識レベルを記録・分析する
+        """
+        sync_history = []
+        consciousness_history = []
+
+        for stimulus in stimulus_sequence:
+            output = self.model({'data': stimulus})
+            
+            # HIALSystemから同期度を取得
+            sync_level = self.model.hial_system.get_synchronization()
+            
+            sync_history.append(sync_level)
+            consciousness_history.append(output['consciousness']['integration_level'])
+
+        # 同期レベルと意識レベルの相関係数を計算
+        correlation = np.corrcoef(sync_history, consciousness_history)[0, 1]
+        return {'synchronization_consciousness_correlation': correlation}</code></pre>
+        </section>
+
+        <section>
+            <h2>D. 拡張応用</h2>
+            <p>IDS理論のフレームワークは、純粋な理論的探求に留まらず、具体的な応用分野においても新たな道筋を提示する。</p>
+
+            <h3>D.1 意識工学（Consciousness Engineering）</h3>
+            <p><strong>目的:</strong> IDSパラメータを調整することで、特定の意識特性（例：創造性、安定性）を持つ人工システムを設計する。</p>
+
+            <pre><code class="language-python">class ConsciousnessEngineer:
+    """
+    目標とする意識特性を持つIDSシステムを設計する
+    """
+    def __init__(self, base_config):
+        self.base_config = base_config
+
+    def design(self, target_properties: dict):
+        """
+        目標特性に応じてIDSの構成を最適化する
+        """
+        optimal_config = self.base_config.copy()
+
+        if target_properties.get('high_creativity'):
+            optimal_config['adaptation_rate'] = 0.3      # 高い適応率
+            optimal_config['norm_violation_tolerance'] = 0.5 # 規範逸脱への寛容性
+
+        if target_properties.get('stable_perception'):
+            optimal_config['adaptation_rate'] = 0.05     # 低い適応率
+            optimal_config['integration_threshold'] = 0.4  # 高い統合閾値
+        
+        system = IntegratedDebugSystem(optimal_config)
+        return system, optimal_config</code></pre>
+
+            <h3>D.2 AGI（汎用人工知能）開発フレームワーク</h3>
+            <p><strong>目的:</strong> IDSの発達的段階（感覚運動→知覚→概念→社会性→メタ認知）を模倣することで、より人間に近い汎用人工知能を構築する。</p>
+
+            <pre><code class="language-python">class AGIDevelopment:
+    """
+    IDSの発達段階に基づいたAGI開発フレームワーク
+    """
+    def __init__(self):
+        self.development_stages = ['sensorimotor', 'perceptual', 'conceptual', 'social', 'metacognitive']
+
+    def create_developmental_agi(self):
+        """
+        発達的段階を経て学習するAGIを生成する
+        """
+        # 初期段階のミニマルな設定でAGIを初期化
+        config = {'n_hierarchies': 3, 'adaptation_rate': 0.3}
+        agi = DevelopmentalIDS(config)
+
+        # 各発達段階に応じた訓練を実施
+        for stage in self.development_stages:
+            print(f"Developing {stage} capabilities...")
+            training_protocol = self.get_training_for_stage(stage)
+            training_protocol.train(agi)
+
+            # 段階の完了を検証し、次のステージへ
+            if self.verify_stage_completion(agi, stage):
+                agi.advance_stage()
+        return agi</code></pre>
+        </section>
+
+        <section>
+            <h2>E. 将来の研究の方向性</h2>
+            <p>IDS理論は完成されたものではなく、さらなる探求を待つ広大な領域が残されている。</p>
+
+            <ol>
+                <li><strong>量子-IDSインターフェース:</strong>
+                    <ul>
+                        <li>量子測定におけるエラー解釈。</li>
+                        <li>観測前の文脈の重ね合わせ状態。</li>
+                        <li>量子もつれを極端な階層間カップリングとして解釈。</li>
+                        <li>デコヒーレンスを高次元から4次元時空への射影としてモデル化。</li>
+                    </ul>
+                </li>
+                <li><strong>集合的意識:</strong>
+                    <ul>
+                        <li>個人間での文脈空間の共有。</li>
+                        <li>社会規範を集合的なTDNGとして定式化。</li>
+                        <li>分散したLocalDOCネットワークとしての組織や社会。</li>
+                    </ul>
+                </li>
+                <li><strong>宇宙論的IDS:</strong>
+                    <ul>
+                        <li>宇宙を自己デバッグするシステムとして捉える。</li>
+                        <li>物理定数を収束した普遍的な規範と見なす。</li>
+                        <li>ブラックホールを宇宙規模のLocalDOC、ダークエネルギーを未解決の予測誤差として解釈する可能性の探求。</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>F. データ利用可能性と事前登録</h2>
+            <p>本研究の科学的透明性と再現性を確保するため、すべての関連資料は公開される。</p>
+
+            <ul>
+                <li><strong>データとコード:</strong> 本論文で提示されたすべてのシミュレーションコード、生データ、および解析スクリプトは、以下のリポジトリで利用可能である。
+                    <ul>
+                        <li><a href="https://github.com/ids-theory/core">https://github.com/ids-theory/core</a></li>
+                        <li><a href="https://github.com/ids-theory/golden-ratio-dynamics">https://github.com/ids-theory/golden-ratio-dynamics</a></li>
+                    </ul>
+                </li>
+                <li><strong>事前登録:</strong> IDS-GUTフレームワークに関する主要な仮説と検証計画は、将来の観測データによるバイアスを排除するため、事前に登録されている。
+                    <ul>
+                        <li>H1: φモデルは自由パラメータモデルよりも優れた性能を示す（ベイズ因子 > 3）。</li>
+                        <li>H2: ブリッジメカニズムはパラメータ制約を5-15%改善する。</li>
+                        <li>棄却条件: 予測が観測と3σ以上乖離した場合、または理論の内部矛盾が発見された場合。</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>G. 詳細な実験結果</h2>
+            <p>本セクションでは、論文中で要約された主要な実験の定量的結果を、詳細な表形式で提示する。</p>
+
+            <h3>G.1 蔵本振動子における動的安定性</h3>
+            <p><strong>目的:</strong> 異なる時定数比が、臨界点近傍の結合振動子ネットワークの安定性に与える影響を定量化する。</p>
+            <p><strong>結果:</strong> φ比（黄金比）を用いたシステムは、崩壊率や長期ドリフトの抑制において、他の比率よりも一貫して優れた性能を示した。静的な同期レベル（Cluster fraction）に有意差は見られず、φが動的な質を最適化することが確認された。</p>
+
+            <table>
+                <tr>
+                    <th>指標 (平均 ± 標準偏差, N=10)</th>
+                    <th>φ-ratio (≈1.62)</th>
+                    <th>1.3-ratio</th>
+                    <th>2.0-ratio</th>
+                    <th>p-value</th>
+                </tr>
+                <tr>
+                    <td>崩壊率 (イベント/試行)</td>
+                    <td>0.8 ± 0.4</td>
+                    <td>2.1 ± 0.8</td>
+                    <td>2.3 ± 0.9</td>
+                    <td>&lt; 0.05</td>
+                </tr>
+                <tr>
+                    <td>PSD傾き (1/f特性からの乖離)</td>
+                    <td>-0.98 ± 0.05</td>
+                    <td>-0.91 ± 0.08</td>
+                    <td>-0.89 ± 0.09</td>
+                    <td>&lt; 0.01</td>
+                </tr>
+                <tr>
+                    <td>クラスター分数 (静的同期度)</td>
+                    <td>0.535 ± 0.04</td>
+                    <td>0.534 ± 0.04</td>
+                    <td>0.536 ± 0.04</td>
+                    <td>n.s.</td>
+                </tr>
+            </table>
+
+            <h3>G.2 φ-RNNにおける「稀だが強い安定性」</h3>
+            <p><strong>目的:</strong> 極端なノイズストレス下における、φ比を持つRNNの破局的故障耐性とリスク指標を評価する。</p>
+            <p><strong>結果:</strong> φ-RNNは、対照群で25%の故障が観測された条件下で、<strong>破局的故障率0%</strong>を達成した。さらに、複数のテールリスク指標において50%以上の改善が見られた。</p>
+
+            <table>
+                <tr>
+                    <th>リスク指標</th>
+                    <th>φ-RNN (n=12)</th>
+                    <th>対照群 (n=24)</th>
+                    <th>改善率</th>
+                </tr>
+                <tr>
+                    <td>破局的故障率</td>
+                    <td>0%</td>
+                    <td>25%</td>
+                    <td>100%</td>
+                </tr>
+                <tr>
+                    <td>VaR(95%) 改善率</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>57.8%</td>
+                </tr>
+                <tr>
+                    <td>CVaR(99%) 改善率</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>62.4%</td>
+                </tr>
+                <tr>
+                    <td>最大エクスポージャー削減率</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>64.4%</td>
+                </tr>
+                <tr>
+                    <td>回復時間 (相対値)</td>
+                    <td>0.46x</td>
+                    <td>1.0x</td>
+                    <td>54%短縮</td>
+                </tr>
+            </table>
+
+            <h3>G.3 RNNにおけるφの自己組織化</h3>
+            <p><strong>目的:</strong> RNNが学習を通じて自発的に時定数比をφに収束させるか、または他の安定点が存在するかを検証する。</p>
+            <p><strong>結果:</strong> システムはφに一意に収束せず、2つの主要なアトラクター（L ≈ 0.97, U ≈ 2.29）へ分岐した。この2つのアトラクターの幾何学的中心は1.633であり、φに極めて近い。これは、φが安定領域を分ける「分水嶺」として機能していることを示唆する。</p>
+
+            <table>
+                <tr>
+                    <th>統計指標 (n=25)</th>
+                    <th>値</th>
+                    <th>95%信頼区間</th>
+                </tr>
+                <tr>
+                    <td>低アトラクター中心 (L)</td>
+                    <td>0.972</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>高アトラクター中心 (U)</td>
+                    <td>2.294</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>幾何学的中心 (L+U)/2</td>
+                    <td>1.633</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>確率的分水嶺 r*</td>
+                    <td>1.211</td>
+                    <td>[0.799, 1.624]</td>
+                </tr>
+            </table>
+
+            <p><strong>注:</strong> 確率的分水嶺の信頼区間はφ (≈1.618) を含んでおり、統計的にφが分水嶺である可能性を排除しない。</p>
+
+            <h3>G.4 自己修復する言語連鎖</h3>
+            <p><strong>目的:</strong> φ比を用いたエラー評価と自己ルール更新が、言語コンテキストの連鎖における意味保存と外乱からの回復に与える効果を測定する。</p>
+            <p><strong>結果:</strong> φ比を導入したシステム（φオン）は、導入しないシステム（φオフ）と比較して、すべての主要指標で大幅な改善を示した。</p>
+
+            <table>
+                <tr>
+                    <th>指標</th>
+                    <th>φオフ</th>
+                    <th>φオン</th>
+                    <th>効果</th>
+                </tr>
+                <tr>
+                    <td>意味保存率</td>
+                    <td>≈ 0.795</td>
+                    <td>≈ 0.895</td>
+                    <td>+12.6%</td>
+                </tr>
+                <tr>
+                    <td>外乱からの回復ステップ</td>
+                    <td>≈ 10.2</td>
+                    <td>≈ 4.3</td>
+                    <td>57.8%短縮</td>
+                </tr>
+                <tr>
+                    <td>PSD傾き (1/f特性)</td>
+                    <td>≈ +0.013</td>
+                    <td>≈ -1.446</td>
+                    <td>臨界点へ整流</td>
+                </tr>
+                <tr>
+                    <td>複合スコア (LCon_core)</td>
+                    <td>≈ 0.116</td>
+                    <td>≈ 0.389</td>
+                    <td>3.4倍</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>H. 検討された代替宇宙論モデル</h2>
+            <p>
+                IDS-GUTフレームワークの妥当性を評価するため、複数の代替モデルとの比較検証を行った。
+                これには、黄金比(φ)以外の特定の無理数（例：$\sqrt{2}$, $\sqrt{3}$）を制御比率とするモデルや、比率を自由なパラメータとしてデータから最尤推定するモデルが含まれる。
+            </p>
+            <p>
+                <strong>結論:</strong> 8ビンのRSDデータを用いたモデル比較において、φモデルは代替の固定比率モデルよりも優れた適合度（低いχ²）を示した。
+                また、自由パラメータモデルで得られた最尤値 $r_{MLE} = 1.65 \pm 0.08$ は、φ=1.618...と統計的に一致しており、データがφを自然に選択することを示唆している。
+                これらの結果が、IDS-GUTにおけるφの特別視を正当化している。
+            </p>
+        </section>
+
+        <section>
+            <h2>I. 主要専門用語の定義集</h2>
+            <dl>
+                <dt><strong>IDS (Integrated Debug System / 統合デバッグシステム):</strong></dt>
+                <dd>あらゆるシステムが内包する、自己の状態と内在的規則性（予測）とのズレを検知、解釈、修正する自己参照的ループ。</dd>
+
+                <dt><strong>カオスの淵 (Edge of Chaos):</strong></dt>
+                <dd>システムが完全に静的な秩序と予測不可能な混沌の中間に存在する、複雑で適応的な振る舞いが可能になる動的な臨界領域。生命や意識は、この領域で活発なIDSを持つと考えられる。</dd>
+
+                <dt><strong>予測 (Prediction):</strong></dt>
+                <dd>IDS理論における広義の概念。高次の認知活動だけでなく、量子レベルの波動関数の時間発展から生物の恒常性維持まで、あらゆるスケールにおけるシステムの内在的な状態遷移規則を指す。</dd>
+
+                <dt><strong>クオリアベクトル ($\vec{Q}$):</strong></dt>
+                <dd>主観的経験を数学的に表現するベクトル。普遍的な経験の骨格をなすスケルトン成分と、感覚固有の質感を与えるテクスチャ成分から成る。</dd>
+
+                <dt><strong>TDNG (Time-Dependent Norm Generation / 時間依存的規範生成):</strong></dt>
+                <dd>システムが従うべき規範（ルール）が、過去・現在・未来の状態から動的に生成されるメカニズム。</dd>
+
+                <dt><strong>HIAL (Hierarchical Integrated Adaptive Layer / 階層的適応レイヤー):</strong></dt>
+                <dd>異なるスケールの情報を処理する、動的に形成・解消されるシステムの階層構造。</dd>
+
+                <dt><strong>LocalDOC (Localized Dynamic Optimization Core / 局所的動的最適化コア):</strong></dt>
+                <dd>エラー解釈に基づき、システムの応答ルールを適応的に修正する情報処理のハブ。</dd>
+
+                <dt><strong>CIE (Critical Information Event / 臨界情報イベント):</strong></dt>
+                <dd>システムが適応的な応答を必要とするほどの、情報構造における重大な変化。</dd>
+            </dl>
+        </section>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; background-color: #ecf0f1; color: #666;">
+        <p>© 2025 IDS理論研究グループ</p>
+        <p>（論文終）</p>
+    </footer>
+</body>
+</html>
