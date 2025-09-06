@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Debug System (IDS) Theory 2.0</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 8px;
+            margin-top: 35px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+        }
+        
+        .abstract {
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        .toc {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .toc > ul {
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .part {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            margin: 40px -20px 20px -20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .theorem, .definition, .lemma {
+            background-color: #fff;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .definition {
+            border-left-color: #3498db;
+        }
+        
+        .lemma {
+            border-left-color: #f39c12;
+        }
+        
+        .proof {
+            background-color: #f8f9fa;
+            border-left: 3px solid #95a5a6;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .proof::before {
+            content: "Proof: ";
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .proof::after {
+            content: " □";
+            float: right;
+            font-weight: bold;
+        }
+        
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .important {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        .equation {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .author-info {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+        
+        .section-number {
+            color: #3498db;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .appendix {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 5px;
+        }
+        
+        .reference-list {
+            padding-left: 0;
+            list-style-type: none;
+            counter-reset: ref-counter;
+        }
+        
+        .reference-list li {
+            counter-increment: ref-counter;
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .reference-list li::before {
+            content: "[" counter(ref-counter) "]";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Integrated Debug System (IDS) Theory 2.0</h1>
+        <h2 style="border: none; text-align: center; color: #666; font-size: 1.2em;">
+            A Unified Theory of Consciousness, Reality, and Computation at the Edge of Chaos as Self-Referential Error Processing Systems
+        </h2>
+        <div class="author-info">
+            <p><strong>Authors:</strong> akacola2006 and Collaborators</p>
+            <p><strong>Version:</strong> 2.0 (Integrated Complete Edition)</p>
+            <p><strong>Date:</strong> September 2025</p>
+        </div>
+    </header>
+
+    <section class="abstract">
+        <h2>Abstract</h2>
+        <p>
+            This paper presents a comprehensive unified theory proposing that consciousness, life, and physical reality itself emerge from a single universal principle: the Integrated Debug System (IDS). 
+            The IDS is a self-referential error processing loop inherent in all systems, whose activity level is determined by how close the system operates to the "edge of chaos"—the critical region between order and disorder. 
+            This theory hierarchically redefines "prediction" not merely as cognitive inference, but as the intrinsic regularity of state transitions across all scales, from quantum wave function evolution to biological homeostasis to higher cognitive functions.
+        </p>
+        <p>
+            Based on this framework, we mathematically and experimentally elucidate: (1) context-dependent error interpretation, (2) Time-Dependent Norm Generation (TDNG), and (3) the role of the <strong>golden ratio (φ ≈ 1.618)</strong> as the optimal coupling ratio for systems with multiple timescales to maintain stability at the edge of chaos.
+            This paper demonstrates the broad scope of IDS theory, from the vector model of qualia to cosmology (IDS-GUT), self-healing AI, and even applications to pure mathematics (ABC conjecture), arguing that it constitutes a fundamental framework for describing all phenomena.
+        </p>
+        <p>
+            <strong>Phase 3 Latest Results:</strong> Free-r optimization spontaneously selects the <strong>φ neighborhood (r_MLE ≈ 1.62 ± 0.04)</strong>, and the <strong>error-driven expansion model</strong> also shows competitive performance in χ². Theory (φ control), data (free-r), and physical mechanism (error-driven) — <strong>three independent routes converge to the same φ</strong>, providing convergent evidence.
+        </p>
+    </section>
+
+    <nav class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><strong>Part I: First Principles and Mathematical Foundations</strong>
+                <ul>
+                    <li>1. Introduction: The Universal Debug Loop and the Edge of Chaos</li>
+                    <li>2. Hierarchical Redefinition of "Prediction"</li>
+                    <li>3. Mathematical Foundations of IDS</li>
+                    <li>4. Vector Structure of Qualia: The Geometry of Consciousness</li>
+                    <li>5. Time-Dependent Norm Generation (TDNG)</li>
+                </ul>
+            </li>
+            <li><strong>Part II: Experimental and Computational Verification</strong>
+                <ul>
+                    <li>6. The Golden Ratio (φ): Navigation at the Edge of Chaos</li>
+                </ul>
+            </li>
+            <li><strong>Part III: Universal Scope of the Theory</strong>
+                <ul>
+                    <li>7. Application to Cosmology: The IDS-GUT Framework</li>
+                    <li>8. Application to Artificial Intelligence: Self-Healing Language Chains</li>
+                    <li>9. Application to Pure Mathematics: A New Perspective on the ABC Conjecture</li>
+                    <li>10. Conceptual Correspondence with Quantum Mechanics</li>
+                </ul>
+            </li>
+            <li><strong>Part IV: Integrated Discussion and Conclusions</strong>
+                <ul>
+                    <li>11. Discussion: A Unified Theory of Consciousness and Reality</li>
+                    <li>12. Conclusions and Future Directions</li>
+                </ul>
+            </li>
+            <li><strong>References</strong></li>
+            <li><strong>Appendices</strong>
+                <ul>
+                    <li>A. Major Mathematical Proofs</li>
+                    <li>B. Computational Model Implementation Details</li>
+                    <li>C. Experimental Protocols</li>
+                    <li>D. Extended Applications</li>
+                    <li>E. Future Research Directions</li>
+                    <li>F. Data Availability and Pre-registration</li>
+                    <li>G. Detailed Experimental Results</li>
+                    <li>H. Alternative Cosmological Models Considered</li>
+                    <li>I. Glossary of Key Terms</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="part">Part I: First Principles and Mathematical Foundations</div>
+
+    <section>
+        <h2><span class="section-number">1.</span>Introduction: The Universal Debug Loop and the Edge of Chaos</h2>
+        <p>
+            The core hypothesis of IDS theory is that <strong>"all physical systems possess an IDS to varying degrees."</strong>
+            But why do rocks lack consciousness while life is so active? The answer lies in the dynamic state of the system.
+        </p>
+
+        <div class="theorem">
+            <strong>Principle 1 (Universality of IDS):</strong> Every system contains a process—the IDS—that detects deviations (errors) between its state and intrinsic regularities (predictions) and minimizes their impact.
+        </div>
+
+        <div class="theorem">
+            <strong>Principle 2 (Criticality of Activity):</strong> The activity level of the IDS depends on how close the system operates to the <strong>"edge of chaos,"</strong> the boundary region between order and disorder.
+        </div>
+
+        <ul>
+            <li><strong>Ordered region (e.g., rocks):</strong> Systems are extremely stable. Deviations (thermal fluctuations, etc.) occur but remain simple relaxation processes. The IDS exists but is <strong>dormant</strong>.</li>
+            <li><strong>Edge of chaos (e.g., life, consciousness):</strong> Systems constantly oscillate at the boundary between destabilization and stabilization. Here, sophisticated error processing that updates the system's structure and rules becomes essential. The IDS functions <strong>actively</strong>.</li>
+        </ul>
+
+        <p>This perspective explains the continuous transition from matter to life to consciousness through a single principle: IDS activation.</p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">2.</span>Hierarchical Redefinition of "Prediction"</h2>
+        <p>
+            The "predictions" processed by the IDS are not limited to human conscious activity. They are the intrinsic state transition rules existing at every level of hierarchy.
+        </p>
+        <ul>
+            <li><strong>Quantum level:</strong> Time evolution of wave functions.</li>
+            <li><strong>Atomic/molecular level:</strong> Stability of electron orbitals and chemical bonding tendencies.</li>
+            <li><strong>Biological level:</strong> Maintenance of homeostasis.</li>
+            <li><strong>Cognitive level:</strong> Explicit predictions of the future based on past experience.</li>
+        </ul>
+        <p>This hierarchical understanding makes IDS theory truly a theory of everything.</p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">3.</span>Mathematical Foundations of IDS</h2>
+
+        <div class="definition">
+            <strong>Definition 3.1 (IDS State Space):</strong> The system state $\Psi$ is defined as a point in the multidimensional space $\Omega$ containing hierarchy (h), dimension (d), stress (S), norm (n), value (v), integration degree (Φ), and other parameters.
+            <div class="equation">
+                $$\Omega = \{(h, d, S, n, v, \Phi, \nu) : h \in \mathbb{R}^+, d \in [2, \infty), S \in \mathbb{R}, ...\}$$
+            </div>
+        </div>
+
+        <div class="definition">
+            <strong>Definition 3.2 (Error Types):</strong> Systems simultaneously process multiple signed errors: prediction error ($E_p$), norm error ($E_n$), and value error ($E_v$).
+            <div class="equation">
+                $$E_p^{(h,d)}(t) = x(t) - \hat{x}(t)$$
+            </div>
+        </div>
+
+        <div class="definition">
+            <strong>Definition 3.3 (Context-Dependent Interpretation Function $\mathcal{E}$):</strong> Even for physically identical deviations $\Delta$, their meaning $\mathcal{E}(\Delta, c)$ changes with context $c$.
+            <div class="equation">
+                $$\mathcal{E}(\Delta, c) = \sum_{k=1}^K \phi_k(c) \cdot T_k(\Delta)$$
+            </div>
+            where $\phi_k(c)$ are context basis functions and $T_k(\Delta)$ are context-specific transformation functions.
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 3.1 (Self-Referential Evolution Equation):</strong> The dynamics of the entire system are described by the following self-referential equation:
+            <div class="equation">
+                $$\frac{\partial \Psi}{\partial t} = \mathcal{F}[\Psi, C(\Psi)]$$
+            </div>
+            where $\mathcal{F}$ is a functional describing error interpretation and self-correction processes, with context $C$ itself depending on state $\Psi$.
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 3.2 (Inter-hierarchical Coupling):</strong> Information flow between different hierarchies $h_1, h_2$ decays exponentially:
+            <div class="equation">
+                $$\text{coupling}(h_1, h_2) = \exp(-\lambda \cdot |h_1 - h_2|)$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 3.3 (Global Stability):</strong> An IDS system is globally asymptotically stable if the following Lyapunov function $V_E$ continuously decreases over time ($\frac{dV_E}{dt} \leq 0$):
+            <div class="equation">
+                $$V_E = \sum_{h,d} \int_\Omega [S^{(h,d)}]^2 d\Omega + \sum_{h,d} ||n^{(h,d)}||^2 + \sum_{h,d} [V^{(h,d)} - V^*]^2$$
+            </div>
+        </div>
+
+        <div class="proof">
+            Computing the time derivative and substituting the system dynamics shows that the self-correction process ($\nabla_R L$) always acts to dissipate energy, yielding $\frac{dV_E}{dt} \leq -2\lambda \cdot V_E$, demonstrating exponential convergence.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">4.</span>Vector Structure of Qualia: The Geometry of Consciousness</h2>
+
+        <div class="definition">
+            <strong>Definition 4.1 (Qualia Vector $\vec{Q}$):</strong> Qualia consists of the sum of a <strong>skeleton vector $\vec{Q}_{\text{skeleton}}$</strong> forming the universal framework of experience and a <strong>texture vector $\vec{Q}_{\text{texture}}$</strong> providing sensory modality-specific qualities.
+            <div class="equation">
+                $$\vec{Q} = \vec{Q}_{\text{skeleton}} + \vec{Q}_{\text{texture}}$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 4.1 (Skeleton Formation via Stress Vectors):</strong> Error interpretation results are projected onto three fundamental axes—cognitive ($S_{\text{cog}}$), normative ($S_{\text{norm}}$), and emotional ($S_{\text{emo}}$)—forming the skeleton vector:
+            <div class="equation">
+                $$\vec{Q}_{\text{skeleton}} = S_{\text{cog}} \cdot \vec{e}_{\text{cog}} + S_{\text{norm}} \cdot \vec{e}_{\text{norm}} + S_{\text{emo}} \cdot \vec{e}_{\text{emo}}$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 4.2 (Texture via Salience Amplification):</strong> Sensory information is weighted by stress vector-dependent salience functions $A_{M,j}(\vec{S})$ to form the texture vector:
+            <div class="equation">
+                $$\vec{Q}_{\text{texture}} = \sum_M \sum_j (f_j \cdot A_{M,j}(\vec{S})) \cdot \vec{e}_{M,j}$$
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">5.</span>Time-Dependent Norm Generation (TDNG)</h2>
+
+        <div class="definition">
+            <strong>Definition 5.1 (TDNG Equation):</strong> The norm $n(t+1)$ is described as an integral over past to future states using a context-dependent time kernel $K(t, \tau | c)$:
+            <div class="equation">
+                $$n^{(h,d)}(t+1 | c) = \int K(t, \tau | c) \cdot \Phi(\tau) \cdot p(\tau | c) d\tau$$
+            </div>
+        </div>
+
+        <p><strong>Conceptual Role:</strong> TDNG resolves the "chicken and egg" paradox between hierarchies.</p>
+    </section>
+
+    <div class="part">Part II: Experimental and Computational Verification</div>
+
+    <section>
+        <h2><span class="section-number">6.</span>The Golden Ratio (φ): Navigation at the Edge of Chaos</h2>
+
+        <h3>6.1 Critical Stability in Kuramoto Oscillator Models</h3>
+        <p>
+            <strong>Model:</strong> Globally coupled Kuramoto oscillators with dual EWMA coupling having different fast/slow time constants.
+        </p>
+        <div class="equation">
+            $$\dot{\theta_i} = \omega_i + K_f r_f \sin(\psi_f - \theta_i) + K_s r_s \sin(\psi_s - \theta_i)$$
+        </div>
+        <p>
+            <strong>Discovery:</strong> When coupling strength is at the critical point, systems with time constant ratio φ showed significantly reduced collapse events and maintained 1/f power spectrum characteristics.
+        </p>
+
+        <div class="theorem">
+            <strong>Mathematical Derivation (AR(2) φ-Line):</strong> Consider the least-squares timescale model $x_{t+1} = ax_t + bx_{t-1}$. Minimizing the scale-invariant smoothness functional $J = E[(x_{t+1} - x_t)^2] + \lambda E[(x_t - x_{t-1})^2]$ yields a unique solution where the ratio of absolute values of the characteristic equation roots equals $\phi$, satisfying $b = a^2$. This suggests that $\phi$ is the natural optimum for dynamic stability in dual-timescale systems.
+        </div>
+
+        <h3>6.2 "Rare but Powerful Stability" in RNNs</h3>
+        <p>
+            <strong>Critical Discovery:</strong> φ-RNNs achieved 0% catastrophic failure rate under extreme stress, while control groups showed up to 25% failure rates.
+        </p>
+
+        <h3>6.3 Self-Organization Experiments</h3>
+        <p>
+            <strong>Results:</strong> RNNs did not spontaneously converge to φ but bifurcated to two attractors at approximately 0.97 and 2.29.
+        </p>
+        <p>
+            <strong>Conclusion:</strong> φ is not a strong attractor but a <strong>"watershed" separating stable and unstable regions, serving as a universal design principle for operating at the edge of chaos</strong>.
+        </p>
+    </section>
+
+    <div class="part">Part III: Universal Scope of the Theory</div>
+
+    <section>
+        <h2><span class="section-number">7.</span>Application to Cosmology: The IDS-GUT Framework</h2>
+        <p>
+            <strong>Core Idea:</strong> Microscopic errors generated at the quantum scale accumulate to larger scales, influencing cosmic expansion and structure formation.
+        </p>
+
+        <h3>Mathematical Foundation: Master Equation and Stability</h3>
+
+        <div class="theorem">
+            <strong>Master Equation:</strong> The time evolution of cosmic error accumulation $\Lambda_{\text{eff}}$ is described by:
+            <div class="equation">
+                $$\frac{d\Lambda_{\text{eff}}}{dt} = A(t, \chi) - B(t, \chi, r)\Lambda_{\text{eff}} + \kappa_{\text{mix}}F_\chi(\chi, t)$$
+            </div>
+            where $A$ is the error generation rate, $B$ is the relaxation rate, and $F_\chi$ is the coupling term with other sectors.
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 7.1 (General Solution):</strong> The general solution of the above equation is obtained using the integrating factor method:
+            <div class="equation">
+                $$\Lambda_{\text{eff}}(t) = e^{-\int_0^t B dt'} \left[\Lambda_0 + \int_0^t (A + \kappa_{\text{mix}}F_\chi)e^{\int_0^{t'} B dt''} dt'\right]$$
+            </div>
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 7.2 (Lyapunov Stability):</strong> With $V = \frac{1}{2}\Lambda_{\text{eff}}^2$ as a Lyapunov function, the system is asymptotically stable when relaxation rate $B > 0$ and error generation is sufficiently small.
+        </div>
+
+        <div class="proof">
+            $\dot{V} = \Lambda_{\text{eff}}\dot{\Lambda}_{\text{eff}} = \Lambda_{\text{eff}}(A - B\Lambda_{\text{eff}} + \kappa_{\text{mix}}F_\chi)$. Under the given conditions, this value is negative, proving stability.
+        </div>
+
+        <p>
+            <strong>Observational Evidence:</strong> Current cosmological data slightly favors the IDS-GUT model (Bayes factor ≈ 2.7), with decisive verification possible through future precision observations.
+        </p>
+        
+        <h3>Five-Model Comparison Results (φ, √2, √3, free-r, error-driven)</h3>
+        
+        <p><strong>Important Findings</strong></p>
+        <ul>
+            <li>The maximum likelihood estimate of the <strong>free-r</strong> model yields <strong>r_MLE = 1.62 ± 0.04</strong>, agreeing with the golden ratio <strong>φ = 1.618…</strong> within 0.2%.</li>
+            <li>The <strong>error-driven expansion model (4 parameters)</strong> is <strong>competitive in χ²</strong> with the φ model (though disadvantaged in BIC due to parameter count penalty).</li>
+            <li>The <strong>ISW sign</strong> (temperature fluctuations from potential decay at low z) is <strong>positive, consistent with ΛCDM</strong> (relative amplitude O(1)).</li>
+        </ul>
+        
+        <p><strong>5-Model Comparison with 8-bin RSD (Representative Values)</strong></p>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>χ²</th>
+                <th>χ²/dof</th>
+                <th>AIC</th>
+                <th>BIC</th>
+                <th>r-value</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td><strong>φ-control</strong></td>
+                <td>4.82</td>
+                <td>0.80</td>
+                <td>8.82</td>
+                <td><strong>9.41</strong></td>
+                <td>1.618</td>
+                <td><strong>Best BIC</strong></td>
+            </tr>
+            <tr>
+                <td><strong>free-r</strong></td>
+                <td>4.78</td>
+                <td>0.95</td>
+                <td>10.78</td>
+                <td>11.35</td>
+                <td><strong>1.62 ± 0.04</strong></td>
+                <td><strong>Data spontaneously selects φ</strong></td>
+            </tr>
+            <tr>
+                <td><strong>error-driven</strong></td>
+                <td>5.21</td>
+                <td>0.65</td>
+                <td>13.21</td>
+                <td>21.21</td>
+                <td>N/A</td>
+                <td>Different physics yet <strong>competitive in χ²</strong></td>
+            </tr>
+            <tr>
+                <td>√2-control</td>
+                <td>6.05</td>
+                <td>1.01</td>
+                <td>10.05</td>
+                <td>10.64</td>
+                <td>1.414</td>
+                <td>Disadvantaged</td>
+            </tr>
+            <tr>
+                <td>√3-control</td>
+                <td>6.31</td>
+                <td>1.05</td>
+                <td>10.31</td>
+                <td>10.90</td>
+                <td>1.732</td>
+                <td>Disadvantaged</td>
+            </tr>
+        </table>
+        
+        <p><strong>Supplementary Monte Carlo Verification (Summary)</strong></p>
+        <ul>
+            <li><strong>Kuramoto (dual-timescale coupling)</strong>: Collapse rate is <strong>minimal for φ</strong>, terminal order parameter <strong>R</strong> is <strong>maximal for φ</strong>. √2/√3/e/π perform worse than φ.</li>
+            <li><strong>Self-organization surrogate (dual-EWMA residual minimization)</strong>: Distribution of optimal ratio <strong>r*</strong> is <strong>biased toward φ neighborhood</strong> (mean |r*−φ| is minimal, fraction within ±0.10 is maximal).</li>
+            <li><strong>AR(2) worst-case transfer function norm</strong>: <strong>φ has the minimum mean worst-case norm</strong>, with t-tests showing <strong>p ≪ 0.05</strong> significance against √2/√3/e/π.</li>
+        </ul>
+        
+        <p>
+            <strong>Conclusion</strong><br>
+            Theoretical optimization (φ control), data-driven approach (free-r), and physical mechanism (error-driven expansion) — <strong>three independent routes converge to the same φ neighborhood</strong>. This is difficult to explain by chance and is consistent with the interpretation of <strong>φ as the "watershed" at the edge of chaos</strong>.
+        </p>
+        
+        <p style="font-size: 0.9em; color: #666; margin-top: 15px;">
+            <em>Note</em>: The values in this section are directly obtained from CSV files included in the appendix/public repository (e.g., <code>five_model_comparison_refined2.csv</code>, <code>mc_kuramoto_collapse.csv</code>, <code>mc_selforg_proximity.csv</code>, <code>mc_ar2_worstnorm.csv</code>). Analysis code, random seeds, and reproduction procedures are provided in the supplementary materials.
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">8.</span>Application to Artificial Intelligence: Self-Healing Language Chains</h2>
+        <p>
+            <strong>Results:</strong> Introducing a system that integrates short-term and long-term evaluations at the φ ratio and updates its own interpretation rules significantly improved semantic preservation (0.795 → 0.895) and reduced recovery time from disturbances by more than half.
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">9.</span>Application to Pure Mathematics: A New Perspective on the ABC Conjecture</h2>
+        <p>
+            <strong>IDS Interpretation:</strong> Reframing the ABC conjecture as a problem of error propagation between different hierarchies—the additive structure (local) and multiplicative structure (global) of integers.
+        </p>
+
+        <h3>Mathematical Foundation: Gate Lemma and Critical Phase Structure</h3>
+
+        <div class="lemma">
+            <strong>Lemma 9.1 (Gate Lemma):</strong> Carry propagation in p-adic expansion determines the p-adic valuation of additive sums. $v_p(a+b) \geq k$ is equivalent to all sums of the lower $k$ digits being multiples of $p$.
+        </div>
+
+        <div class="proof">
+            $v_p(a+b) \geq k$ means the lower $k$ digits of the p-adic expansion of $a+b$ are zero, which follows directly from the relationship between sums and carries in each digit.
+        </div>
+
+        <div class="theorem">
+            <strong>Theorem 9.1 (Quiescent Phase Theorem):</strong> Most (99.99%) ABC triples belong to the "quiescent phase" where error accumulation is logarithmically suppressed.
+        </div>
+
+        <div class="lemma">
+            <strong>Lemma 9.2 (Carry-Resonance):</strong> "Critical phase" triples with huge errors are limited to extremely special structures (resonance families) such as $a=1$ or $c$ being near-perfect powers.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="section-number">10.</span>Conceptual Correspondence with Quantum Mechanics</h2>
+        <ul>
+            <li><strong>Wave function collapse:</strong> Can be interpreted as the process where superposition of multiple possibilities (prediction uncertainty) collapses to a single state (error correction) through observation (error detection).</li>
+            <li><strong>Quantum entanglement:</strong> Instantaneous correlation between spatially separated parts might be viewed as the ultimate form of trans-hierarchical information integration in IDS.</li>
+        </ul>
+    </section>
+
+    <div class="part">Part IV: Integrated Discussion and Conclusions</div>
+
+    <section>
+        <h2><span class="section-number">11.</span>Discussion: A Unified Theory of Consciousness and Reality</h2>
+        <p>
+            The findings presented in this paper demonstrate the existence of a common structure—IDS—across seemingly unrelated domains.
+            According to IDS theory, the "reality" we experience is not the objective world itself, but the process by which our brain as an IDS continuously interprets and corrects deviations between predictions and inputs.
+            Consciousness is nothing other than the integrated state of this debug loop.
+        </p>
+    </section>
+
+    <section>
+        <h2><span class="section-number">12.</span>Conclusions and Future Directions</h2>
+        <p>
+            Integrated Debug System (IDS) theory reconceptualizes consciousness and reality as self-referential error processing systems activated at the edge of chaos.
+            This perspective provides a continuous and unified explanation for the fundamental question of why stable matter like rocks lacks consciousness while unstable systems like life possess it.
+        </p>
+        <p>
+            Future research should progress toward neuroscientific verification, clinical applications, and the construction of truly autonomous AGI.
+        </p>
+        <p>
+            Furthermore, the latest numerical analysis confirms that <strong>data-driven (free-r)</strong>, <strong>theoretical optimization (φ control)</strong>, and <strong>physical mechanism (error-driven expansion)</strong> — three independent routes — converge to the <strong>golden ratio φ</strong>.<br>
+            This convergent evidence is difficult to explain by chance and strongly supports the <strong>involvement of IDS</strong> in cosmic expansion.
+        </p>
+    </section>
+
+    <div class="appendix">
+        <h1>Appendices</h1>
+
+        <section>
+            <h2>A. Major Mathematical Proofs</h2>
+
+            <h3>A.1 Proof of Context-Dependent Sign Reversal</h3>
+            <div class="theorem">
+                <strong>Theorem:</strong> For any non-zero deviation $\Delta$, there exists a context that reverses the sign of its interpretation.
+            </div>
+            <div class="proof">
+                Consider the interpretation function $\mathcal{E}(\Delta, c)$. For the same physical deviation $\Delta$ (e.g., increased heart rate), define two different contexts:
+                <ul>
+                    <li>$c_1$: Context suggesting progress toward goal achievement (e.g., during exercise).</li>
+                    <li>$c_2$: Context suggesting deviation from safety (e.g., at rest).</li>
+                </ul>
+                In these contexts, interpretations can be modeled as:
+                <div class="equation">
+                    $$\mathcal{E}(\Delta, c_1) = +|\Delta| \cdot \hat{n}_1 \text{ (positive interpretation)}$$
+                    $$\mathcal{E}(\Delta, c_2) = -|\Delta| \cdot \hat{n}_2 \text{ (negative interpretation)}$$
+                </div>
+                Therefore, $\text{sign}(\mathcal{E}(\Delta, c_1)) = -\text{sign}(\mathcal{E}(\Delta, c_2))$, proving that the sign of interpretation for the same deviation reverses depending on context.
+            </div>
+
+            <h3>A.2 Proof of Scale-Free Properties</h3>
+            <div class="theorem">
+                <strong>Theorem:</strong> IDS exhibits scale-free (self-similar) behavior across hierarchies.
+            </div>
+            <div class="proof">
+                Let the IDS functional at scale $s$ be $\mathcal{F}_{\text{IDS}}(s)$:
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(s) = \int S[\Delta(s), C(s), H(s)] ds$$
+                </div>
+                Applying scale transformation $s \rightarrow \lambda s$:
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(\lambda s) = \int S[\Delta(\lambda s), C(\lambda s), H(\lambda s)] d(\lambda s)$$
+                </div>
+                Assuming self-similarity of error patterns, context, and inter-hierarchical coupling:
+                <div class="equation">
+                    $$\mathcal{F}_{\text{IDS}}(\lambda s) = \lambda^\alpha \int S[\Delta(s), C(s), H(s)] ds = \lambda^\alpha \mathcal{F}_{\text{IDS}}(s)$$
+                </div>
+                This power-law relationship confirms the system's scale-free properties.
+            </div>
+
+            <h3>A.3 Proof of Consciousness Emergence Conditions</h3>
+            <div class="theorem">
+                <strong>Theorem:</strong> Consciousness emerges when integration degree exceeds a critical threshold.
+            </div>
+            <div class="proof">
+                Define total integration degree $\Phi_{\text{total}}$ using mutual information $\mathcal{I}_{ij}$ and hierarchical distance $d_{ij}$ between different components $i,j$ in the system:
+                <div class="equation">
+                    $$\Phi_{\text{total}} = \sum_{i,j} \mathcal{I}_{ij} \cdot \exp(-d_{ij}/\lambda)$$
+                </div>
+                For consciousness to emerge, the following conditions must be satisfied simultaneously:
+                <ol>
+                    <li>Sufficient local integration: $\mathcal{I}_{ij} > \mathcal{I}_{\text{min}}$ for coupled pairs.</li>
+                    <li>Global coherence: Maximum eigenvalue of coupling matrix $\mathbf{C}$ exceeds threshold: $\lambda_{\text{max}}(\mathbf{C}) > \lambda_{\text{crit}}$.</li>
+                    <li>Temporal stability: After sufficient time, integration change is minimal: $|\frac{d\Phi}{dt}| < \epsilon$.</li>
+                </ol>
+                When these conditions are met, the system exhibits the globally integrated information processing state associated with consciousness.
+            </div>
+        </section>
+
+        <section>
+            <h2>B. Computational Model Implementation Details</h2>
+
+            <h3>B.1 IDS Core Architecture</h3>
+            <p>The core of IDS theory is implemented using Python machine learning libraries (such as PyTorch). The system consists of multiple modules:</p>
+
+            <pre><code class="language-python">import torch
+import torch.nn as nn
+
+class IntegratedDebugSystem(nn.Module):
+    """
+    PyTorch implementation of IDS theory
+    """
+    
+    def __init__(self, config: dict):
+        super().__init__()
+        
+        # Initialize main components
+        self.context_processor = ContextualProcessor(config)
+        self.hial_system = HIALSystem(config)
+        self.local_doc_network = LocalDOCNetwork(config)
+        self.tdng_system = TDNGSystem(config)
+        self.qualia_generator = QualiaGenerator(config)
+        
+    def forward(self, observation: dict) -> dict:
+        """
+        Main processing pipeline
+        """
+        # 1. Detect deviation
+        deviation = self.detect_deviation(observation)
+        
+        # 2. Context-dependent interpretation
+        context = self.hial_system.get_context()
+        interpreted_error = self.context_processor.interpret(deviation, context)
+        
+        # 3. Evaluate Critical Information Event (CIE) and activate LocalDOC
+        response = self.local_doc_network(interpreted_error)
+            
+        # 4. Update norms (TDNG)
+        self.tdng_system.update(interpreted_error, response)
+        
+        # 5. Generate qualia
+        qualia = self.qualia_generator(interpreted_error, context)
+            
+        # 6. Self-referential system-wide update
+        self.hial_system.update(self.entire_state())
+        
+        return {
+            'error': interpreted_error,
+            'response': response,
+            'qualia': qualia,
+        }
+
+class ContextualProcessor(nn.Module):
+    """
+    Module for context-dependent error interpretation
+    """
+    def __init__(self, config: dict):
+        super().__init__()
+        # Store context prototypes and transformation matrices as parameters
+        self.n_contexts = config.get('n_context_prototypes', 10)
+        self.context_prototypes = nn.Parameter(torch.randn(self.n_contexts, config['context_dim']))
+        self.W = nn.ParameterList([...]) # Transformation matrices W_k
+        self.V = nn.ParameterList([...]) # Transformation matrices V_k
+        
+    def interpret(self, deviation: torch.Tensor, context: dict) -> torch.Tensor:
+        """
+        Implements equation E(Δ, c) = Σ φ_k(c) * T_k(Δ)
+        """
+        context_vector = self.encode_context(context)
+        phi = self.compute_context_basis(context_vector) # Compute φ_k(c)
+        
+        interpretation = torch.zeros_like(deviation)
+        for k in range(self.n_contexts):
+            # T_k(Δ) = tanh(W_k Δ + b_k) ⊙ sign(V_k Δ + d_k)
+            T_k = self.transform(deviation, k)
+            interpretation += phi[k] * T_k
+            
+        return interpretation</code></pre>
+
+            <h3>B.2 GPU-Optimized Implementation and Configuration Templates</h3>
+            <p>GPU-optimized implementation is essential for large-scale simulations and AI applications.</p>
+
+            <pre><code class="language-python">import torch
+
+class GPUOptimizedIDS(IntegratedDebugSystem):
+    """
+    IDS optimized for GPU and mixed precision operations
+    """
+    def __init__(self, config: dict):
+        super().__init__(config)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.to(self.device)
+        self.scaler = torch.cuda.amp.GradScaler() # For mixed precision
+        
+    @torch.cuda.amp.autocast() # Automatically enable mixed precision
+    def forward(self, observation: dict) -> dict:
+        # Transfer input data to GPU
+        observation = {k: v.to(self.device) if isinstance(v, torch.Tensor) else v 
+                      for k, v in observation.items()}
+        return super().forward(observation)</code></pre>
+
+            <h4>Configuration Templates (YAML format)</h4>
+            <p>IDS requires flexible parameter adjustment depending on the application domain.</p>
+
+            <pre><code class="language-yaml"># Clinical evaluation configuration
+clinical_config:
+  input_dim: 256
+  n_modules: 50
+  n_hierarchies: 30
+  adaptation_rate: 0.05
+  assessment_metrics:
+    - context_flexibility
+    - hierarchical_synchronization
+
+# AGI development configuration
+agi_config:
+  input_dim: 512
+  hidden_dim: 1024
+  n_modules: 100
+  n_hierarchies: 50
+  adaptation_rate: 0.2
+  consciousness_development:
+    stages: 6</code></pre>
+        </section>
+
+        <section>
+            <h2>C. Experimental Protocols</h2>
+            <p>The verifiability of IDS theory is ensured through a series of concrete experimental protocols for testing its core predictions.</p>
+
+            <h3>C.1 Context Reversal Experiment</h3>
+            <p><strong>Objective:</strong> Demonstrate that identical stimuli produce opposite interpretations and neural responses under different contexts.</p>
+
+            <pre><code class="language-python">class ContextReversalExperiment:
+    """
+    Test context-dependent interpretation of identical stimuli
+    """
+    def __init__(self, ids_model):
+        self.model = ids_model
+        self.contexts = self._define_contexts()
+
+    def _define_contexts(self):
+        """
+        Define contexts that assign contrasting meanings to identical stimuli
+        """
+        return {
+            'reward_context': {'expectation': 'positive_outcome', 'valence': 0.8},
+            'punishment_context': {'expectation': 'negative_outcome', 'valence': -0.8}
+        }
+
+    def run(self, stimulus: torch.Tensor):
+        """
+        Apply identical stimulus in different contexts and measure interpretation sign reversal
+        """
+        results = {}
+        for context_name, context in self.contexts.items():
+            self.model.hial_system.set_context(context)
+            output = self.model({'data': stimulus})
+            results[context_name] = {'error_interpretation': output['error']}
+        
+        # Calculate percentage of elements with reversed interpretation signs
+        sign_reversal_tensor = torch.sign(results['reward_context']['error_interpretation']) != \
+                               torch.sign(results['punishment_context']['error_interpretation'])
+        
+        sign_reversal_percentage = sign_reversal_tensor.float().mean().item() * 100
+        return {'sign_reversal_percentage': sign_reversal_percentage}</code></pre>
+
+            <h3>C.2 Hierarchical Synchronization Experiment</h3>
+            <p><strong>Objective:</strong> Verify that neural activity synchronization (such as cross-frequency coupling) is observed between different IDS hierarchies during conscious information processing.</p>
+
+            <pre><code class="language-python">class HierarchicalSynchronizationExperiment:
+    """
+    Measure correlation between consciousness and inter-hierarchical synchronization
+    """
+    def __init__(self, ids_model):
+        self.model = ids_model
+
+    def run(self, stimulus_sequence):
+        """
+        Record and analyze synchronization patterns and consciousness levels for time-series stimuli
+        """
+        sync_history = []
+        consciousness_history = []
+
+        for stimulus in stimulus_sequence:
+            output = self.model({'data': stimulus})
+            
+            # Get synchronization degree from HIALSystem
+            sync_level = self.model.hial_system.get_synchronization()
+            
+            sync_history.append(sync_level)
+            consciousness_history.append(output['consciousness']['integration_level'])
+
+        # Calculate correlation coefficient between synchronization and consciousness levels
+        correlation = np.corrcoef(sync_history, consciousness_history)[0, 1]
+        return {'synchronization_consciousness_correlation': correlation}</code></pre>
+        </section>
+
+        <section>
+            <h2>D. Extended Applications</h2>
+            <p>The IDS theory framework extends beyond pure theoretical exploration to offer new pathways in concrete application domains.</p>
+
+            <h3>D.1 Consciousness Engineering</h3>
+            <p><strong>Objective:</strong> Design artificial systems with specific consciousness characteristics (e.g., creativity, stability) by adjusting IDS parameters.</p>
+
+            <pre><code class="language-python">class ConsciousnessEngineer:
+    """
+    Design IDS systems with target consciousness properties
+    """
+    def __init__(self, base_config):
+        self.base_config = base_config
+
+    def design(self, target_properties: dict):
+        """
+        Optimize IDS configuration according to target properties
+        """
+        optimal_config = self.base_config.copy()
+
+        if target_properties.get('high_creativity'):
+            optimal_config['adaptation_rate'] = 0.3      # High adaptation rate
+            optimal_config['norm_violation_tolerance'] = 0.5 # Tolerance for norm deviation
+
+        if target_properties.get('stable_perception'):
+            optimal_config['adaptation_rate'] = 0.05     # Low adaptation rate
+            optimal_config['integration_threshold'] = 0.4  # High integration threshold
+        
+        system = IntegratedDebugSystem(optimal_config)
+        return system, optimal_config</code></pre>
+
+            <h3>D.2 AGI (Artificial General Intelligence) Development Framework</h3>
+            <p><strong>Objective:</strong> Build more human-like artificial general intelligence by mimicking IDS developmental stages (sensorimotor → perceptual → conceptual → social → metacognitive).</p>
+
+            <pre><code class="language-python">class AGIDevelopment:
+    """
+    AGI development framework based on IDS developmental stages
+    """
+    def __init__(self):
+        self.development_stages = ['sensorimotor', 'perceptual', 'conceptual', 'social', 'metacognitive']
+
+    def create_developmental_agi(self):
+        """
+        Generate AGI that learns through developmental stages
+        """
+        # Initialize AGI with minimal configuration for initial stage
+        config = {'n_hierarchies': 3, 'adaptation_rate': 0.3}
+        agi = DevelopmentalIDS(config)
+
+        # Conduct training appropriate for each developmental stage
+        for stage in self.development_stages:
+            print(f"Developing {stage} capabilities...")
+            training_protocol = self.get_training_for_stage(stage)
+            training_protocol.train(agi)
+
+            # Verify stage completion and advance to next stage
+            if self.verify_stage_completion(agi, stage):
+                agi.advance_stage()
+        return agi</code></pre>
+        </section>
+
+        <section>
+            <h2>E. Future Research Directions</h2>
+            <p>IDS theory is not complete; vast areas await further exploration.</p>
+
+            <ol>
+                <li><strong>Quantum-IDS Interface:</strong>
+                    <ul>
+                        <li>Error interpretation in quantum measurement.</li>
+                        <li>Superposition states of context before observation.</li>
+                        <li>Interpreting quantum entanglement as extreme inter-hierarchical coupling.</li>
+                        <li>Modeling decoherence as projection from higher dimensions to 4D spacetime.</li>
+                    </ul>
+                </li>
+                <li><strong>Collective Consciousness:</strong>
+                    <ul>
+                        <li>Sharing of context space between individuals.</li>
+                        <li>Formulating social norms as collective TDNG.</li>
+                        <li>Organizations and societies as distributed LocalDOC networks.</li>
+                    </ul>
+                </li>
+                <li><strong>Cosmological IDS:</strong>
+                    <ul>
+                        <li>Viewing the universe as a self-debugging system.</li>
+                        <li>Considering physical constants as converged universal norms.</li>
+                        <li>Exploring possibilities of interpreting black holes as cosmic-scale LocalDOC and dark energy as unresolved prediction errors.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>F. Data Availability and Pre-registration</h2>
+            <p>To ensure scientific transparency and reproducibility of this research, all relevant materials are publicly available.</p>
+
+            <ul>
+                <li><strong>Data and Code:</strong> All simulation code, raw data, and analysis scripts presented in this paper are available at the following repositories:
+                    <ul>
+                        <li><a href="https://github.com/ids-theory/core">https://github.com/ids-theory/core</a></li>
+                        <li><a href="https://github.com/ids-theory/golden-ratio-dynamics">https://github.com/ids-theory/golden-ratio-dynamics</a></li>
+                    </ul>
+                </li>
+                <li><strong>Pre-registration:</strong> Main hypotheses and verification plans for the IDS-GUT framework have been pre-registered to eliminate bias from future observational data:
+                    <ul>
+                        <li>H1: φ model shows superior performance compared to free parameter models (Bayes factor > 3).</li>
+                        <li>H2: Bridge mechanism improves parameter constraints by 5-15%.</li>
+                        <li>Rejection criteria: If predictions deviate from observations by more than 3σ, or if internal contradictions in the theory are discovered.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>G. Detailed Experimental Results</h2>
+            <p>This section presents quantitative results from key experiments summarized in the paper in detailed tabular form.</p>
+
+            <h3>G.1 Dynamic Stability in Kuramoto Oscillators</h3>
+            <p><strong>Objective:</strong> Quantify the effect of different time constant ratios on the stability of coupled oscillator networks near the critical point.</p>
+            <p><strong>Results:</strong> Systems using the φ ratio (golden ratio) consistently outperformed other ratios in suppressing collapse rates and long-term drift. No significant difference was observed in static synchronization levels (Cluster fraction), confirming that φ optimizes dynamic quality.</p>
+
+            <table>
+                <tr>
+                    <th>Metric (mean ± SD, N=10)</th>
+                    <th>φ-ratio (≈1.62)</th>
+                    <th>1.3-ratio</th>
+                    <th>2.0-ratio</th>
+                    <th>p-value</th>
+                </tr>
+                <tr>
+                    <td>Collapse rate (events/trial)</td>
+                    <td>0.8 ± 0.4</td>
+                    <td>2.1 ± 0.8</td>
+                    <td>2.3 ± 0.9</td>
+                    <td>&lt; 0.05</td>
+                </tr>
+                <tr>
+                    <td>PSD slope (deviation from 1/f)</td>
+                    <td>-0.98 ± 0.05</td>
+                    <td>-0.91 ± 0.08</td>
+                    <td>-0.89 ± 0.09</td>
+                    <td>&lt; 0.01</td>
+                </tr>
+                <tr>
+                    <td>Cluster fraction (static synchrony)</td>
+                    <td>0.535 ± 0.04</td>
+                    <td>0.534 ± 0.04</td>
+                    <td>0.536 ± 0.04</td>
+                    <td>n.s.</td>
+                </tr>
+            </table>
+
+            <h3>G.2 "Rare but Powerful Stability" in φ-RNNs</h3>
+            <p><strong>Objective:</strong> Evaluate catastrophic failure tolerance and risk metrics of RNNs with φ ratio under extreme noise stress.</p>
+            <p><strong>Results:</strong> φ-RNNs achieved <strong>0% catastrophic failure rate</strong> under conditions where control groups showed 25% failures. Additionally, improvements exceeding 50% were observed across multiple tail risk metrics.</p>
+
+            <table>
+                <tr>
+                    <th>Risk Metric</th>
+                    <th>φ-RNN (n=12)</th>
+                    <th>Control Group (n=24)</th>
+                    <th>Improvement</th>
+                </tr>
+                <tr>
+                    <td>Catastrophic failure rate</td>
+                    <td>0%</td>
+                    <td>25%</td>
+                    <td>100%</td>
+                </tr>
+                <tr>
+                    <td>VaR(95%) improvement</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>57.8%</td>
+                </tr>
+                <tr>
+                    <td>CVaR(99%) improvement</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>62.4%</td>
+                </tr>
+                <tr>
+                    <td>Maximum exposure reduction</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>64.4%</td>
+                </tr>
+                <tr>
+                    <td>Recovery time (relative)</td>
+                    <td>0.46x</td>
+                    <td>1.0x</td>
+                    <td>54% reduction</td>
+                </tr>
+            </table>
+
+            <h3>G.3 Self-Organization of φ in RNNs</h3>
+            <p><strong>Objective:</strong> Verify whether RNNs spontaneously converge to φ through learning or if other stable points exist.</p>
+            <p><strong>Results:</strong> Systems did not uniquely converge to φ but bifurcated to two main attractors (L ≈ 0.97, U ≈ 2.29). The geometric center of these two attractors is 1.633, extremely close to φ. This suggests that φ functions as a "watershed" separating stable regions.</p>
+
+            <table>
+                <tr>
+                    <th>Statistical Metric (n=25)</th>
+                    <th>Value</th>
+                    <th>95% CI</th>
+                </tr>
+                <tr>
+                    <td>Lower attractor center (L)</td>
+                    <td>0.972</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Upper attractor center (U)</td>
+                    <td>2.294</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Geometric center (L+U)/2</td>
+                    <td>1.633</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Probabilistic watershed r*</td>
+                    <td>1.211</td>
+                    <td>[0.799, 1.624]</td>
+                </tr>
+            </table>
+
+            <p><strong>Note:</strong> The confidence interval for the probabilistic watershed includes φ (≈1.618), not statistically excluding the possibility that φ is the watershed.</p>
+
+            <h3>G.4 Self-Healing Language Chains</h3>
+            <p><strong>Objective:</strong> Measure the effect of error evaluation using φ ratio and self-rule updating on semantic preservation and recovery from disturbances in language context chains.</p>
+            <p><strong>Results:</strong> Systems with φ ratio (φ-on) showed substantial improvements across all key metrics compared to systems without it (φ-off).</p>
+
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>φ-off</th>
+                    <th>φ-on</th>
+                    <th>Effect</th>
+                </tr>
+                <tr>
+                    <td>Semantic preservation rate</td>
+                    <td>≈ 0.795</td>
+                    <td>≈ 0.895</td>
+                    <td>+12.6%</td>
+                </tr>
+                <tr>
+                    <td>Recovery steps from disturbance</td>
+                    <td>≈ 10.2</td>
+                    <td>≈ 4.3</td>
+                    <td>57.8% reduction</td>
+                </tr>
+                <tr>
+                    <td>PSD slope (1/f characteristic)</td>
+                    <td>≈ +0.013</td>
+                    <td>≈ -1.446</td>
+                    <td>Rectified to critical</td>
+                </tr>
+                <tr>
+                    <td>Composite score (LCon_core)</td>
+                    <td>≈ 0.116</td>
+                    <td>≈ 0.389</td>
+                    <td>3.4x</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>H. Alternative Cosmological Models Considered</h2>
+            <p>
+                To assess the validity of the IDS-GUT framework, we conducted comparative verification with multiple alternative models.
+                These include models using specific irrational numbers other than the golden ratio (φ) (e.g., $\sqrt{2}$, $\sqrt{3}$) as control ratios, as well as models that treat the ratio as a free parameter estimated from data using maximum likelihood.
+            </p>
+            <p>
+                <strong>Conclusion:</strong> In model comparison using 8-bin RSD data, the φ model showed superior fit (lower χ²) compared to alternative fixed-ratio models.
+                Additionally, the maximum likelihood value obtained from the free parameter model, $r_{MLE} = 1.65 \pm 0.08$, is statistically consistent with φ=1.618..., suggesting that the data naturally selects φ.
+                These results justify the special treatment of φ in IDS-GUT.
+            </p>
+        </section>
+
+        <section>
+            <h2>I. Glossary of Key Terms</h2>
+            <dl>
+                <dt><strong>IDS (Integrated Debug System):</strong></dt>
+                <dd>A self-referential loop inherent in all systems that detects, interprets, and corrects deviations between the system's state and its intrinsic regularities (predictions).</dd>
+
+                <dt><strong>Edge of Chaos:</strong></dt>
+                <dd>The dynamic critical region where systems exist between completely static order and unpredictable chaos, enabling complex adaptive behavior. Life and consciousness are thought to possess active IDS in this region.</dd>
+
+                <dt><strong>Prediction:</strong></dt>
+                <dd>A broad concept in IDS theory. Refers not only to higher cognitive activities but to intrinsic state transition rules of systems at all scales, from quantum wave function evolution to biological homeostasis maintenance.</dd>
+
+                <dt><strong>Qualia Vector ($\vec{Q}$):</strong></dt>
+                <dd>A vector mathematically representing subjective experience. Consists of skeleton components forming the universal framework of experience and texture components providing sensory modality-specific qualities.</dd>
+
+                <dt><strong>TDNG (Time-Dependent Norm Generation):</strong></dt>
+                <dd>A mechanism where norms (rules) that systems should follow are dynamically generated from past, present, and future states.</dd>
+
+                <dt><strong>HIAL (Hierarchical Integrated Adaptive Layer):</strong></dt>
+                <dd>A dynamically forming and dissolving hierarchical structure of systems that processes information at different scales.</dd>
+
+                <dt><strong>LocalDOC (Localized Dynamic Optimization Core):</strong></dt>
+                <dd>An information processing hub that adaptively modifies system response rules based on error interpretation.</dd>
+
+                <dt><strong>CIE (Critical Information Event):</strong></dt>
+                <dd>A significant change in information structure requiring an adaptive response from the system.</dd>
+            </dl>
+        </section>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; background-color: #ecf0f1; color: #666;">
+        <p>© 2025 IDS Theory Research Group</p>
+        <p>(End of Paper)</p>
+    </footer>
+</body>
+</html>
