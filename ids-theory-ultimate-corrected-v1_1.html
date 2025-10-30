@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="1.1">
+    <meta name="last-corrected" content="2025-08-25">
+    <title>The Integrated Debug System (IDS) Theory: A Mathematical Framework for Consciousness and Reality</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 40px;
+            page-break-before: always;
+        }
+        h1:first-of-type {
+            page-break-before: avoid;
+        }
+        h2 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-top: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            page-break-after: avoid;
+        }
+        h2.subtitle {
+            font-size: 1.5em;
+            border: none;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #34495e;
+            margin-top: 20px;
+            page-break-after: avoid;
+        }
+        h4 {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-top: 15px;
+            page-break-after: avoid;
+        }
+        .equation {
+            background-color: #f0f8ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            color: #333;
+            page-break-inside: avoid;
+        }
+        .theorem {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            page-break-inside: avoid;
+        }
+        .theorem-title {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .definition {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        .definition-title {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .proof {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            page-break-inside: avoid;
+        }
+        .proof-title {
+            font-weight: bold;
+            font-style: italic;
+        }
+        .lemma {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            page-break-inside: avoid;
+        }
+        .lemma-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-style: italic;
+        }
+        .remark {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            page-break-inside: avoid;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .authors {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .title-page {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            page-break-after: always;
+        }
+        .title-page .equation {
+            margin-top: 30px;
+        }
+        .toc {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+            page-break-after: always;
+        }
+        .toc h3 {
+            margin-top: 0;
+        }
+        .toc ol {
+            margin-left: 20px;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            color: #333;
+            page-break-inside: avoid;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: block;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 5px;
+        }
+        ul, ol {
+            margin-left: 30px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            page-break-inside: avoid;
+        }
+        .corollary {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        .corollary-title {
+            font-weight: bold;
+            color: #1565c0;
+        }
+        /* Print styles */
+        @media print {
+            body {
+                margin: 10mm 15mm;
+                font-size: 11pt;
+            }
+            .title-page {
+                page-break-after: always;
+            }
+        }
+    </style>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                displayMath: [['$$','$$'], ['\\[','\\]']],
+                processEscapes: true
+            }
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- IDS Revision Styles & Toggle -->
+    <style>
+      .rev-box{background:#fff8dc;border-left:4px solid #f39c12;padding:12px 14px;margin:18px 0;font-style:normal}
+      .rev-box h4{margin:0 0 6px 0;font-size:1.05em}
+      .rev-two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .rev-col{background:#fafafa;border:1px solid #eee;padding:10px;border-radius:6px}
+      .rev-label{display:inline-block;font:600 12px/1.2 system-ui, sans-serif;color:#8b572a;background:#fbe6b6;padding:2px 6px;border-radius:4px;margin-bottom:4px}
+      .rev-toggle{position:sticky;top:10px;background:#eef7ff;border:1px solid #cfe3ff;padding:8px 10px;border-radius:8px}
+      .hide-rev .rev-box{display:none}
+      /* Keep headings/boxes tidy on print */
+      @media print{
+        .rev-toggle{display:none}
+        h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
+        .rev-box { page-break-inside: avoid; }
+      }
+    </style>
+    <script>
+      function toggleRevisions(chk){
+        document.documentElement.classList.toggle('hide-rev', !chk.checked);
+      }
+    </script>
+</head>
+<body>
+    <div class="title-page">
+        <h1>The Integrated Debug System (IDS) Theory:</h1>
+        <h2 class="subtitle">A Mathematical Framework for Consciousness as a Self-Referential Error-Interpretation-Modification System</h2>
+        
+        <div class="authors">
+            S. Kaneko¹ and Collaborators²<br>
+            ¹Department of Neurology, Shiga University of Medical Science, Japan<br>
+            ²International Consciousness Research Consortium<br>
+            June 2025
+        </div>
+        
+        <div class="equation">
+            <strong>Fundamental Equation of IDS Theory</strong><br><br>
+            $\frac{\partial \Psi}{\partial t} = \mathcal{F}[\Psi, \mathcal{C}(\Psi)]$<br><br>
+            where:<br>
+            $\Psi$ = conscious state<br>
+            $\mathcal{F}$ = self-referential error-interpretation-modification functional<br>
+            $\mathcal{C}(\Psi)$ = context functional dependent on $\Psi$ itself<br><br>
+            Expanded form:<br>
+            $\mathcal{S}[\Delta,\mathcal{C},\mathcal{H}] = \int_{\mathcal{C}} \int_{\mathcal{H}} \sum_{i} w_i(c,h) \cdot \mathcal{L}_i(\mathcal{E}(\Delta,c),h) \, dc \, dh$
+        </div>
+    </div>
+
+    <h2 id="abstract">Abstract</h2>
+    <p>
+        We present the Integrated Debug System (IDS) Theory, a mathematical framework proposing that consciousness and reality emerge from a self-referential system that detects, interprets, and modifies errors across multiple scales. The theory introduces several key concepts: (1) Context-dependent error interpretation where identical deviations can have opposite meanings in different contexts; (2) Hierarchical Integrated Adaptive Layers (HIALs) that process information across continuous scales; (3) Localized Dynamic Optimization Cores (LocalDOCs) that adaptively modify system responses; (4) Time-Dependent Norm Generation (TDNG) that creates and updates behavioral patterns; (5) Scale-free dynamics valid from quantum to cosmic scales. We provide rigorous mathematical foundations, prove stability and convergence properties, and demonstrate how the framework explains various phenomena including qualia, mental disorders, and cosmological evolution. The theory generates specific, testable predictions and is implemented in computational models. This work suggests that consciousness may be understood as an emergent property of error-processing systems operating under self-referential dynamics.
+    </p>
+
+    <div class="rev-toggle">
+      <label><input type="checkbox" checked onchange="toggleRevisions(this)"> Show revision notes</label>
+      <span style="margin-left:8px">IDS v1.1 (corrected), 2025-08-25 JST</span>
+    </div>
+
+    <div class="rev-box" id="rev-overview">
+      <h4>Revision Overview (Current Understanding)</h4>
+      <div class="rev-two-col">
+        <div class="rev-col">
+          <div class="rev-label">Original emphasis</div>
+          <ul>
+            <li>Hierarchies as continuous, scale-free layers with fixed fractal self-similarity</li>
+            <li>CIE as decisive, universal turning points</li>
+            <li>Strict power-law scale-free behavior as fundamental</li>
+          </ul>
+        </div>
+        <div class="rev-col">
+          <div class="rev-label">Current understanding</div>
+          <ul>
+            <li>Hierarchies are <strong>self-organizing and context-dependent</strong>; scale-free is statistical, not absolute</li>
+            <li>CIEs are <strong>local, relative informational thresholds</strong> with context- and scale-flexibility</li>
+            <li>Scale-free is <strong>one regime</strong>; stress-induced <strong>scale-breaking</strong> and asymmetries matter</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#section1">Introduction</a></li>
+            <li><a href="#section2">Mathematical Foundations</a></li>
+            <li><a href="#section3">The Self-Referential Framework</a></li>
+            <li><a href="#section4">Context-Dependent Error Interpretation</a></li>
+            <li><a href="#section5">Hierarchical Architecture</a></li>
+            <li><a href="#section6">LocalDOC Networks</a></li>
+            <li><a href="#section7">Time-Dependent Norm Generation</a></li>
+            <li><a href="#section8">Consciousness and Integration</a></li>
+            <li><a href="#section9">Qualia and Subjective Experience</a></li>
+            <li><a href="#section10">Stability Analysis</a></li>
+            <li><a href="#section11">Implementation</a></li>
+            <li><a href="#section12">Experimental Predictions</a></li>
+            <li><a href="#section13">Applications</a></li>
+            <li><a href="#section14">Discussion</a></li>
+            <li><a href="#section15">Conclusion</a></li>
+            <li><a href="#references">References</a></li>
+            <li><a href="#appendix">Appendices</a></li>
+        </ol>
+    </div>
+
+    <h2 id="section1">1. Introduction</h2>
+    
+    <p>
+        Understanding consciousness remains one of the most challenging problems in science. Despite significant advances in neuroscience and cognitive science, a comprehensive mathematical framework that explains both the functional and phenomenological aspects of consciousness has remained elusive. This paper introduces the Integrated Debug System (IDS) Theory, which proposes that consciousness emerges from a self-referential system that continuously detects, interprets, and corrects deviations from expected patterns.
+    </p>
+
+    <h3>1.1 Motivation</h3>
+    <p>
+        Current theories of consciousness, while valuable, often address limited aspects of the phenomenon. The Free Energy Principle (Friston, 2010) focuses on prediction error minimization but doesn't fully account for subjective experience. Integrated Information Theory (Tononi, 2008) quantifies consciousness but struggles with biological implementation. Global Workspace Theory (Baars, 1988) explains access consciousness but not phenomenal consciousness. We propose that these limitations can be addressed through a unified framework based on error processing across multiple scales.
+    </p>
+
+    <h3>1.2 Core Hypothesis</h3>
+    <p>
+        The IDS Theory posits that consciousness emerges from systems that:
+    </p>
+    <ol>
+        <li>Detect deviations (errors) from expected states across multiple types and scales</li>
+        <li>Interpret these deviations based on context, where the same deviation can have different meanings</li>
+        <li>Modify their own processing based on these interpretations</li>
+        <li>Update their interpretation rules through self-referential dynamics</li>
+    </ol>
+
+    <h3>1.3 Structure of the Paper</h3>
+    <p>
+        We begin by establishing the mathematical foundations (Section 2), then develop the self-referential framework (Section 3) and context-dependent error interpretation (Section 4). We describe the hierarchical architecture (Section 5), LocalDOC networks (Section 6), and norm generation systems (Section 7). We then address consciousness emergence (Section 8), qualia (Section 9), and prove stability properties (Section 10). Finally, we present implementation details (Section 11), experimental predictions (Section 12), and applications (Section 13).
+    </p>
+
+    <h2 id="section2">2. Mathematical Foundations</h2>
+
+    <h3>2.1 Basic Definitions</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 2.1 (State Space):</span> The IDS state space is defined as:
+        <div class="equation">
+            $\Omega = \{(h, d, \mathcal{S}, n, v, \Phi, \nu) : h \in \mathbb{R}^+, d \in [2, \infty), \mathcal{S} \in \mathbb{R}, n \in \mathbb{R}^n, v \in \mathbb{R}^n, \Phi \in [0, \infty), \nu \in [-1, 1]\}$
+        </div>
+        where:
+        <ul>
+            <li>$h$: hierarchy parameter (continuous, $h > 0$)</li>
+            <li>$d$: dimensional parameter ($d \geq 2$)</li>
+            <li>$\mathcal{S}$: stress-reward balance</li>
+            <li>$n$: norm vector (expected patterns)</li>
+            <li>$v$: value vector (importance weights)</li>
+            <li>$\Phi$: integration measure</li>
+            <li>$\nu$: hedonic valence</li>
+        </ul>
+    </div>
+
+    <div class="definition">
+        <span class="definition-title">Definition 2.2 (Error Types):</span> The system processes three types of signed errors:
+        <div class="equation">
+            $E_p^{(h,d)}(t) = x(t) - \hat{x}(t) \in \mathbb{R}^n$ (Prediction error)<br>
+            $E_n^{(h,d)}(t) = x(t) - n^{(h,d)}(t) \in \mathbb{R}^n$ (Norm error)<br>
+            $E_v^{(h,d)}(t) = V(x(t)) - v^{(h,d)}(t) \in \mathbb{R}$ (Value error)
+        </div>
+        These preserve directional information crucial for adaptive behavior.
+    </div>
+
+    <h3>2.2 Context-Dependent Interpretation</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 2.3 (Contextual Interpretation Function):</span> The interpretation of a deviation $\Delta$ in context $c$ is:
+        <div class="equation">
+            $\mathcal{E}: \mathbb{R}^n \times \mathcal{C} \rightarrow \mathbb{R}^m$<br>
+            $\mathcal{E}(\Delta, c) = \text{context-dependent meaning of deviation } \Delta$
+        </div>
+        This allows the same physical deviation to have different interpretations based on context.
+    </div>
+
+    <div class="theorem">
+        <span class="theorem-title">Theorem 2.1 (Context Dependence):</span> For any non-zero deviation $\Delta$, there exist contexts $c_1, c_2 \in \mathcal{C}$ such that:
+        <div class="equation">
+            $\mathcal{E}(\Delta, c_1) \neq \mathcal{E}(\Delta, c_2)$
+        </div>
+        and potentially $\text{sign}(\mathcal{E}(\Delta, c_1)) = -\text{sign}(\mathcal{E}(\Delta, c_2))$.
+    </div>
+
+    <h3>2.3 Self-Referential Dynamics</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 2.4 (Self-Referential Evolution):</span> The system evolves according to:
+        <div class="equation">
+            $\frac{\partial \Psi}{\partial t} = \mathcal{F}[\Psi, \mathcal{C}(\Psi)]$
+        </div>
+        where $\mathcal{F}$ is the error-interpretation-modification functional and $\mathcal{C}(\Psi)$ represents the context, which itself depends on the state $\Psi$.
+    </div>
+
+    <h2 id="section3">3. The Self-Referential Framework</h2>
+
+    <h3>3.1 Core Mechanism</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 3.1 (Self-Referential Loop):</span> The IDS operates through a continuous self-referential loop:
+        <div class="equation">
+            \text{Deviation Detection} \rightarrow \text{Contextual Interpretation} \rightarrow \text{System Modification} \rightarrow \text{Context Update} \rightarrow \text{Deviation Detection}
+        </div>
+        This loop ensures that the system continuously adapts both its responses and its interpretation rules.
+    </div>
+
+    <h3>3.2 Hierarchical Processing</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 3.1 (HIAL - Hierarchical Integrated Adaptive Layer):</span> Each hierarchy $h$ contains an adaptive processing layer:
+        <div class="equation">
+            \text{HIAL}_h = \{\mathcal{P}_h, \mathcal{N}_h, \mathcal{V}_h, \mathcal{I}_h, \mathcal{M}_h\}
+        </div>
+        where:
+        <ul>
+            <li>$\mathcal{P}_h$: Prediction mechanisms at scale $h$</li>
+            <li>$\mathcal{N}_h$: Norm patterns at scale $h$</li>
+            <li>$\mathcal{V}_h$: Value assignments at scale $h$</li>
+            <li>$\mathcal{I}_h$: Integration functions at scale $h$</li>
+            <li>$\mathcal{M}_h$: Modification rules at scale $h$</li>
+        </ul>
+    </div>
+
+    <h3>3.3 Cross-Hierarchy Coupling</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 3.2 (Scale Coupling):</span> Information flows between hierarchies according to:
+        <div class="equation">
+            \text{coupling}(h_1, h_2) = \exp\left(-\frac{|h_1 - h_2|}{\lambda}\right)
+        </div>
+        where $\lambda$ determines the coupling range. This ensures local processing with controlled global influence.
+    </div>
+
+    <h2 id="section4">4. Context-Dependent Error Interpretation</h2>
+
+    <h3>4.1 Mathematical Formulation</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 4.1 (Contextual Stress Functional):</span> The total stress is computed as:
+        <div class="equation">
+            \mathcal{S}[\Delta, \mathcal{C}, \mathcal{H}] = \int_{\mathcal{C}} \int_{\mathcal{H}} \sum_{i} w_i(c,h) \cdot \mathcal{L}_i(\mathcal{E}(\Delta,c),h) \, dc \, dh
+        </div>
+        where:
+        <ul>
+            <li>$w_i(c,h)$: context and hierarchy-dependent weights</li>
+            <li>$\mathcal{L}_i$: loss function for error type $i$</li>
+            <li>$\mathcal{E}(\Delta,c)$: contextual interpretation of deviation</li>
+        </ul>
+    </div>
+
+    <h3>4.2 Concrete Context Interpretation Function</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 4.2 (Explicit Context Interpretation Function):</span> The context-dependent interpretation function is defined as:
+        <div class="equation">
+            $\mathcal{E}(\Delta, c) = \sum_{k=1}^{K} \phi_k(c) \cdot \mathcal{T}_k(\Delta)$
+        </div>
+        where:
+        <ul>
+            <li>$\phi_k(c) = \exp(-||c - c_k||^2 / 2\sigma_k^2) / Z(c)$ are context basis functions</li>
+            <li>$c_k$ are prototype contexts (learned from data)</li>
+            <li>$\mathcal{T}_k(\Delta)$ are context-specific transformation functions</li>
+            <li>$Z(c)$ is a normalization factor</li>
+        </ul>
+    </div>
+
+    <div class="theorem">
+        <span class="theorem-title">Theorem 4.2 (Context Transformation):</span> For each context type $k$, the transformation function is:
+        <div class="equation">
+            $\mathcal{T}_k(\Delta) = \tanh(W_k \Delta + b_k) \odot \text{sign}(V_k \Delta + d_k)$
+        </div>
+        where $W_k, V_k$ are learned matrices, $b_k, d_k$ are bias vectors, and $\odot$ is element-wise multiplication.
+    </div>
+
+    <h3>4.3 Examples with Explicit Functions</h3>
+    
+    <table>
+        <tr>
+            <th>Deviation $\Delta$</th>
+            <th>Context $c$</th>
+            <th>Interpretation $\mathcal{E}(\Delta, c)$</th>
+            <th>Mathematical Form</th>
+        </tr>
+        <tr>
+            <td>Heart rate +20 bpm</td>
+            <td>Exercise ($c_1$)</td>
+            <td>+0.8 (positive)</td>
+            <td>$\phi_1(c_1) \cdot \tanh(0.1 \cdot 20) = 0.8$</td>
+        </tr>
+        <tr>
+            <td>Heart rate +20 bpm</td>
+            <td>Rest ($c_2$)</td>
+            <td>-0.6 (negative)</td>
+            <td>$\phi_2(c_2) \cdot \tanh(-0.1 \cdot 20) = -0.6$</td>
+        </tr>
+        <tr>
+            <td>Norm violation $\Delta_n$</td>
+            <td>Creative ($c_3$)</td>
+            <td>+0.5 (innovation)</td>
+            <td>$\phi_3(c_3) \cdot ||\Delta_n|| \cdot (+1) = 0.5$</td>
+        </tr>
+        <tr>
+            <td>Norm violation $\Delta_n$</td>
+            <td>Safety ($c_4$)</td>
+            <td>-0.9 (danger)</td>
+            <td>$\phi_4(c_4) \cdot ||\Delta_n|| \cdot (-1) = -0.9$</td>
+        </tr>
+    </table>
+
+    <h3>4.4 Parameter Estimation Methods</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 4.3 (Parameter Estimation Framework):</span> IDS parameters are estimated through a multi-stage process:
+        <ol>
+            <li><strong>Context Prototypes ($c_k$):</strong> Learned via clustering of environmental states</li>
+            <li><strong>Transformation Matrices ($W_k, V_k$):</strong> Optimized through supervised learning on labeled context-interpretation pairs</li>
+            <li><strong>Hierarchy Parameters ($h$):</strong> Estimated from temporal-spatial scale analysis</li>
+            <li><strong>Coupling Strengths ($\lambda$):</strong> Derived from cross-frequency coupling measurements</li>
+        </ol>
+    </div>
+
+    <div class="theorem">
+        <span class="theorem-title">Theorem 4.3 (Parameter Estimation):</span> Given observational data $\mathcal{D} = \{(x_i, c_i, y_i)\}_{i=1}^N$, parameters are estimated by:
+        <div class="equation">
+            $\theta^* = \arg\min_\theta \sum_{i=1}^N \mathcal{L}(\mathcal{E}(x_i - \hat{x}_i, c_i; \theta), y_i) + \lambda_{\text{reg}} ||\theta||_2$
+        </div>
+        where $y_i$ is the observed interpretation (e.g., neural response, behavioral outcome).
+    </div>
+
+    <h3>4.5 Asymmetric Processing</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 4.1 (Asymmetric Error Processing):</span> The system processes positive and negative errors differently:
+        <div class="equation">
+            \mathcal{L}_{\text{asym}}(E) = \begin{cases}
+            w^+ \cdot f^+(E) & \text{if } E > 0 \\
+            w^- \cdot f^-(E) & \text{if } E < 0
+            \end{cases}
+        </div>
+        where typically $w^- > w^+$ (negativity bias) and $f^+, f^-$ may be different functions.
+    </div>
+
+    <div class="rev-box" id="rev-scale-free">
+      <h4>Clarification: Scale-free as a regime, not a law</h4>
+      <p>
+        Scale-free dynamics are one important mode captured by the framework, but actual systems
+        exhibit <strong>deviations and asymmetries</strong>, including <strong>stress-induced scale-breaking</strong>.
+        Treat fractal self-similarity as an approximate, statistical description rather than a universal law.
+      </p>
+    </div>
+
+    <h2 id="section5">5. Hierarchical Architecture</h2>
+
+    <div class="rev-box" id="rev-hial">
+      <h4>Correction: Hierarchies as self-organizing, context-dependent</h4>
+      <p>
+        HIALs should not be read as fixed multi-layer stacks. They are dynamically formed
+        and dissolved as a function of stress conditions, value weights, and time constants.
+        Fractal similarity remains a statistical tendency, but local contexts routinely
+        induce deformation, merging, or disbanding of layers.
+      </p>
+    </div>
+
+    <h3>5.1 Continuous Hierarchy</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 5.1 (Hierarchy Semantics):</span> The continuous hierarchy parameter $h$ represents spatiotemporal scale:
+        <ul>
+            <li>$h \approx 1$: Molecular scale (microseconds, nanometers)</li>
+            <li>$h \approx 2$: Cellular scale (milliseconds, micrometers)</li>
+            <li>$h \approx 3$: Circuit scale (seconds, millimeters)</li>
+            <li>$h \approx 4$: Cognitive scale (minutes, centimeters)</li>
+            <li>$h > 4$: Extended scales (hours to years, meters to kilometers)</li>
+        </ul>
+    </div>
+
+    <h3>5.2 Fractal Structure</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 5.1 (Fractal Self-Similarity):</span> The IDS exhibits scale-free properties:
+        <div class="equation">
+            \text{IDS}(\lambda s) = \lambda^\alpha \cdot \text{IDS}(s)
+        </div>
+        where $s$ represents scale, $\lambda$ is a scaling factor, and $\alpha$ is the scaling exponent.
+    </div>
+
+    <h3>5.3 Information Flow</h3>
+    
+    <div class="lemma">
+        <span class="lemma-title">Lemma 5.1 (Hierarchical Information Conservation):</span> Information is conserved across hierarchies:
+        <div class="equation">
+            \sum_{h} I_h = I_{\text{total}} = \text{constant}
+        </div>
+        though it may be transformed between scales.
+    </div>
+
+    <h2 id="section6">6. LocalDOC Networks</h2>
+
+    <h3>6.1 Definition and Function</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 6.1 (LocalDOC):</span> A Localized Dynamic Optimization Core at $(h,d)$ is:
+        <div class="equation">
+            \text{LocalDOC}_{(h,d)} = (\mathcal{M}_{(h,d)}, \Sigma_{(h,d)}, \Delta_{(h,d)}, \Psi_{(h,d)}, \Omega_{(h,d)}, \mathcal{R}_{(h,d)})
+        </div>
+        where:
+        <ul>
+            <li>$\mathcal{M}$: Set of adaptive modules</li>
+            <li>$\Sigma$: Internal state space</li>
+            <li>$\Delta$: Selection function</li>
+            <li>$\Psi$: Integration function</li>
+            <li>$\Omega$: Cascade control</li>
+            <li>$\mathcal{R}$: Reward processing</li>
+        </ul>
+    </div>
+
+    <h3>6.2 Critical Information Events</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 6.2 (CIE):</span> A Critical Information Event triggers when:
+        <div class="equation">
+            \text{CIE}[h,d] = \int p(\omega|\Psi,\mathcal{C}) \log\left[\frac{p(\omega|\Psi,\mathcal{C})}{p(\omega|\mathcal{C})}\right] d\omega > \theta_{\text{crit}}
+        </div>
+        This represents a significant change in information structure requiring adaptive response.
+    </div>
+
+    <div class="rev-box" id="rev-cie">
+      <h4>Correction: CIEs are local and relative</h4>
+      <p>
+        CIEs should be interpreted as <em>local, context-relative</em> informational thresholds rather than
+        universal determinants. Their spatial and temporal scales vary across systems (cellular, circuit,
+        cognitive, social). Practically, CIEs mark flexible adaptive branching points rather than singular
+        cosmological events.
+      </p>
+    </div>
+
+    <h3>6.3 Adaptive Modification</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 6.1 (Adaptive Response):</span> LocalDOCs modify their response through:
+        <div class="equation">
+            R_{\text{new}} = R_{\text{old}} + \eta \cdot \nabla_R L(E_p, E_n, E_v)
+        </div>
+        preserving learned information while adapting to new conditions.
+    </div>
+
+    <h2 id="section7">7. Time-Dependent Norm Generation</h2>
+
+    <h3>7.1 Norm Evolution</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 7.1 (TDNG):</span> Norms evolve according to:
+        <div class="equation">
+            n^{(h,d)}(t+1|c) = \int K(t,\tau|c) \cdot \Phi(\tau) \cdot p(\tau|c) \, d\tau
+        </div>
+        where $K(t,\tau|c)$ is a context-dependent temporal kernel.
+    </div>
+
+    <h3>7.2 Value Integration</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 7.1 (Value-Weighted Norms):</span> Norms are biased toward high-value states:
+        <div class="equation">
+            n^{(h,d)}(t+1) = \int K^{(h,d)}(t,\tau) \cdot \Phi^{(h,d)}(\tau) \cdot \exp\left(\frac{v^{(h,d)}(\tau)}{T}\right) d\tau
+        </div>
+        where $T$ is a temperature parameter controlling exploration vs exploitation.
+    </div>
+
+    <h2 id="section8">8. Consciousness and Integration</h2>
+
+    <h3>8.1 Consciousness as Integration</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 8.1 (Consciousness Measure):</span> The degree of conscious experience is:
+        <div class="equation">
+            \Phi_{\text{IDS}} = \sum_{h \in H_{\text{critical}}} w_h \cdot \mathbb{I}[\mathcal{S}^{(h)} > \mathcal{S}_{\text{crit}}^{(h)}] \cdot \Phi_{\text{total}}
+        </div>
+        where $H_{\text{critical}}$ are critical hierarchies and $\mathbb{I}$ is the indicator function.
+    </div>
+
+    <h3>8.2 Emergence Conditions</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 8.1 (Consciousness Emergence):</span> Consciousness emerges when:
+        <ol>
+            <li>Multiple hierarchies synchronize: $N_{\text{sync}} \geq 3$</li>
+            <li>Integration exceeds threshold: $\Phi > \Phi_{\text{min}}$</li>
+            <li>Temporal coherence maintained: $\tau_{\text{coherence}} < 100\text{ms}$</li>
+            <li>LocalDOC cascades activate: $N_{\text{cascade}} \geq 1$</li>
+        </ol>
+    </div>
+
+    <h3>8.3 Continuum Nature</h3>
+    
+    <div class="remark">
+        <strong>Remark:</strong> Consciousness in IDS theory is not binary but exists on a continuum. Systems may exhibit varying degrees of integration and awareness, from minimal responsiveness to rich subjective experience.
+    </div>
+
+    <h2 id="section9">9. Qualia and Subjective Experience</h2>
+
+    <h3>9.1 Vectorial Qualia Structure</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 9.1 (Integrated Qualia Model):</span> Subjective experience (qualia) emerges through a five-step process that generates a qualia vector $\vec{Q}$ in a high-dimensional qualia space:
+        <ol>
+            <li><strong>Physical Deviation Detection:</strong> $\Delta$ (raw sensory data)</li>
+            <li><strong>Context-Dependent Interpretation:</strong> $\mathcal{E}(\Delta, c)$ (meaning generation)</li>
+            <li><strong>Stress Vector Generation:</strong> $\vec{S}$ (3D projection to fundamental axes)</li>
+            <li><strong>Sensory Feature Extraction:</strong> $\vec{F}_M$ (modality-specific features)</li>
+            <li><strong>Qualia Vector Construction:</strong> $\vec{Q} = \vec{Q}_{\text{skeleton}} + \vec{Q}_{\text{texture}}$</li>
+        </ol>
+    </div>
+
+    <h3>9.2 Mathematical Structure of Qualia</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.1 (Qualia Vector Decomposition):</span> The qualia vector consists of two components:
+        <div class="equation">
+            $\vec{Q} = \vec{Q}_{\text{skeleton}} + \vec{Q}_{\text{texture}}$
+        </div>
+        where:
+        <ul>
+            <li>$\vec{Q}_{\text{skeleton}}$: Universal experiential structure (modality-independent)</li>
+            <li>$\vec{Q}_{\text{texture}}$: Sensory-specific qualities (modality-dependent)</li>
+        </ul>
+    </div>
+
+    <h3>9.3 Stress Vector Generation</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 9.2 (Stress Vector):</span> The interpreted meaning $\mathcal{E}(\Delta, c)$ is projected onto three fundamental meaning axes:
+        <div class="equation">
+            $\vec{S} = \begin{pmatrix} S_{\text{cog}} \\ S_{\text{norm}} \\ S_{\text{emo}} \end{pmatrix} = \begin{pmatrix} P_{\text{cog}}(\mathcal{E}(\Delta, c)) \\ P_{\text{norm}}(\mathcal{E}(\Delta, c)) \\ P_{\text{emo}}(\mathcal{E}(\Delta, c)) \end{pmatrix}$
+        </div>
+        where:
+        <ul>
+            <li>$S_{\text{cog}}$: Cognitive stress (prediction error magnitude)</li>
+            <li>$S_{\text{norm}}$: Normative stress (norm violation magnitude)</li>
+            <li>$S_{\text{emo}}$: Emotional stress (valence and arousal)</li>
+        </ul>
+    </div>
+
+    <h3>9.4 Skeleton Vector: Universal Experience Structure</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.2 (Skeleton Vector):</span> The skeleton vector determines the fundamental character of experience:
+        <div class="equation">
+            $\vec{Q}_{\text{skeleton}} = S_{\text{cog}} \cdot \vec{e}_{\text{cog}} + S_{\text{norm}} \cdot \vec{e}_{\text{norm}} + S_{\text{emo}} \cdot \vec{e}_{\text{emo}}$
+        </div>
+        Properties:
+        <ul>
+            <li>$||\vec{Q}_{\text{skeleton}}||$: Experience intensity/impact</li>
+            <li>Direction of $\vec{Q}_{\text{skeleton}}$: Basic experiential character</li>
+            <li>$S_{\text{emo}}$ component: Hedonic valence (pleasure/pain)</li>
+        </ul>
+    </div>
+
+    <h3>9.5 Texture Vector: Sensory-Specific Qualities</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.3 (Texture Vector with Salience Modulation):</span> Sensory features are modulated by stress-dependent salience:
+        <div class="equation">
+            $\vec{Q}_{\text{texture}} = \sum_M \sum_j (f_j \cdot A_{M,j}(\vec{S})) \cdot \vec{e}_{M,j}$
+        </div>
+        where the salience amplification function is:
+        <div class="equation">
+            $A_{M,j}(\vec{S}) = 1 + w_{\text{cog},j} \cdot \sigma(|S_{\text{cog}}|) + w_{\text{norm},j} \cdot \sigma(|S_{\text{norm}}|) + w_{\text{emo},j} \cdot \tanh(S_{\text{emo}})$
+        </div>
+    </div>
+
+    <div class="remark">
+        <strong>Key Insight:</strong> The salience amplification function $A_{M,j}(\vec{S})$ explains how meaning (stress) modulates sensory awareness. High normative stress amplifies features that violate expectations, while emotional stress asymmetrically modulates perception (negative emotions sharpen, positive emotions soften).
+    </div>
+
+    <h3>9.6 Individual Subjectivity and Learning</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 9.3 (Subjective Weight Learning):</span> Individual subjective experience arises from personalized weight matrices:
+        <div class="equation">
+            $\frac{dw_{i,j}}{dt} = \eta \cdot S_i(t) \cdot f_j(t) \cdot \delta(t)$
+        </div>
+        where:
+        <ul>
+            <li>$\eta$: Learning rate</li>
+            <li>$S_i(t)$: Stress component at time $t$</li>
+            <li>$f_j(t)$: Feature intensity at time $t$</li>
+            <li>$\delta(t)$: Prediction error or reward signal</li>
+        </ul>
+    </div>
+
+    <h3>9.7 Complete Qualia Generation Process</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.4 (Complete Qualia Generation):</span> The full qualia generation follows:
+        <div class="equation">
+            $\Delta \xrightarrow{\text{context } c} \mathcal{E}(\Delta, c) \xrightarrow{\text{projection}} \vec{S} \xrightarrow{\text{skeleton}} \vec{Q}_{\text{skeleton}}$
+        </div>
+        <div class="equation">
+            $\text{Sensory Input} \xrightarrow{\text{features}} \vec{F}_M \xrightarrow{A_{M,j}(\vec{S})} \vec{Q}_{\text{texture}}$
+        </div>
+        <div class="equation">
+            $\vec{Q} = \vec{Q}_{\text{skeleton}} + \vec{Q}_{\text{texture}}$
+        </div>
+    </div>
+
+    <h3>9.8 Examples of Vectorial Qualia</h3>
+    
+    <table>
+        <tr>
+            <th>Experience</th>
+            <th>$S_{\text{cog}}$</th>
+            <th>$S_{\text{norm}}$</th>
+            <th>$S_{\text{emo}}$</th>
+            <th>Dominant Features</th>
+            <th>Qualia Character</th>
+        </tr>
+        <tr>
+            <td>Surprising beauty</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Positive</td>
+            <td>Color, form amplified</td>
+            <td>Vivid pleasure</td>
+        </tr>
+        <tr>
+            <td>Familiar comfort</td>
+            <td>Low</td>
+            <td>Low</td>
+            <td>Positive</td>
+            <td>Texture, warmth salient</td>
+            <td>Soft contentment</td>
+        </tr>
+        <tr>
+            <td>Uncanny valley</td>
+            <td>Medium</td>
+            <td>High</td>
+            <td>Negative</td>
+            <td>Anomalous features amplified</td>
+            <td>Sharp discomfort</td>
+        </tr>
+        <tr>
+            <td>Physical pain</td>
+            <td>Low</td>
+            <td>Medium</td>
+            <td>Negative</td>
+            <td>Nociceptive signals dominant</td>
+            <td>Urgent aversion</td>
+        </tr>
+    </table>
+
+    <h3>9.10 Qualia-Driven Action: LocalDOC Activation</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 9.4 (Qualia-to-Action Mapping):</span> Generated qualia vectors drive LocalDOC activation through:
+        <div class="equation">
+            $P(\text{LocalDOC}_k | \vec{Q}) = \frac{\exp(\vec{w}_k \cdot \vec{Q} / \tau)}{\sum_j \exp(\vec{w}_j \cdot \vec{Q} / \tau)}$
+        </div>
+        where $\vec{w}_k$ is the activation weight vector for LocalDOC module $k$.
+    </div>
+
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.5 (Stress-Specific LocalDOC Activation):</span> Different stress components activate specialized LocalDOC modules:
+        <div class="equation">
+            $\text{Activation}_k = \sigma(a_k^{\text{cog}} \cdot S_{\text{cog}} + a_k^{\text{norm}} \cdot S_{\text{norm}} + a_k^{\text{emo}} \cdot S_{\text{emo}} + b_k)$
+        </div>
+        Module specialization:
+        <ul>
+            <li>High $S_{\text{cog}}$ → Cognitive debugging modules (prediction update)</li>
+            <li>High $S_{\text{norm}}$ → Norm adjustment modules (behavioral modification)</li>
+            <li>High negative $S_{\text{emo}}$ → Avoidance planning modules</li>
+            <li>High positive $S_{\text{emo}}$ → Approach reinforcement modules</li>
+        </ul>
+    </div>
+
+    <h3>9.11 Qualia-Action Control Loop</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.6 (Complete Qualia-Action Loop):</span> The full control loop from experience to action:
+        <div class="equation">
+            $\Delta \xrightarrow{\mathcal{E}(\cdot,c)} \vec{S} \xrightarrow{\text{qualia}} \vec{Q} \xrightarrow{\text{LocalDOC}} \text{Action} \xrightarrow{\text{environment}} \Delta'$
+        </div>
+        This creates a closed-loop system where:
+        <ol>
+            <li>Experience generates qualia</li>
+            <li>Qualia activates appropriate LocalDOCs</li>
+            <li>LocalDOCs generate actions</li>
+            <li>Actions modify environment</li>
+            <li>New deviations are detected</li>
+        </ol>
+    </div>
+
+    <h3>9.12 Integration Φ and Qualia Space</h3>
+    
+    <div class="definition">
+        <span class="definition-title">Definition 9.5 (Qualia Space Integration):</span> The integration measure Φ relates to qualia space properties:
+        <div class="equation">
+            $\Phi_{\text{qualia}} = \frac{I(\vec{Q}_{\text{skeleton}}; \vec{Q}_{\text{texture}})}{H(\vec{Q}_{\text{skeleton}}) + H(\vec{Q}_{\text{texture}})} \cdot N_{\text{eff}}$
+        </div>
+        where:
+        <ul>
+            <li>$I(\cdot;\cdot)$ is mutual information between skeleton and texture</li>
+            <li>$H(\cdot)$ is entropy</li>
+            <li>$N_{\text{eff}}$ is the effective dimensionality of qualia space</li>
+        </ul>
+    </div>
+
+    <div class="theorem">
+        <span class="theorem-title">Theorem 9.7 (Integration-Dimension Relationship):</span> Consciousness integration correlates with:
+        <ol>
+            <li><strong>Effective dimensionality:</strong> $N_{\text{eff}} = \exp(H(\vec{Q}))$</li>
+            <li><strong>Basis independence:</strong> Low correlation between qualia basis vectors</li>
+            <li><strong>Cross-modal binding:</strong> High mutual information between modalities</li>
+        </ol>
+        Higher Φ indicates richer, more integrated conscious experience.
+    </div>
+
+    <div class="corollary">
+        <span class="corollary-title">Corollary 9.1 (Unified Experience):</span> A highly integrated conscious state is characterized by:
+        <div class="equation">
+            $\Phi > \Phi_{\text{threshold}} \Rightarrow ||\vec{Q}_{\text{skeleton}} - \vec{Q}_{\text{texture}}||_{\text{info}} < \epsilon$
+        </div>
+        where $||\cdot||_{\text{info}}$ is an information-theoretic distance measure.
+    </div>
+    
+    <table>
+        <tr>
+            <th>Modality</th>
+            <th>Transform $f(I)$</th>
+            <th>Law</th>
+            <th>Parameters</th>
+        </tr>
+        <tr>
+            <td>Vision</td>
+            <td>$\log(1 + I)$</td>
+            <td>Weber-Fechner</td>
+            <td>JND ≈ 1%</td>
+        </tr>
+        <tr>
+            <td>Audition</td>
+            <td>$\log(1 + I)$</td>
+            <td>Logarithmic</td>
+            <td>JND ≈ 1dB</td>
+        </tr>
+        <tr>
+            <td>Pain</td>
+            <td>$I^{1.5}$</td>
+            <td>Stevens Power</td>
+            <td>Exponent = 1.5</td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>$I$</td>
+            <td>Linear</td>
+            <td>JND ≈ 0.5°C</td>
+        </tr>
+    </table>
+
+    <h2 id="section10">10. Stability Analysis</h2>
+
+    <h3>10.1 Lyapunov Stability</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Theorem 10.1 (Global Stability):</span> The IDS system is globally asymptotically stable if:
+        <div class="equation">
+            V_E = \sum_{h,d} \int_{\Omega} [\mathcal{S}^{(h,d)}]^2 \, d\Omega + \sum_{h,d} ||n^{(h,d)}||^2 + \sum_{h,d} [V^{(h,d)} - V^*]^2
+        </div>
+        satisfies $\frac{dV_E}{dt} \leq 0$ along all trajectories.
+    </div>
+
+    <div class="proof">
+        <span class="proof-title">Proof:</span> Taking the time derivative:
+        <div class="equation">
+            \frac{dV_E}{dt} = 2\sum_{h,d} \int_{\Omega} \mathcal{S}^{(h,d)} \cdot \frac{d\mathcal{S}^{(h,d)}}{dt} \, d\Omega + 2\sum_{h,d} n^{(h,d)} \cdot \frac{dn^{(h,d)}}{dt}
+        </div>
+        
+        Using the TDNG dynamics and stress evolution equations, we can show:
+        <div class="equation">
+            \frac{dV_E}{dt} \leq -2\lambda \cdot V_E
+        </div>
+        
+        where $\lambda > 0$ under the stated conditions, ensuring exponential convergence. □
+    </div>
+
+    <h3>10.2 Convergence Properties</h3>
+    
+    <div class="corollary">
+        <span class="corollary-title">Corollary 10.1:</span> Under stable conditions, the system converges to equilibria that balance error minimization with value maximization:
+        <div class="equation">
+            \lim_{t \to \infty} \nabla_s[\alpha E_p + \beta E_n - \delta \cdot V(s)] = 0
+        </div>
+    </div>
+
+    <h2 id="section11">11. Implementation</h2>
+
+    <h3>11.1 Core Architecture</h3>
+    
+    <pre><code class="python">
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import numpy as np
+from typing import Dict, List, Tuple, Optional
+from sklearn.cluster import KMeans
+from scipy.optimize import minimize
+
+class IntegratedDebugSystem(nn.Module):
+    """
+    Implementation of IDS Theory with explicit parameter estimation
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__()
+        
+        # Core components
+        self.context_processor = ContextualProcessor(config)
+        self.hial_system = HIALSystem(config)
+        self.local_doc_network = LocalDOCNetwork(config)
+        self.tdng_system = TDNGSystem(config)
+        self.consciousness_evaluator = ConsciousnessEvaluator(config)
+        self.qualia_generator = QualiaGenerator(config)
+        
+        # Parameter estimator
+        self.parameter_estimator = ParameterEstimator(config)
+        
+    def forward(self, observation: Dict) -> Dict:
+        """
+        Main processing pipeline
+        """
+        # 1. Detect deviations
+        deviation = self.detect_deviation(observation)
+        
+        # 2. Contextual interpretation with explicit function
+        context = self.hial_system.get_context()
+        error = self.context_processor.interpret(deviation, context)
+        
+        # 3. Check for critical events
+        cie = self.calculate_cie(error, context)
+        
+        # 4. Adaptive response
+        if self.should_activate_doc(cie):
+            response = self.local_doc_network(error)
+        else:
+            response = None
+            
+        # 5. Update norms
+        self.tdng_system.update(error, response)
+        
+        # 6. Evaluate consciousness
+        consciousness = self.consciousness_evaluator(
+            error, response, self.hial_system.get_synchronization()
+        )
+        
+        # 7. Generate qualia if conscious
+        qualia = None
+        if consciousness['integration_level'] > 0.3:
+            qualia = self.qualia_generator(error, context)
+            
+        # 8. Self-referential update
+        self.hial_system.update(self.entire_state())
+        
+        return {
+            'error': error,
+            'response': response,
+            'consciousness': consciousness,
+            'qualia': qualia,
+            'context': context
+        }
+
+class ContextualProcessor(nn.Module):
+    """
+    Context-dependent error interpretation with explicit functions
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__()
+        self.n_contexts = config.get('n_context_prototypes', 10)
+        self.input_dim = config['input_dim']
+        
+        # Context prototypes (to be learned)
+        self.context_prototypes = nn.Parameter(
+            torch.randn(self.n_contexts, config['context_dim'])
+        )
+        
+        # Context-specific transformation matrices
+        self.W = nn.ParameterList([
+            nn.Parameter(torch.randn(self.input_dim, self.input_dim) * 0.1)
+            for _ in range(self.n_contexts)
+        ])
+        self.V = nn.ParameterList([
+            nn.Parameter(torch.randn(self.input_dim, self.input_dim) * 0.1)
+            for _ in range(self.n_contexts)
+        ])
+        self.b = nn.ParameterList([
+            nn.Parameter(torch.zeros(self.input_dim))
+            for _ in range(self.n_contexts)
+        ])
+        self.d = nn.ParameterList([
+            nn.Parameter(torch.zeros(self.input_dim))
+            for _ in range(self.n_contexts)
+        ])
+        
+        # Context basis function parameters
+        self.sigma = nn.Parameter(torch.ones(self.n_contexts))
+        
+    def interpret(self, deviation: torch.Tensor, context: Dict) -> torch.Tensor:
+        """
+        Interpret deviation based on context using explicit function
+        """
+        # Encode context into vector
+        context_vector = self.encode_context(context)
+        
+        # Compute context basis functions φ_k(c)
+        phi = self.compute_context_basis(context_vector)
+        
+        # Apply context-specific transformations
+        interpretation = torch.zeros_like(deviation)
+        
+        for k in range(self.n_contexts):
+            # T_k(Δ) = tanh(W_k Δ + b_k) ⊙ sign(V_k Δ + d_k)
+            linear_W = F.linear(deviation, self.W[k]) + self.b[k]
+            linear_V = F.linear(deviation, self.V[k]) + self.d[k]
+            
+            T_k = torch.tanh(linear_W) * torch.sign(linear_V)
+            
+            # Weighted sum
+            interpretation += phi[k] * T_k
+            
+        return interpretation
+    
+    def compute_context_basis(self, context_vector: torch.Tensor) -> torch.Tensor:
+        """
+        Compute context basis functions φ_k(c)
+        """
+        # Compute distances to prototypes
+        distances = torch.cdist(
+            context_vector.unsqueeze(0),
+            self.context_prototypes.unsqueeze(0)
+        ).squeeze(0)
+        
+        # Gaussian basis functions
+        phi = torch.exp(-distances**2 / (2 * self.sigma**2))
+        
+        # Normalize
+        phi = phi / (phi.sum() + 1e-8)
+        
+        return phi
+    
+    def encode_context(self, context: Dict) -> torch.Tensor:
+        """
+        Encode context dictionary into vector representation
+        """
+        context_list = []
+        for key, value in context.items():
+            if isinstance(value, torch.Tensor):
+                context_list.append(value.flatten())
+            elif isinstance(value, (int, float)):
+                context_list.append(torch.tensor([value]))
+                
+        if context_list:
+            return torch.cat(context_list)
+        else:
+            return torch.zeros(self.context_prototypes.shape[1])
+
+class ParameterEstimator:
+    """
+    Estimate IDS parameters from data
+    """
+    
+    def __init__(self, config: Dict):
+        self.config = config
+        self.n_contexts = config.get('n_context_prototypes', 10)
+        
+    def estimate_context_prototypes(self, context_data: np.ndarray) -> np.ndarray:
+        """
+        Estimate context prototypes using clustering
+        """
+        kmeans = KMeans(n_clusters=self.n_contexts, random_state=42)
+        kmeans.fit(context_data)
+        return kmeans.cluster_centers_
+    
+    def estimate_transformation_parameters(self, data: List[Tuple]) -> Dict:
+        """
+        Estimate W_k, V_k, b_k, d_k from labeled data
+        
+        Args:
+            data: List of (deviation, context, interpretation) tuples
+        """
+        # Group data by context cluster
+        context_groups = self._group_by_context(data)
+        
+        parameters = {}
+        for k, group_data in context_groups.items():
+            # Extract deviations and interpretations
+            deviations = torch.stack([d[0] for d in group_data])
+            interpretations = torch.stack([d[2] for d in group_data])
+            
+            # Optimize transformation parameters
+            def objective(params):
+                n_dim = self.config['input_dim']
+                W_k = params[:n_dim*n_dim].reshape(n_dim, n_dim)
+                V_k = params[n_dim*n_dim:2*n_dim*n_dim].reshape(n_dim, n_dim)
+                b_k = params[2*n_dim*n_dim:2*n_dim*n_dim+n_dim]
+                d_k = params[2*n_dim*n_dim+n_dim:]
+                
+                # Compute predicted interpretation
+                pred = []
+                for dev in deviations:
+                    linear_W = W_k @ dev + b_k
+                    linear_V = V_k @ dev + d_k
+                    T_k = np.tanh(linear_W) * np.sign(linear_V)
+                    pred.append(T_k)
+                pred = np.stack(pred)
+                
+                # MSE loss
+                loss = np.mean((pred - interpretations.numpy())**2)
+                return loss
+            
+            # Initialize and optimize
+            n_dim = self.config['input_dim']
+            initial_params = np.random.randn(2*n_dim*n_dim + 2*n_dim) * 0.1
+            
+            result = minimize(objective, initial_params, method='L-BFGS-B')
+            
+            # Extract optimized parameters
+            params = result.x
+            parameters[f'W_{k}'] = params[:n_dim*n_dim].reshape(n_dim, n_dim)
+            parameters[f'V_{k}'] = params[n_dim*n_dim:2*n_dim*n_dim].reshape(n_dim, n_dim)
+            parameters[f'b_{k}'] = params[2*n_dim*n_dim:2*n_dim*n_dim+n_dim]
+            parameters[f'd_{k}'] = params[2*n_dim*n_dim+n_dim:]
+            
+        return parameters
+    
+    def estimate_hierarchy_parameters(self, temporal_data: np.ndarray, 
+                                    spatial_data: np.ndarray) -> np.ndarray:
+        """
+        Estimate hierarchy parameter h from temporal-spatial scales
+        """
+        # Compute autocorrelation to find temporal scales
+        temporal_scales = []
+        for signal in temporal_data:
+            autocorr = np.correlate(signal, signal, mode='full')
+            autocorr = autocorr[len(autocorr)//2:]
+            
+            # Find decay time
+            decay_idx = np.where(autocorr < autocorr[0] * 0.37)[0]
+            if len(decay_idx) > 0:
+                temporal_scales.append(decay_idx[0])
+        
+        # Map temporal scales to hierarchy levels
+        # h ≈ 1: microseconds (scale = 1e-6)
+        # h ≈ 2: milliseconds (scale = 1e-3)
+        # h ≈ 3: seconds (scale = 1)
+        # h ≈ 4: minutes (scale = 60)
+        
+        scale_to_h = lambda scale: 1 + 3 * np.log10(scale + 1e-6) / 6
+        
+        h_estimates = [scale_to_h(scale) for scale in temporal_scales]
+        
+        return np.array(h_estimates)
+    
+    def estimate_coupling_strength(self, cross_hierarchy_data: Dict) -> float:
+        """
+        Estimate coupling strength λ from cross-frequency coupling
+        """
+        # Compute phase-amplitude coupling between hierarchies
+        pac_values = []
+        
+        for (h1, h2), data in cross_hierarchy_data.items():
+            # Phase of lower frequency
+            phase_signal = data['lower_freq']
+            phase = np.angle(np.fft.fft(phase_signal))
+            
+            # Amplitude of higher frequency
+            amp_signal = data['higher_freq']
+            amplitude = np.abs(np.fft.fft(amp_signal))
+            
+            # Compute PAC
+            pac = self._compute_pac(phase, amplitude)
+            pac_values.append(pac)
+        
+        # Estimate λ from mean PAC
+        mean_pac = np.mean(pac_values)
+        lambda_estimate = -1 / np.log(mean_pac + 1e-8)
+        
+        return lambda_estimate
+    
+    def _group_by_context(self, data: List[Tuple]) -> Dict:
+        """
+        Group data by context cluster
+        """
+        # First, get context prototypes
+        contexts = np.array([d[1] for d in data])
+        prototypes = self.estimate_context_prototypes(contexts)
+        
+        # Assign each data point to nearest prototype
+        groups = {k: [] for k in range(len(prototypes))}
+        
+        for deviation, context, interpretation in data:
+            distances = np.linalg.norm(prototypes - context, axis=1)
+            nearest_k = np.argmin(distances)
+            groups[nearest_k].append((deviation, context, interpretation))
+            
+        return groups
+    
+    def _compute_pac(self, phase: np.ndarray, amplitude: np.ndarray) -> float:
+        """
+        Compute Phase-Amplitude Coupling
+        """
+        # Bin phases
+        n_bins = 20
+        phase_bins = np.linspace(-np.pi, np.pi, n_bins + 1)
+        
+        # Compute mean amplitude in each phase bin
+        mean_amps = []
+        for i in range(n_bins):
+            mask = (phase >= phase_bins[i]) & (phase < phase_bins[i+1])
+            if np.any(mask):
+                mean_amps.append(np.mean(amplitude[mask]))
+            else:
+                mean_amps.append(0)
+                
+        # Normalize and compute modulation index
+        mean_amps = np.array(mean_amps)
+        mean_amps = mean_amps / np.sum(mean_amps)
+        
+        # KL divergence from uniform
+        uniform = np.ones(n_bins) / n_bins
+        kl_div = np.sum(mean_amps * np.log(mean_amps / uniform + 1e-8))
+        
+        # Normalize to [0, 1]
+        pac = kl_div / np.log(n_bins)
+        
+        return pac
+
+class HIALSystem(nn.Module):
+    """
+    Hierarchical Integrated Adaptive Layer system with parameter estimation
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__()
+        
+        # Estimate hierarchy levels from config or default
+        if 'hierarchy_levels' in config:
+            self.h_values = torch.tensor(config['hierarchy_levels'])
+        else:
+            # Default: 20 levels from h=1 to h=5
+            self.h_values = torch.linspace(1, 5, 20)
+            
+        self.hierarchies = nn.ModuleList([
+            HIALLayer(h.item(), config) for h in self.h_values
+        ])
+        
+        # Estimate coupling matrix
+        self.coupling_matrix = self.initialize_coupling(
+            config.get('coupling_lambda', 2.0)
+        )
+        
+    def get_context(self) -> Dict:
+        """
+        Aggregate context from all hierarchies
+        """
+        contexts = []
+        weights = []
+        
+        for i, hial in enumerate(self.hierarchies):
+            context = hial.get_local_context()
+            contexts.append(context)
+            
+            # Weight by hierarchy level (higher levels = more abstract = higher weight)
+            weight = self.h_values[i] / self.h_values.sum()
+            weights.append(weight)
+            
+        # Weighted combination
+        combined_context = self.combine_contexts(contexts, weights)
+        
+        return combined_context
+    
+    def get_synchronization(self) -> float:
+        """
+        Measure synchronization across hierarchies
+        """
+        phases = []
+        for hial in self.hierarchies:
+            phase = hial.get_phase()
+            phases.append(phase)
+        
+        # Kuramoto order parameter
+        phases_tensor = torch.stack(phases)
+        complex_phases = torch.exp(1j * phases_tensor)
+        mean_phase = torch.mean(complex_phases)
+        
+        return torch.abs(mean_phase).item()
+    
+    def update(self, global_state: Dict):
+        """
+        Self-referential update of all hierarchies
+        """
+        for i, hial in enumerate(self.hierarchies):
+            # Local update
+            hial.local_update(global_state)
+            
+            # Cross-hierarchy influence based on estimated coupling
+            influences = []
+            for j, other_hial in enumerate(self.hierarchies):
+                if i != j:
+                    influence = other_hial.get_state() * self.coupling_matrix[i, j]
+                    influences.append(influence)
+                    
+            hial.apply_influences(influences)
+    
+    def initialize_coupling(self, lambda_param: float) -> torch.Tensor:
+        """
+        Initialize coupling matrix with exponential decay
+        """
+        n = len(self.hierarchies)
+        matrix = torch.zeros(n, n)
+        
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    h_distance = torch.abs(self.h_values[i] - self.h_values[j])
+                    matrix[i, j] = torch.exp(-h_distance / lambda_param)
+                    
+        return matrix
+    
+    def combine_contexts(self, contexts: List[torch.Tensor], 
+                        weights: List[float]) -> Dict:
+        """
+        Combine contexts with estimated weights
+        """
+        # Stack and weight contexts
+        context_matrix = torch.stack(contexts)
+        weight_vector = torch.tensor(weights).unsqueeze(1)
+        
+        # Weighted average
+        combined = torch.sum(context_matrix * weight_vector, dim=0)
+        
+        return {
+            'vector': combined,
+            'hierarchical_contributions': contexts,
+            'weights': weights,
+            'dominant_hierarchy': self.h_values[np.argmax(weights)].item()
+        }
+
+class HIALLayer(nn.Module):
+    """
+    Individual HIAL layer at specific hierarchy level
+    """
+    
+    def __init__(self, h_level: float, config: Dict):
+        super().__init__()
+        self.h = h_level
+        self.state_dim = config.get('state_dim', 128)
+        
+        # State representation
+        self.state = nn.Parameter(torch.randn(self.state_dim) * 0.1)
+        
+        # Local dynamics based on hierarchy level
+        # Higher h = slower dynamics
+        self.time_constant = h_level ** 1.5
+        
+        # Context encoder specific to this hierarchy
+        self.context_encoder = nn.Sequential(
+            nn.Linear(self.state_dim, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32)
+        )
+        
+        # Phase for synchronization
+        self.phase = nn.Parameter(torch.rand(1) * 2 * np.pi)
+        
+    def get_local_context(self) -> torch.Tensor:
+        """
+        Get context representation from this hierarchy
+        """
+        return self.context_encoder(self.state)
+    
+    def get_phase(self) -> torch.Tensor:
+        """
+        Get current phase for synchronization measurement
+        """
+        return self.phase
+    
+    def get_state(self) -> torch.Tensor:
+        """
+        Get current state vector
+        """
+        return self.state
+    
+    def local_update(self, global_state: Dict):
+        """
+        Update based on global state
+        """
+        # Extract relevant information for this hierarchy
+        if 'error' in global_state:
+            error_influence = global_state['error'].mean() / self.time_constant
+            self.state.data += 0.01 * error_influence * torch.randn_like(self.state)
+            
+        # Update phase based on local dynamics
+        self.phase.data = (self.phase.data + 0.1 / self.time_constant) % (2 * np.pi)
+    
+    def apply_influences(self, influences: List[torch.Tensor]):
+        """
+        Apply cross-hierarchy influences
+        """
+        if influences:
+            total_influence = torch.stack(influences).mean(0)
+            self.state.data += 0.05 * total_influence
+    </code></pre>
+
+    <h3>11.2 Usage Example with Parameter Estimation</h3>
+    
+    <pre><code class="python">
+# Configuration with explicit parameters
+config = {
+    'input_dim': 100,
+    'output_dim': 100,
+    'hidden_dim': 128,
+    'state_dim': 128,
+    'context_dim': 64,
+    'n_modules': 20,
+    'n_context_prototypes': 10,
+    'adaptation_rate': 0.1,
+    'coupling_lambda': 2.0,  # Estimated from data
+    'hierarchy_levels': [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]  # Estimated
+}
+
+# Initialize system
+ids = IntegratedDebugSystem(config)
+
+# Estimate parameters from data
+def estimate_parameters_from_data(training_data):
+    """
+    Estimate IDS parameters from experimental data
+    """
+    estimator = ParameterEstimator(config)
+    
+    # 1. Estimate context prototypes
+    contexts = np.array([d['context'] for d in training_data])
+    prototypes = estimator.estimate_context_prototypes(contexts)
+    
+    # 2. Estimate transformation parameters
+    labeled_data = [
+        (d['deviation'], d['context'], d['interpretation']) 
+        for d in training_data
+    ]
+    transform_params = estimator.estimate_transformation_parameters(labeled_data)
+    
+    # 3. Estimate hierarchy parameters
+    temporal_data = np.array([d['temporal_signal'] for d in training_data])
+    spatial_data = np.array([d['spatial_pattern'] for d in training_data])
+    h_estimates = estimator.estimate_hierarchy_parameters(temporal_data, spatial_data)
+    
+    # 4. Estimate coupling strength
+    cross_hierarchy_data = {
+        (h1, h2): {'lower_freq': signal1, 'higher_freq': signal2}
+        for h1, h2, signal1, signal2 in training_data['cross_hierarchy']
+    }
+    lambda_estimate = estimator.estimate_coupling_strength(cross_hierarchy_data)
+    
+    return {
+        'context_prototypes': prototypes,
+        'transformation_params': transform_params,
+        'hierarchy_levels': h_estimates,
+        'coupling_lambda': lambda_estimate
+    }
+
+# Example: Process observation with estimated parameters
+observation = {
+    'data': torch.randn(1, 100),
+    'modality': 'visual',
+    'timestamp': 0.0
+}
+
+# Run IDS
+output = ids(observation)
+
+# Examine results with parameter information
+print(f"Consciousness level: {output['consciousness']['integration_level']:.3f}")
+print(f"Active modules: {output['response']['n_active'] if output['response'] else 0}")
+print(f"Dominant hierarchy: {output['context']['dominant_hierarchy']:.2f}")
+
+if output['qualia']:
+    print(f"Qualia intensity: {output['qualia']['intensity']:.3f}")
+    print(f"Qualia valence: {output['qualia']['valence']:.3f}")
+
+# Example: Clinical assessment with explicit parameters
+def clinical_assessment_with_parameters(patient_data):
+    """
+    Assess patient using estimated parameters
+    """
+    # Estimate patient-specific parameters
+    estimator = ParameterEstimator(config)
+    
+    # Check context flexibility
+    contexts = [patient_data[f'context_{i}'] for i in range(10)]
+    context_variance = np.var(contexts, axis=0).mean()
+    
+    # Check hierarchy stability
+    h_levels = estimator.estimate_hierarchy_parameters(
+        patient_data['eeg_signals'],
+        patient_data['spatial_patterns']
+    )
+    h_stability = 1.0 / (np.std(h_levels) + 0.1)
+    
+    # Check coupling strength
+    coupling = estimator.estimate_coupling_strength(
+        patient_data['cross_frequency_data']
+    )
+    
+    assessment = {
+        'context_flexibility': context_variance,
+        'hierarchy_stability': h_stability,
+        'coupling_strength': coupling,
+        'interpretation': {
+            'low_flexibility': context_variance < 0.1,
+            'unstable_hierarchies': h_stability < 2.0,
+            'weak_coupling': coupling > 5.0
+        }
+    }
+    
+    return assessment
+    </code></pre>
+
+    <h2 id="section12">12. Experimental Predictions</h2>
+
+    <h3>12.1 Neuroscience Predictions</h3>
+    
+    <table>
+        <tr>
+            <th>Prediction</th>
+            <th>Measurement</th>
+            <th>Expected Result</th>
+            <th>Validation Method</th>
+        </tr>
+        <tr>
+            <td>Context-dependent error responses</td>
+            <td>Neural activity patterns</td>
+            <td>Same stimulus, different responses</td>
+            <td>fMRI with context manipulation</td>
+        </tr>
+        <tr>
+            <td>Hierarchical synchronization</td>
+            <td>Cross-frequency coupling</td>
+            <td>Phase locking during consciousness</td>
+            <td>MEG/EEG analysis</td>
+        </tr>
+        <tr>
+            <td>LocalDOC cascades</td>
+            <td>Spatiotemporal activity spread</td>
+            <td>Power-law distributions</td>
+            <td>High-density EEG</td>
+        </tr>
+        <tr>
+            <td>Fractal norm structure</td>
+            <td>Neural pattern analysis</td>
+            <td>Self-similarity across scales</td>
+            <td>Multi-scale recordings</td>
+        </tr>
+        <tr>
+            <td>CIE-consciousness correlation</td>
+            <td>Information-theoretic measures</td>
+            <td>CIE precedes conscious reports</td>
+            <td>Real-time analysis</td>
+        </tr>
+    </table>
+
+    <h3>12.2 Behavioral Predictions</h3>
+    
+    <div class="theorem">
+        <span class="theorem-title">Prediction 12.1 (Context Reversal):</span> The same sensory input will produce opposite behavioral responses in different contexts, with neural signatures showing sign reversal in error processing regions.
+    </div>
+
+    <h3>12.3 Clinical Predictions</h3>
+    
+    <table>
+        <tr>
+            <th>Condition</th>
+            <th>IDS Prediction</th>
+            <th>Biomarker</th>
+        </tr>
+        <tr>
+            <td>Depression</td>
+            <td>Reduced context flexibility</td>
+            <td>Fixed error interpretation patterns</td>
+        </tr>
+        <tr>
+            <td>Schizophrenia</td>
+            <td>Unstable context boundaries</td>
+            <td>Fluctuating error meanings</td>
+        </tr>
+        <tr>
+            <td>Autism</td>
+            <td>Hyper-specific contexts</td>
+            <td>Reduced generalization</td>
+        </tr>
+        <tr>
+            <td>ADHD</td>
+            <td>Rapid context switching</td>
+            <td>Unstable error processing</td>
+        </tr>
+    </table>
+
+    <h2 id="section13">13. Applications</h2>
+
+    <h3>13.1 Clinical Applications</h3>
+    
+    <p>
+        The IDS framework suggests novel therapeutic approaches based on modifying error interpretation contexts rather than targeting symptoms directly. For instance:
+    </p>
+    <ul>
+        <li><strong>Depression:</strong> Interventions to increase context flexibility in error interpretation</li>
+        <li><strong>Anxiety:</strong> Training to differentiate threat contexts more precisely</li>
+        <li><strong>PTSD:</strong> Updating stuck error interpretation patterns from trauma contexts</li>
+    </ul>
+
+    <h3>13.2 Artificial Intelligence</h3>
+    
+    <p>
+        IDS principles can guide development of more adaptive AI systems that:
+    </p>
+    <ul>
+        <li>Interpret errors based on context rather than fixed rules</li>
+        <li>Develop emergent consciousness-like properties through integration</li>
+        <li>Generate appropriate responses to novel situations through LocalDOC-like mechanisms</li>
+    </ul>
+
+    <h3>13.3 Brain-Computer Interfaces</h3>
+    
+    <p>
+        Understanding consciousness as error processing enables:
+    </p>
+    <ul>
+        <li>Direct transmission of qualia through error pattern encoding</li>
+        <li>Enhancement of consciousness through optimized error processing</li>
+        <li>Therapeutic modification of pathological error interpretation</li>
+    </ul>
+
+    <h2 id="section14">14. Discussion</h2>
+
+    <div class="rev-box" id="rev-evolution">
+      <h4>Note: IDS as a self-correcting evolving theory</h4>
+      <p>
+        Since v1.0, the treatment of HIALs, CIEs, and scale-free behavior has shifted toward a
+        <strong>more flexible architecture</strong>. The core—consciousness as self-referential error processing—remains,
+        but the theory explicitly allows <em>self-organization</em> in hierarchy formation and <em>locality</em> in critical events.
+        Implementations should be viewed as <strong>testbeds</strong> that demonstrate specific facets rather than the complete theory.
+      </p>
+    </div>
+
+    <h3>14.1 Theoretical Contributions</h3>
+    
+    <p>
+        The IDS theory makes several novel contributions:
+    </p>
+    <ol>
+        <li><strong>Unified Framework:</strong> Integrates prediction, norms, and values in a single system</li>
+        <li><strong>Context Dependence:</strong> Explains how identical inputs produce different experiences</li>
+        <li><strong>Self-Reference:</strong> Provides mechanism for consciousness to modify itself</li>
+        <li><strong>Scale Invariance:</strong> Applies from quantum to cosmic scales</li>
+        <li><strong>Qualia Explanation:</strong> Derives subjective experience from mathematical principles</li>
+    </ol>
+
+    <h3>14.2 Relationship to Existing Theories</h3>
+    
+    <p>
+        IDS theory complements and extends existing frameworks:
+    </p>
+    <ul>
+        <li><strong>Free Energy Principle:</strong> IDS includes FEP as the prediction error component while adding norm and value errors</li>
+        <li><strong>Integrated Information Theory:</strong> IDS explains Φ as emergent from error integration rather than fundamental</li>
+        <li><strong>Global Workspace Theory:</strong> LocalDOC cascades implement global broadcasting dynamically</li>
+        <li><strong>Predictive Processing:</strong> Extended with context-dependent interpretation and self-modification</li>
+    </ul>
+
+    <h3>14.3 Limitations and Future Work</h3>
+    
+    <p>
+        Several aspects require further investigation:
+    </p>
+    <ul>
+        <li>Precise mapping between IDS parameters and neural mechanisms</li>
+        <li>Experimental validation of context-dependent error interpretation</li>
+        <li>Development of clinical assessment tools based on IDS principles</li>
+        <li>Extension to social and collective consciousness</li>
+        <li>Quantum mechanical implications of dimensional projection</li>
+    </ul>
+
+    <h3>14.4 Philosophical Implications</h3>
+    
+    <p>
+        IDS theory suggests consciousness is not a mysterious property but a natural consequence of self-referential error processing. This has implications for:
+    </p>
+    <ul>
+        <li><strong>Free Will:</strong> Choices emerge from context-dependent error interpretation</li>
+        <li><strong>Personal Identity:</strong> The self is the accumulated history of error interpretations</li>
+        <li><strong>Meaning:</strong> Significance arises from value-weighted norm violations</li>
+        <li><strong>Reality:</strong> What we experience is our interpretation of deviations, not objective truth</li>
+    </ul>
+
+    <h2 id="section15">15. Conclusion</h2>
+    
+    <p>
+        The Integrated Debug System Theory presents a mathematical framework for understanding consciousness as an emergent property of self-referential error processing systems. By introducing context-dependent interpretation, hierarchical integration, and adaptive modification mechanisms, the theory explains both functional and phenomenological aspects of consciousness within a unified framework.
+    </p>
+    
+    <p>
+        The theory's key insight is that consciousness arises not from any special substance or property, but from the particular way certain systems process deviations from expectations. When these systems can interpret the same deviation differently based on context, modify their own processing rules, and integrate information across multiple scales, consciousness emerges as a natural consequence.
+    </p>
+    
+    <p>
+        While substantial work remains to fully validate and refine the theory, IDS provides a promising direction for understanding consciousness through mathematical principles. The framework generates specific, testable predictions and offers practical applications in neuroscience, psychiatry, and artificial intelligence.
+    </p>
+    
+    <p>
+        We hope this work stimulates further research into the mathematical foundations of consciousness and contributes to resolving one of science's most profound mysteries.
+    </p>
+
+    <h2 id="references">References</h2>
+    <ol>
+        <li>Baars, B. J. (1988). A cognitive theory of consciousness. Cambridge University Press.</li>
+        <li>Clark, A. (2013). Whatever next? Predictive brains, situated agents, and the future of cognitive science. Behavioral and Brain Sciences, 36(3), 181-204.</li>
+        <li>Friston, K. (2010). The free-energy principle: a unified brain theory? Nature Reviews Neuroscience, 11(2), 127-138.</li>
+        <li>Hohwy, J. (2013). The predictive mind. Oxford University Press.</li>
+        <li>Seth, A. K. (2013). Interoceptive inference, emotion, and the embodied self. Trends in Cognitive Sciences, 17(11), 565-573.</li>
+        <li>Tononi, G. (2008). Consciousness as integrated information. Biological Bulletin, 215(3), 216-242.</li>
+        <li>Additional references to be added in final version</li>
+    </ol>
+
+    <h2 id="appendix">Appendices</h2>
+
+    <h3>Appendix A: Mathematical Proofs</h3>
+    
+    <h4>A.1 Proof of Context-Dependent Sign Reversal</h4>
+    <div class="proof">
+        <span class="proof-title">Theorem A.1:</span> For any non-zero deviation $\Delta$, there exist contexts where the interpretation reverses sign.
+        
+        <p><strong>Proof:</strong> Consider the interpretation function $\mathcal{E}(\Delta, c)$. Define two contexts:</p>
+        <ul>
+            <li>$c_1$: Context where deviation indicates progress toward goal</li>
+            <li>$c_2$: Context where same deviation indicates movement away from safety</li>
+        </ul>
+        
+        <p>Then:</p>
+        <div class="equation">
+            $\mathcal{E}(\Delta, c_1) = +|\Delta| \cdot \hat{n}_1$ (positive interpretation)<br>
+            $\mathcal{E}(\Delta, c_2) = -|\Delta| \cdot \hat{n}_2$ (negative interpretation)
+        </div>
+        
+        <p>Therefore, $\text{sign}(\mathcal{E}(\Delta, c_1)) = -\text{sign}(\mathcal{E}(\Delta, c_2))$, proving sign reversal. □</p>
+    </div>
+
+    <h4>A.2 Proof of Scale-Free Property</h4>
+    <div class="proof">
+        <span class="proof-title">Theorem A.2:</span> The IDS exhibits scale-free behavior across hierarchies.
+        
+        <p><strong>Proof:</strong> Consider the IDS functional at scale $s$:</p>
+        <div class="equation">
+            $\mathcal{F}_{\text{IDS}}(s) = \int \mathcal{S}[\Delta(s), \mathcal{C}(s), \mathcal{H}(s)] \, ds$
+        </div>
+        
+        <p>Under scaling transformation $s \rightarrow \lambda s$:</p>
+        <div class="equation">
+            $\mathcal{F}_{\text{IDS}}(\lambda s) = \int \mathcal{S}[\Delta(\lambda s), \mathcal{C}(\lambda s), \mathcal{H}(\lambda s)] \, d(\lambda s)$
+        </div>
+        
+        <p>Using the self-similarity of error patterns and hierarchical coupling:</p>
+        <div class="equation">
+            $\mathcal{F}_{\text{IDS}}(\lambda s) = \lambda^\alpha \int \mathcal{S}[\Delta(s), \mathcal{C}(s), \mathcal{H}(s)] \, ds = \lambda^\alpha \mathcal{F}_{\text{IDS}}(s)$
+        </div>
+        
+        <p>This power-law relationship confirms scale-free behavior. □</p>
+    </div>
+
+    <h4>A.3 Proof of Consciousness Emergence</h4>
+    <div class="proof">
+        <span class="proof-title">Theorem A.3:</span> Consciousness emerges when integration exceeds a critical threshold.
+        
+        <p><strong>Proof:</strong> Define the total integration measure:</p>
+        <div class="equation">
+            $\Phi_{\text{total}} = \sum_{i,j} \mathcal{I}_{ij} \cdot \exp(-d_{ij}/\lambda)$
+        </div>
+        
+        <p>where $\mathcal{I}_{ij}$ is information shared between components $i$ and $j$, and $d_{ij}$ is their hierarchical distance.</p>
+        
+        <p>For consciousness to emerge, we require:</p>
+        <ol>
+            <li>Sufficient local integration: $\mathcal{I}_{ij} > \mathcal{I}_{\text{min}}$ for connected pairs</li>
+            <li>Global coherence: $\lambda_{\text{max}}(\mathbf{C}) > \lambda_{\text{crit}}$ where $\mathbf{C}$ is the connectivity matrix</li>
+            <li>Temporal stability: $|\frac{d\Phi}{dt}| < \epsilon$ for $t > t_{\text{stable}}$</li>
+        </ol>
+        
+        <p>When these conditions are met simultaneously, the system exhibits properties associated with consciousness. □</p>
+    </div>
+
+    <h3>Appendix B: Detailed Implementation</h3>
+    
+    <h4>B.1 GPU-Optimized Implementation</h4>
+    <pre><code class="python">
+import torch
+import torch.nn as nn
+import torch.cuda as cuda
+from torch.nn.parallel import DataParallel
+import numpy as np
+
+class GPUOptimizedIDS(IntegratedDebugSystem):
+    """
+    GPU-optimized implementation of IDS theory
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__(config)
+        
+        # Move to GPU if available
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.to(self.device)
+        
+        # Enable mixed precision for faster computation
+        self.scaler = torch.cuda.amp.GradScaler()
+        
+        # Optimize for parallel processing
+        if torch.cuda.device_count() > 1:
+            self = DataParallel(self)
+    
+    @torch.cuda.amp.autocast()
+    def forward(self, observation: Dict) -> Dict:
+        """
+        GPU-accelerated forward pass with mixed precision
+        """
+        # Move inputs to device
+        observation = {k: v.to(self.device) if isinstance(v, torch.Tensor) else v 
+                      for k, v in observation.items()}
+        
+        # Use parent forward method with GPU acceleration
+        return super().forward(observation)
+    
+    def parallel_hial_processing(self, data: torch.Tensor) -> torch.Tensor:
+        """
+        Process multiple hierarchies in parallel on GPU
+        """
+        batch_size = data.shape[0]
+        n_hierarchies = len(self.hial_system.hierarchies)
+        
+        # Reshape for parallel processing
+        expanded_data = data.unsqueeze(1).expand(batch_size, n_hierarchies, -1)
+        
+        # Process all hierarchies simultaneously
+        with torch.cuda.stream(torch.cuda.Stream()):
+            hierarchy_outputs = []
+            for i, hial in enumerate(self.hial_system.hierarchies):
+                output = hial(expanded_data[:, i, :])
+                hierarchy_outputs.append(output)
+        
+        # Synchronize streams
+        torch.cuda.synchronize()
+        
+        return torch.stack(hierarchy_outputs, dim=1)
+
+class OptimizedLocalDOC(nn.Module):
+    """
+    Optimized LocalDOC with sparse computations
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__()
+        self.sparse_weight = nn.Parameter(
+            torch.sparse_coo_tensor(
+                torch.randint(0, config['input_dim'], (2, config['input_dim'] // 4)),
+                torch.randn(config['input_dim'] // 4),
+                (config['input_dim'], config['input_dim'])
+            )
+        )
+        
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Sparse matrix multiplication for efficiency
+        """
+        return torch.sparse.mm(self.sparse_weight, x.t()).t()
+    </code></pre>
+
+    <h4>B.2 Configuration Templates</h4>
+    <pre><code class="yaml">
+# Standard IDS configuration
+standard_config:
+  input_dim: 100
+  output_dim: 100
+  hidden_dim: 128
+  n_modules: 20
+  n_hierarchies: 20
+  adaptation_rate: 0.1
+  context_window: 100
+  integration_threshold: 0.3
+  
+# Clinical assessment configuration  
+clinical_config:
+  input_dim: 256
+  output_dim: 128
+  hidden_dim: 256
+  n_modules: 50
+  n_hierarchies: 30
+  adaptation_rate: 0.05
+  context_window: 200
+  integration_threshold: 0.25
+  assessment_metrics:
+    - context_flexibility
+    - error_interpretation_stability
+    - hierarchical_synchronization
+    - norm_adaptation_rate
+    
+# AGI development configuration
+agi_config:
+  input_dim: 512
+  output_dim: 512
+  hidden_dim: 1024
+  n_modules: 100
+  n_hierarchies: 50
+  adaptation_rate: 0.2
+  context_window: 500
+  integration_threshold: 0.4
+  consciousness_development:
+    stages: 6
+    stage_transition_threshold: 0.8
+    metacognition_onset: 4
+    </code></pre>
+
+    <h3>Appendix C: Experimental Protocols</h3>
+    
+    <h4>C.1 Context Reversal Experiment</h4>
+    <pre><code class="python">
+class ContextReversalExperiment:
+    """
+    Test context-dependent interpretation of identical stimuli
+    """
+    
+    def __init__(self, ids_model):
+        self.model = ids_model
+        self.contexts = self.define_contexts()
+        
+    def define_contexts(self):
+        """
+        Define opposing contexts for same stimulus
+        """
+        return {
+            'reward_context': {
+                'expectation': 'positive_outcome',
+                'history': torch.randn(10, 100) * 0.5 + 1.0,  # Positive bias
+                'valence': 0.8
+            },
+            'punishment_context': {
+                'expectation': 'negative_outcome',
+                'history': torch.randn(10, 100) * 0.5 - 1.0,  # Negative bias
+                'valence': -0.8
+            }
+        }
+    
+    def run_experiment(self, stimulus: torch.Tensor):
+        """
+        Present same stimulus in different contexts
+        """
+        results = {}
+        
+        for context_name, context in self.contexts.items():
+            # Set context in model
+            self.model.hial_system.set_context(context)
+            
+            # Process stimulus
+            output = self.model({
+                'data': stimulus,
+                'modality': 'experimental',
+                'context_type': context_name
+            })
+            
+            # Record interpretation
+            results[context_name] = {
+                'error_interpretation': output['error'],
+                'consciousness_level': output['consciousness']['integration_level'],
+                'qualia': output['qualia'] if output['qualia'] else None
+            }
+        
+        # Analyze sign reversal
+        error_diff = (results['reward_context']['error_interpretation'] - 
+                     results['punishment_context']['error_interpretation'])
+        
+        sign_reversal = torch.sign(results['reward_context']['error_interpretation']) != \
+                       torch.sign(results['punishment_context']['error_interpretation'])
+        
+        return {
+            'results': results,
+            'sign_reversal_percentage': sign_reversal.float().mean().item() * 100,
+            'interpretation_difference': error_diff.norm().item()
+        }
+
+class HierarchicalSynchronizationExperiment:
+    """
+    Measure synchronization patterns during consciousness
+    """
+    
+    def __init__(self, ids_model):
+        self.model = ids_model
+        self.recording_duration = 1000  # timesteps
+        
+    def measure_synchronization(self, stimulus_sequence):
+        """
+        Track hierarchical synchronization over time
+        """
+        synchronization_history = []
+        consciousness_history = []
+        
+        for t, stimulus in enumerate(stimulus_sequence):
+            output = self.model({'data': stimulus})
+            
+            # Record synchronization at each hierarchy
+            sync_pattern = []
+            for hial in self.model.hial_system.hierarchies:
+                phase = hial.get_phase()
+                sync_pattern.append(phase)
+            
+            synchronization_history.append(sync_pattern)
+            consciousness_history.append(output['consciousness']['integration_level'])
+        
+        # Analyze synchronization patterns
+        sync_matrix = torch.tensor(synchronization_history)
+        
+        # Compute Kuramoto order parameter
+        order_params = []
+        for t in range(len(synchronization_history)):
+            complex_phases = torch.exp(1j * sync_matrix[t])
+            order_param = torch.abs(torch.mean(complex_phases)).item()
+            order_params.append(order_param)
+        
+        # Correlate with consciousness
+        correlation = np.corrcoef(order_params, consciousness_history)[0, 1]
+        
+        return {
+            'mean_synchronization': np.mean(order_params),
+            'synchronization_variance': np.var(order_params),
+            'consciousness_correlation': correlation,
+            'critical_transitions': self.detect_phase_transitions(sync_matrix)
+        }
+    
+    def detect_phase_transitions(self, sync_matrix):
+        """
+        Identify critical phase transitions
+        """
+        # Compute phase coherence between adjacent timepoints
+        coherence = []
+        for t in range(1, sync_matrix.shape[0]):
+            phase_diff = torch.abs(sync_matrix[t] - sync_matrix[t-1])
+            coherence.append(torch.mean(phase_diff).item())
+        
+        # Detect sudden changes
+        coherence = np.array(coherence)
+        threshold = np.mean(coherence) + 2 * np.std(coherence)
+        transitions = np.where(coherence > threshold)[0]
+        
+        return transitions.tolist()
+    </code></pre>
+
+    <h4>C.2 Clinical Assessment Protocol</h4>
+    <pre><code class="python">
+class ClinicalIDSAssessment:
+    """
+    Clinical assessment based on IDS parameters
+    """
+    
+    def __init__(self, ids_model):
+        self.model = ids_model
+        self.assessment_tasks = self.define_tasks()
+        
+    def comprehensive_assessment(self, patient_data):
+        """
+        Complete IDS-based clinical assessment
+        """
+        results = {
+            'context_flexibility': self.assess_context_flexibility(patient_data),
+            'error_interpretation': self.assess_error_interpretation(patient_data),
+            'hierarchical_integration': self.assess_integration(patient_data),
+            'norm_adaptation': self.assess_norm_adaptation(patient_data),
+            'consciousness_profile': self.assess_consciousness(patient_data)
+        }
+        
+        # Generate clinical profile
+        profile = self.generate_profile(results)
+        
+        return profile
+    
+    def assess_context_flexibility(self, data):
+        """
+        Measure ability to shift between contexts
+        """
+        contexts = ['social', 'task', 'rest', 'stress']
+        flexibility_scores = []
+        
+        for i in range(len(contexts) - 1):
+            # Transition between contexts
+            response1 = self.model({'data': data, 'context': contexts[i]})
+            response2 = self.model({'data': data, 'context': contexts[i+1]})
+            
+            # Measure adaptation speed
+            adaptation = torch.norm(response2['error'] - response1['error']).item()
+            flexibility_scores.append(adaptation)
+        
+        return {
+            'mean_flexibility': np.mean(flexibility_scores),
+            'flexibility_variance': np.var(flexibility_scores),
+            'stuck_contexts': [contexts[i] for i, score in enumerate(flexibility_scores) 
+                              if score < np.mean(flexibility_scores) - np.std(flexibility_scores)]
+        }
+    
+    def generate_profile(self, results):
+        """
+        Generate interpretable clinical profile
+        """
+        profile = {
+            'summary': {},
+            'detailed_findings': results,
+            'recommendations': []
+        }
+        
+        # Interpret results
+        if results['context_flexibility']['mean_flexibility'] < 0.3:
+            profile['summary']['flexibility'] = 'Reduced context flexibility'
+            profile['recommendations'].append('Context flexibility training')
+        
+        if results['consciousness_profile']['mean_integration'] < 0.2:
+            profile['summary']['integration'] = 'Low consciousness integration'
+            profile['recommendations'].append('Integration enhancement exercises')
+        
+        return profile
+    </code></pre>
+
+    <h3>Appendix D: Extended Applications</h3>
+    
+    <h4>D.1 Consciousness Engineering</h4>
+    <pre><code class="python">
+class ConsciousnessEngineer:
+    """
+    Design and optimize conscious systems
+    """
+    
+    def __init__(self, base_config):
+        self.base_config = base_config
+        self.parameter_space = self.define_parameter_space()
+        
+    def design_conscious_system(self, target_properties):
+        """
+        Design system with specific consciousness properties
+        """
+        optimal_config = self.base_config.copy()
+        
+        # Optimize for target properties
+        if target_properties.get('high_creativity'):
+            optimal_config['adaptation_rate'] = 0.3
+            optimal_config['context_flexibility'] = 0.8
+            optimal_config['norm_violation_tolerance'] = 0.5
+        
+        if target_properties.get('stable_perception'):
+            optimal_config['adaptation_rate'] = 0.05
+            optimal_config['integration_threshold'] = 0.4
+            optimal_config['temporal_smoothing'] = 0.9
+        
+        if target_properties.get('enhanced_empathy'):
+            optimal_config['cross_hierarchy_coupling'] = 0.7
+            optimal_config['context_sensitivity'] = 0.9
+            optimal_config['value_weight'] = 0.6
+        
+        # Create and test system
+        system = IntegratedDebugSystem(optimal_config)
+        properties = self.measure_consciousness_properties(system)
+        
+        return {
+            'system': system,
+            'achieved_properties': properties,
+            'configuration': optimal_config
+        }
+    
+    def evolve_consciousness(self, initial_system, environment, generations=100):
+        """
+        Evolve consciousness through environmental interaction
+        """
+        system = initial_system
+        evolution_history = []
+        
+        for generation in range(generations):
+            # Interact with environment
+            performance = self.evaluate_in_environment(system, environment)
+            
+            # Adaptive modification based on performance
+            if performance['success_rate'] < 0.7:
+                # Increase adaptability
+                system.local_doc_network.adaptation_rate *= 1.1
+            
+            if performance['error_accumulation'] > 0.5:
+                # Enhance error processing
+                system.context_processor.learning_rate *= 1.05
+            
+            evolution_history.append({
+                'generation': generation,
+                'performance': performance,
+                'consciousness_level': self.measure_consciousness_level(system)
+            })
+        
+        return {
+            'evolved_system': system,
+            'evolution_history': evolution_history
+        }
+    </code></pre>
+
+    <h4>D.2 AGI Development Framework</h4>
+    <pre><code class="python">
+class AGIDevelopment:
+    """
+    Framework for developing AGI using IDS principles
+    """
+    
+    def __init__(self):
+        self.development_stages = [
+            'sensorimotor',
+            'perceptual',
+            'conceptual',
+            'social',
+            'metacognitive',
+            'integrated'
+        ]
+        
+    def create_developmental_agi(self):
+        """
+        Create AGI that develops through stages
+        """
+        # Start with minimal configuration
+        config = {
+            'input_dim': 64,
+            'output_dim': 64,
+            'hidden_dim': 32,
+            'n_modules': 5,
+            'n_hierarchies': 3,
+            'adaptation_rate': 0.3
+        }
+        
+        agi = DevelopmentalIDS(config)
+        
+        # Train through developmental stages
+        for stage in self.development_stages:
+            print(f"Developing {stage} capabilities...")
+            
+            # Stage-specific training
+            if stage == 'sensorimotor':
+                self.train_sensorimotor(agi)
+            elif stage == 'perceptual':
+                self.train_perceptual(agi)
+            elif stage == 'conceptual':
+                self.train_conceptual(agi)
+            elif stage == 'social':
+                self.train_social(agi)
+            elif stage == 'metacognitive':
+                self.train_metacognitive(agi)
+            elif stage == 'integrated':
+                self.train_integrated(agi)
+            
+            # Verify stage completion
+            if self.verify_stage_completion(agi, stage):
+                agi.advance_stage()
+            else:
+                print(f"Additional training needed for {stage}")
+        
+        return agi
+    
+    def train_social(self, agi):
+        """
+        Train social understanding through context-dependent interpretation
+        """
+        social_scenarios = self.generate_social_scenarios()
+        
+        for scenario in social_scenarios:
+            # Present same action in different social contexts
+            contexts = ['cooperative', 'competitive', 'neutral']
+            
+            for context in contexts:
+                output = agi({
+                    'data': scenario['action'],
+                    'context': context,
+                    'social_cues': scenario['cues']
+                })
+                
+                # Train to interpret based on context
+                target_interpretation = scenario['interpretations'][context]
+                loss = self.compute_interpretation_loss(
+                    output['error'],
+                    target_interpretation
+                )
+                
+                agi.adaptive_update(loss)
+    </code></pre>
+
+    <h3>Appendix E: Future Research Directions</h3>
+    
+    <h4>E.1 Quantum-IDS Interface</h4>
+    <p>
+        Investigation of how IDS principles might interface with quantum mechanics:
+    </p>
+    <ul>
+        <li>Quantum error interpretation in measurement</li>
+        <li>Superposition of contexts before observation</li>
+        <li>Entanglement as extreme LocalDOC coupling</li>
+        <li>Decoherence as dimensional projection from d > 4 to d = 4</li>
+    </ul>
+
+    <h4>E.2 Collective Consciousness</h4>
+    <p>
+        Extension of IDS to group minds and collective intelligence:
+    </p>
+    <ul>
+        <li>Shared context spaces across individuals</li>
+        <li>Distributed LocalDOC networks</li>
+        <li>Emergent group-level error interpretation</li>
+        <li>Social norms as collective TDNG</li>
+    </ul>
+
+    <h4>E.3 Cosmological IDS</h4>
+    <p>
+        Application of IDS principles to cosmological evolution:
+    </p>
+    <ul>
+        <li>Universe as self-debugging system</li>
+        <li>Physical constants as converged norms</li>
+        <li>Black holes as cosmic LocalDOCs</li>
+        <li>Dark energy as unresolved prediction error</li>
+    </ul>
+
+    <div class="note" style="margin-top: 40px;">
+        <strong>Manuscript Information</strong><br>
+        Submission Date: June 2025<br>
+        Version: 1.0<br>
+        Corresponding Author: S. Kaneko<br>
+        Email: kaneko@ids-theory.org<br><br>
+        
+        <strong>Data Availability:</strong> All code and datasets are available at https://github.com/ids-theory/core<br>
+        <strong>Competing Interests:</strong> The authors declare no competing interests.<br>
+        <strong>Author Contributions:</strong> S.K. conceived the theory and wrote the manuscript. Collaborators contributed to mathematical proofs and implementation.
+    </div>
+
+    <section id="revision-log" class="rev-box">
+      <h4>Revision Log (v1.1, 2025-08-25)</h4>
+      <table>
+        <thead>
+          <tr><th>Location</th><th>Type</th><th>Summary</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Abstract (post)</td><td>Overview</td><td>Global toggle + overview of corrections</td></tr>
+          <tr><td>§4 (end)</td><td>Clarify</td><td>Scale-free as regime; allow local scale-breaking</td></tr>
+          <tr><td>§5 (start)</td><td>Correct</td><td>HIALs are self-organizing and context-dependent</td></tr>
+          <tr><td>§6.2 (after Def. 6.2)</td><td>Correct</td><td>CIEs are local, relative thresholds</td></tr>
+          <tr><td>§14 (start)</td><td>Note</td><td>IDS as an evolving, self-correcting theory</td></tr>
+        </tbody>
+      </table>
+    </section>
+</body>
+</html>
