@@ -5,7 +5,7 @@ version: "Core v2.4 • UHT v0.5.0"
 date: "2025-09-28"
 license: "CC BY 4.0"
 authors:
-  - "S. Kaneko（理論統合）"
+  - "理論統合）"
   - "GPT‑5 Pro（数理・実装統合）"
   - "Collaborators（論文整備・QC）"
 status: "Integrated Complete Draft"
