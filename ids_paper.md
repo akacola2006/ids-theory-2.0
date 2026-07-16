@@ -1,7 +1,7 @@
 # IDS: 階層非共鳴エラー制御理論 — 数理物理から数論・流体・意識・AGIへ
 _A Hierarchical Non-Resonant Error-Control Theory_
 
-**著者**: Kaneko, et al.  
+**著者**:  et al.  
 **日付**: 2025-09-12  
 **キーワード**: IDS, 非共鳴, 黄金比 φ, CIE, Θリンク, ABC予想, Navier–Stokes, 正則性, 誤差流, KAM, RG, QEC
 
