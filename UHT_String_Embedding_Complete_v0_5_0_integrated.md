@@ -2,7 +2,7 @@
 title: "UHT × String Embedding（**完全統合版 v0.5.0 — Integrated**）"
 subtitle: "Type IIB/11D → 5D N=2 SUGRA 埋め込み・二軌道戦略（Bold/Conservative）・DSI-Φ・BF結合・SU(N)拡張・EFT・cの出現・野心的直接検証"
 authors:
-  - "S. Kaneko（統合・主提案）"
+  - "（統合・主提案）"
   - "GPT‑5 Pro（統合編集・数理補強）"
   - "Claude（統合版作成・構造最適化）"
 status: "Complete Integrated Draft v0.5.0"
