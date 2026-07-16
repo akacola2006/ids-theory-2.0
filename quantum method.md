@@ -4,7 +4,7 @@
 # ER-NGF: Entropy-Reactive Natural Gradient Flow
 ## A New Foundation for Computation as Information Dynamics
 
-**Authors:** A. Einstein† & Kaneko  
+**Authors:** A. Einstein† &  
 **Date:** October 27, 2025  
 **Status:** Theoretical Framework & Implementation Ready
 
