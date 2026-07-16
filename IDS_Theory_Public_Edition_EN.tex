@@ -1,0 +1,568 @@
+% IDS Theory --- Public Edition (formal paper format)
+% Compiled from IDS Canonical Theory v2.1.0-r2 (public-r6.2)
+% Build: latexmk -pdf IDS_Theory_Public_Edition_EN.tex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{booktabs,array,tabularx,xltabular}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[colorlinks=true,linkcolor=linknavy,citecolor=linknavy,urlcolor=linknavy]{hyperref}
+
+\definecolor{linknavy}{RGB}{31,79,111}
+\definecolor{boxline}{RGB}{110,100,80}
+\definecolor{boxbg}{RGB}{247,245,238}
+
+\emergencystretch=1.5em
+\setlength{\parskip}{0pt}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% Canonical statement box
+\mdfdefinestyle{canon}{%
+  linecolor=boxline,linewidth=0.9pt,
+  backgroundcolor=boxbg,
+  topline=false,bottomline=false,rightline=false,
+  innerleftmargin=10pt,innerrightmargin=10pt,
+  innertopmargin=7pt,innerbottommargin=7pt,
+  skipabove=10pt,skipbelow=10pt}
+\newenvironment{canonbox}{\begin{mdframed}[style=canon]\itshape}{\end{mdframed}}
+\newenvironment{defbox}[1]{\begin{mdframed}[style=canon]\textbf{\textsc{#1}.}\ \itshape}{\end{mdframed}}
+
+% Named theorem with canonical numbering
+\newenvironment{namedthm}[1]{\par\addvspace{\medskipamount}\noindent\textbf{#1.}\ \itshape\ignorespaces}{\par\addvspace{\medskipamount}}
+
+\theoremstyle{plain}
+\newtheorem*{principle*}{Principle}
+
+\title{\bfseries IDS Theory: Information-Driven Stress, Debug, and Self-organization\\[6pt]
+\large A Condensed Public Edition of the Canonical Reconstruction (v2.1.0-r2)}
+\author{\normalsize Public edition prepared from the IDS Canonical Theory, revision public-r6.2}
+\date{July 16, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+IDS is a principle theory of open hierarchical systems under finite observational resources. Its core separates latent positive accumulation from observable finite allocation, equips the observable manifold with a scalar stress functional dissipated by natural gradient flow, and identifies the cross-scale invariant not with raw information or scalar stress but with the non-integrable Hodge residual class $[\omega]\in C^1/\operatorname{im}d_0$. Admissible coarse-graining descends to the residual quotient; eliminative coarse-graining generates an anomaly, which drives self-organization. Structures are stable nonzero co-fixed points of residual dynamics and observer selection; resilience is the persistence of residual classes under perturbation, observation change, and coarse-graining, quantified by the spectral gap of the curvature Laplacian. This public edition condenses the canonical document: it presents the axioms, the core definitions, the principal theorems with short proofs where available, the falsifiability commitments, and the theory's honest boundaries, while omitting internal audit ledgers, freeze records, and revision bookkeeping. The full canonical text (in Japanese) remains the authoritative source.
+\end{abstract}
+
+\medskip
+\tableofcontents
+
+\section{What Is IDS Theory?}\label{sec:intro}
+
+Every organized system --- a brain, a market, an ecosystem, a machine-learning model, perhaps the universe itself --- observes the world with \emph{finite resources}, compresses what it sees, and accumulates tension where its current description fails. IDS theory is a mathematical framework for that situation. Its strongest core can be condensed into one sentence:
+
+\begin{canonbox}
+IDS theory studies open hierarchical systems with finite observational resources, in which observable scalar stress dissipates, latent structure accumulates on a positive cone, and the non-integrable Hodge residual classes that coarse-graining cannot erase are preserved, transported, and generated as structure.
+\end{canonbox}
+
+Three working definitions anchor everything that follows.
+
+\begin{defbox}{Stress}
+Residual pressure that the current descriptive system cannot turn into a gradient.
+\end{defbox}
+
+\begin{defbox}{Debug}
+The reorganization of residual classes by dissipation, conservation, re-injection, and change of coarse-graining.
+\end{defbox}
+
+\begin{defbox}{Resilience}
+The stable persistence of residual structure across perturbation, observation change, and coarse-graining.
+\end{defbox}
+
+In plain terms: \emph{stress} is what your current model of the world cannot explain away; \emph{debugging} is not deleting errors but reorganizing them; \emph{resilience} is the capacity of structure to survive being simplified.
+
+The mathematical heart of the theory is not a number but an equivalence class --- the \textbf{residual class} of an observed flow $\omega$, taken modulo everything that can be written as a gradient:
+\begin{equation}
+\boxed{\,[\omega]\in C^1/\operatorname{im}d_0\,.}
+\label{eq:heart}
+\end{equation}
+The golden ratio $\varphi$, which appears prominently in earlier versions of this line of work, is deliberately \emph{not} an axiom. It emerges as a theorem --- the Perron signature of the smallest binary swap--aggregation processor and the unique solution of a self-dual balance equation (Section~\ref{sec:phi}) --- but the theory is defined without it.
+
+\subsection{How the claims are layered}
+
+IDS does not treat all of its statements with the same confidence. Every claim belongs to one of six layers (Table~\ref{tab:layers}), and unproven extensions are never allowed to contaminate the proven core. This public edition walks through the layers roughly in order, and Section~\ref{sec:notclaim} states explicitly what the theory does \emph{not} claim.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}l l Y Y@{}}
+\toprule
+Layer & Name & Content & Status \\
+\midrule
+C0 & Mathematical core & Finite resources, positive cones, natural gradient, Hodge residuals, admissible coarse-graining & Definitions and theorems \\
+C1 & Residual dynamics & $\dot\rho=-L\rho+a$, Type I/II structures, observer co-fixed points & Conditional theorems \\
+C2 & Causality, resilience & $(K,\eta)\sim(L,J)$, spectral gaps, hypocoercivity & Theorems plus hypotheses \\
+C3 & Physical bridges & Causal-Hodge Bridge, information-thermal connection & Models with extra axioms \\
+C4 & Noncommutative and control extensions & Gauge orbits, Type III promotion, control-relevant quotients & Finite regular layers proven; continuum open \\
+C5 & Philosophy and time & Creative oblivion, future/past boundaries & Interpretations and hypotheses \\
+\bottomrule
+\end{tabularx}
+\caption{The six confidence layers of the IDS canon.}
+\label{tab:layers}
+\end{table}
+
+\section{The Core on One Page}\label{sec:core}
+
+\subsection{The state of an IDS system}
+
+An IDS system is described, at minimum, by a finite oriented cell complex $X$ (the ``observation complex'' --- nodes, links, and faces on which measurements live), together with:
+\begin{itemize}[itemsep=1pt,topsep=3pt]
+\item a cochain complex $C^0(X)\xrightarrow{\,d_0\,}C^1(X)\xrightarrow{\,d_1\,}C^2(X)$ with $d_1d_0=0$, where $C^1$ carries flows, differences, and response fields on edges;
+\item a metric $g$ (possibly induced by the observers);
+\item a latent positive cone $K$: hidden weights may accumulate without bound;
+\item an observation manifold $M$ (for example the probability simplex): observable allocations are always finite and normalized;
+\item a scalar stress functional $\mathcal S:M\to\mathbb R_{\ge0}$;
+\item a coarse-graining map $\Phi$, an observer distribution $\mu$, a curvature Laplacian $L=\delta_1 d_1$, a conservative generator $J$, and an anomaly source $a$.
+\end{itemize}
+The separation between the \textbf{latent cone} (which may grow) and the \textbf{observable simplex} (which is always renormalized to finite total weight) is the first structural axiom of the theory: attention is finite even when accumulation is not.
+
+\subsection{The residual}
+
+Any observed edge flow $\omega\in C^1(X)$ splits by the finite Hodge decomposition into a gradient part, a harmonic part, and a coexact part:
+\begin{equation}
+\omega=d_0\phi+h+\delta_1\psi.
+\end{equation}
+The gradient part $d_0\phi$ is the portion a local potential can explain --- and therefore dissipate. What remains,
+\begin{equation}
+\mathfrak r(\omega)=(I-P_{\mathrm{grad}})\,\omega=h+\delta_1\psi,
+\end{equation}
+is the \textbf{structural stress residual}. The canonical object is not this representative but the quotient class
+\begin{equation}
+\boxed{\,[\omega]\in R^1(X):=C^1(X)/\operatorname{im}d_0\,,}
+\end{equation}
+because only the class is stable under changes of potential and descends correctly under coarse-graining.
+
+\subsection{The debug equation}
+
+Promoting the residual class to a dynamical variable gives the minimal abelian \textbf{debug equation}
+\begin{equation}
+\boxed{\ \dot\rho=-L\rho+a,\qquad L=\delta_1d_1,\ }
+\end{equation}
+and, once causal orientation is included,
+\begin{equation}
+\boxed{\ \dot\rho=-L\rho+J\rho+a.\ }
+\label{eq:debug}
+\end{equation}
+Each term has a plain reading: $-L\rho$ is dissipative debugging (smoothing out what can be smoothed), $J\rho$ is conservative circulation (transport and rotation that destroy nothing), and $a$ is the anomaly --- stress injected by coarse-graining itself, by external forcing, or by unresolved information.
+
+\subsection{Structure}
+
+A \textbf{structure} is a stable, nonzero co-fixed point of the residual dynamics and the observer selection:
+\begin{equation}
+\boxed{\ 0=-L_{\mu^\ast}\rho^\ast+J_{\mu^\ast}\rho^\ast+a_{\mu^\ast},\qquad \rho^\ast\ne0.\ }
+\end{equation}
+In the simplest case $J=0$ the equilibrium decomposes as $\rho^\ast=h+L^+a$:
+\begin{itemize}[itemsep=1pt,topsep=3pt]
+\item $h\in H^1(X)$ --- \textbf{Type I}, topologically protected structure;
+\item $L^+a$ --- \textbf{Type II}, structure maintained by ongoing forcing and dissipation in balance.
+\end{itemize}
+A third, genealogical type --- \textbf{Type III} --- is defined not at a fixed scale but across scales (Section~\ref{sec:typeiii}).
+
+\subsection{Resilience}
+
+Near a structure, linearized recovery obeys $\|y(t)\|\le e^{-\lambda^+_{\min}(L)\,t}\|y(0)\|$, so the positive spectral gap
+\begin{equation}
+\Delta_{\mathrm{res}}=\lambda^+_{\min}(L)
+\end{equation}
+is the \textbf{resilience gap}: the guaranteed exponential rate at which residual structure returns after perturbation. $\Delta_{\mathrm{res}}>0$ is the IDS analogue of a mass gap (Section~\ref{sec:massgap}).
+
+\section{The Axioms in Brief}\label{sec:axioms}
+
+The axioms are not claims about how the world must be; they define what counts as an IDS-type system. Table~\ref{tab:axioms} states them informally. Axiom A13 deserves emphasis: the honesty axiom is why this document can state cleanly which parts are theorems and which are hopes.
+
+\begin{small}
+\begin{xltabular}{\textwidth}{@{}l >{\RaggedRight}p{3.4cm} Y@{}}
+\caption{The axioms of IDS, stated informally.}\label{tab:axioms}\\
+\toprule
+Axiom & Name & Content \\
+\midrule
+\endfirsthead
+\toprule
+Axiom & Name & Content \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+A0 & Observation complex & Observations live on a finite oriented cell complex with $d_1d_0=0$. \\
+A1 & Finite observational resources & Observable allocations lie on the simplex: positive and summing to one. \\
+A2 & Latent positive structure & Hidden weights live in a positive cone and may accumulate; observation is their normalization $x=u/\sum_iu_i$. \\
+A3 & Scalar stress functional & A nonnegative stress $\mathcal S$ exists on the observation manifold --- and $\varphi$ must not be built into it. \\
+A4 & Coordinate-invariant dissipation & Between events, states follow the natural gradient flow $\dot x=-\operatorname{grad}_g\mathcal S(x)$. \\
+A5 & Local swap--aggregation & Discrete events update latent weights by cone-positive maps; the minimal binary case is $F=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$. \\
+A6 & Structural residual & The essential structure of a flow is its class $[\omega]\in C^1/\operatorname{im}d_0$. \\
+A7 & Admissible coarse-graining & Admissible maps send gradients to gradients, hence descend to the residual quotient. \\
+A8 & Eliminative anomaly & Coarse-graining that eliminates hidden degrees of freedom generally violates A7; the defect $\mathfrak A_\Phi$ is the anomaly. \\
+A9 & Residual debugging & Residual classes evolve minimally by $\dot\rho=-\delta_1d_1\rho+a$. \\
+A10 & Observer covariance & Observers are not passive: their kernels and metrics enter the decomposition of residuals. \\
+A11 & Causal decomposition & Causal structure splits into an undirected skeleton $K$ and an orientation field $\eta$. \\
+A12 & Admissible conservative generators & $J$ must preserve the gradient subspace and descend to the quotient; strong admissibility additionally protects the harmonic sector. \\
+A13 & Canonical honesty & Every claim must be labeled: theorem, definition, conditional theorem, hypothesis, interpretation, or open problem. \\
+A14 & Self-regeneration (model-selective) & A model may claim self-regeneration only if its comparison rules, boundaries, and return maps are regenerated internally, with no external template oracle. \\
+A15 & Information-thermal bundle (model-selective) & A model may carry a bundle of hidden information-enthalpy coordinates with a vertically nondegenerate exchange form. \\
+\end{xltabular}
+\end{small}
+
+\section{Two Kinds of Stress, and What a Bug Is}\label{sec:stress}
+
+IDS distinguishes two fundamentally different kinds of stress:
+\begin{itemize}[itemsep=1pt,topsep=3pt]
+\item \textbf{Scalar stress} $\mathcal S(x)$ --- a potential on the observation manifold. It dissipates under natural gradient flow. It answers ``how much tension is there?''
+\item \textbf{Structural stress residual} $[\omega]\in C^1/\operatorname{im}d_0$ --- the part of an observed flow that no local potential can produce. It answers ``what shape does the irreducible tension have?''
+\end{itemize}
+
+\begin{canonbox}
+$\mathcal S$ governs dissipation; $[\omega]$ governs structure.
+\end{canonbox}
+
+A \textbf{bug}, in IDS, is precisely a nonzero residual class relative to a given complex, metric, and coarse-graining:
+\begin{equation}
+\mathrm{Bug}_{X,g}(\omega):=[\omega]_X\in C^1(X)/\operatorname{im}d_0.
+\end{equation}
+A bug is not an absolute defect. Under a different coarse-graining it may vanish --- or be amplified. \textbf{Debugging} is any transformation of the residual data $(R^1,L,J,a,\mu)$; driving $\rho\to0$ is only one special case. Stabilizing a nonzero structure $\rho^\ast\ne0$ is equally a form of debugging. This is the formal version of a familiar truth: a mature system does not eliminate all its tensions --- it organizes them.
+
+\section{Coarse-Graining: What Survives Simplification}\label{sec:coarse}
+
+\subsection{The coarse-graining principle}
+
+The single most important principle in IDS:
+
+\begin{canonbox}
+What coarse-graining preserves is neither raw information nor scalar stress, but the non-integrable residual class.
+\end{canonbox}
+
+Two residuals with the same norm can have entirely different homology, circulation, and boundary response --- a scalar is a measurement, not the thing itself.
+
+\subsection{Admissible versus eliminative}
+
+\textbf{Admissible coarse-graining} satisfies $\Phi(\operatorname{im}d_0)\subseteq\operatorname{im}d_0$: gradients stay gradients, and the map descends to the residual quotient. It transports residual classes faithfully and kills only integrable deviations.
+
+\textbf{Eliminative coarse-graining} integrates out hidden degrees of freedom and generally breaks this condition. Something that was microscopically exact reappears after coarse-graining as a genuine residual. That defect,
+\begin{equation}
+\mathfrak A_\Phi=q\circ\Phi\circ d_0\ne0,
+\end{equation}
+is the \textbf{anomaly} --- and it is the engine of self-organization in this theory. Vanishing anomaly and admissibility are equivalent.
+
+\subsection{Type III: structure with a history}\label{sec:typeiii}
+
+Some structure is not protected topology (Type I) and not maintained forcing (Type II), but \textbf{promoted memory}: a mode that decayed at the fine scale becomes harmonic --- protected --- at the coarse scale. When only 2-cell constraints are forgotten, this promoted sector is exactly the orthogonal complement
+\begin{equation}
+\boxed{\ \mathcal T_{\mathrm{III}}=\bar H^1\ominus H^1=\operatorname{im}\delta_1\cap\ker\bar d_1\ }
+\end{equation}
+(canonical Theorem 25). For general finite compressions $K$, the promotion map $\Gamma_K=\bar PK(I-P)$ identifies which fine decaying modes land in coarse zero-modes, and its pseudoinverse $\Gamma_K^+$ is the canonical decoder that recovers them (canonical Theorem 26). The canonical slogan:
+
+\begin{canonbox}
+Local fine curvature / constraint response $\longrightarrow$ coarse global harmonic memory.
+\end{canonbox}
+
+Debugging, in this light, is a \emph{choice of coarse-graining}: changing the level of description re-selects which residuals count as structure.
+
+\section{Causality Without Starting From Arrows}\label{sec:causality}
+
+IDS refuses to reduce causality to a directed acyclic graph. Causal structure is decomposed as $\mathcal C=(K,\eta)$: first an \textbf{undirected constraint skeleton} $K$ (which degrees of freedom can constrain each other at all), then an \textbf{orientation field} $\eta$ (which way influence flows) as additional structure. In the commutative layer these are realized by operators:
+\begin{equation}
+K\leftrightarrow L=\delta_1d_1,\qquad \eta\leftrightarrow J.
+\end{equation}
+
+The arrow of causality comes in three strengths:
+\begin{description}[itemsep=1pt,topsep=3pt]
+\item[Level 0 --- no arrow.] $J=0$; pure dissipation, readable as gradient flow.
+\item[Level 1 --- metric-relative arrow.] $J\ne0$ but the dynamics can still be made self-adjoint in some metric; the arrow is representation-dependent.
+\item[Level 2 --- intrinsic arrow.] The spectrum is non-real or carries Jordan blocks; no real inner product can symmetrize it. The arrow is a spectral invariant.
+\end{description}
+
+The causal resilience principle then reads: a system is resilient when its non-integrable residual class has a stable, coarse-graining-compatible attractor under $K$ and $\eta$ ---
+\begin{equation}
+0=-L\rho^\ast+J\rho^\ast+a,\qquad
+\Phi_\ast[\rho^\ast]=[\rho^\ast],\qquad
+\lambda^+_{\min}(L)>0.
+\end{equation}
+
+\section{Five Types of Resilience}\label{sec:resilience}
+
+Table~\ref{tab:resilience} summarizes the five canonical types. Hypocoercive resilience deserves a comment: even directions with \emph{no direct dissipation} can recover, provided the conservative rotation $\Omega$ keeps turning them into dissipative directions until the whole space is covered. The minimal mechanism is a theorem; it formalizes ``the ability to rotate broken information into a repairable channel.''
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}l Y >{\RaggedRight}p{3.9cm} Y@{}}
+\toprule
+Type & Mechanism & Formula & Everyday analogue \\
+\midrule
+Type I & Topological protection & $\rho^\ast=h\in H^1$ & A memory or identity that survives because it is a closed loop nothing local can cut \\
+Type II & Forcing--dissipation balance & $\rho^\ast=L^+a$ & Life, cities, markets: order that persists only while flux flows \\
+Type III & Cross-scale promotion & $\mathcal T_{\mathrm{III}}=\bar H^1\ominus H^1$ & A childhood constraint that became a permanent trait of the adult \\
+Spectral & Gap-driven recovery & $\Delta_{\mathrm{res}}=\lambda^+_{\min}(L)>0$ & Bouncing back at a guaranteed rate \\
+Hypocoercive & Rotation into repairable directions & $A=D+\Omega$, H\"ormander-type span condition & Damage that cannot be fixed directly gets routed to where it can be \\
+\bottomrule
+\end{tabularx}
+\caption{The five types of resilience.}
+\label{tab:resilience}
+\end{table}
+
+\section{Where the Golden Ratio Actually Lives}\label{sec:phi}
+
+The golden ratio is not an axiom of IDS --- that is itself an axiom (A3 forbids building $\varphi$ into the stress functional). Where $\varphi$ does appear, it appears as a \emph{theorem about minimal architectures}. Theorem numbers follow the canonical document.
+
+\begin{namedthm}{Theorem 8 (binary minimax)}
+The unique minimizer of the binary self-similar relay cost $J(\rho)=\max\{1-\rho,\rho^2\}$ on $0<\rho<1$ is
+\begin{equation*}
+\rho^\ast=\frac1\varphi=\frac{\sqrt5-1}{2},
+\end{equation*}
+with minimum value $1/\varphi^2$.
+\end{namedthm}
+
+\begin{proof}
+One curve falls, the other rises; the minimax sits at their crossing, $\rho^2+\rho-1=0$, whose positive root is $1/\varphi$.
+\end{proof}
+
+\begin{namedthm}{Theorem 9 (swap--aggregation Perron ratio)}
+The minimal binary swap--aggregation processor $F=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ drives any positive initial weight to the ratio
+\begin{equation*}
+\lim_{t\to\infty}\frac{u_{2,t}}{u_{1,t}}=\varphi,
+\qquad
+\Pi(u_t)\to(\varphi^{-2},\varphi^{-1}).
+\end{equation*}
+\end{namedthm}
+
+\begin{proof}
+The characteristic polynomial is $\lambda^2-\lambda-1=0$, with eigenvalues $\varphi$ and $-\varphi^{-1}$. $F$ is a primitive nonnegative matrix, so by Perron--Frobenius every positive initial vector converges projectively to the dominant eigenvector $v=(1,\varphi)^T$.
+\end{proof}
+
+\begin{namedthm}{Theorem 18 (no free $\varphi$)}
+The bare geometry of the positive-definite cone, with its full congruence symmetry $\Sigma\mapsto A\Sigma A^T$, singles out no special point.
+\end{namedthm}
+
+\begin{proof}
+If $P$ were invariant under all congruences, then in particular $t^2P=P$ for all $t>0$, impossible for $P\ne0$. Scale invariance alone kills every candidate.
+\end{proof}
+
+\begin{namedthm}{Theorem 19 (self-dual balance selects $\varphi G$)}
+Add one structural demand --- that the state exceed its reference exactly by its own dual, $\Sigma-G=G\Sigma^{-1}G$ --- and the unique solution is
+\begin{equation*}
+\Sigma=\varphi G.
+\end{equation*}
+\end{namedthm}
+
+\begin{proof}
+Whitening by $X=G^{-1/2}\Sigma G^{-1/2}$ turns the equation into $X-I=X^{-1}$, i.e.\ $X^2-X-I=0$ on positive eigenvalues, whose only positive root is $\varphi$.
+\end{proof}
+
+Together: geometry alone never chooses the golden ratio; the golden ratio is the signature of a specific minimal processing architecture and a specific self-dual balance. This is a sharper and humbler claim than ``$\varphi$ is everywhere'' --- and it is falsifiable (Section~\ref{sec:falsify}).
+
+\section{The Mass Gap, Reformulated --- Honestly}\label{sec:massgap}
+
+The IDS version of a mass gap is the positive spectral bottom of the residual Laplacian:
+\begin{equation}
+\boxed{\ \Delta_{\mathrm{IDS}}=\inf\operatorname{Spec}^+(\delta_1d_1),\ }
+\end{equation}
+and the theory's central identification is
+
+\begin{canonbox}
+mass gap $=$ resilience gap $=$ nonzero recovery rate of residual structure.
+\end{canonbox}
+
+A gapped system is one whose nonzero residual excitations are spectrally separated from its zero modes --- one that cannot dissolve into arbitrarily soft deformations.
+
+\paragraph{The honest boundary.}
+This is a definition within the commutative residual layer, \emph{not} a proof of the Yang--Mills mass gap. The road from here to Yang--Mills requires replacing residual classes by gauge orbits, introducing connections and curvature $F_A=dA+A\wedge A$, recovering the commutative theory as a tangent approximation at flat connections, controlling the covariant Laplacian, and proving vacuum spectral separation after quantization. The canonical statement is deliberately modest:
+
+\begin{canonbox}
+IDS does not solve the Yang--Mills mass gap; it reformulates the mass gap as the resilience gap of residual structure.
+\end{canonbox}
+
+Version 2.0 of the canon added a quantitative program toward the physical case --- a direct multiscale route in which a scale-unitary decomposition, a uniform positive ``tariff'' on every detail channel, a bounded decoder, and a transported defect budget below one jointly imply a vacuum-complement lower bound. For four-dimensional Yang--Mills the one remaining load-bearing statement is called \textbf{Physical Non-Abelian Tariff Descent}: all of these bounds must be verified on the actual transfer Hamiltonian, uniformly in volume, lattice spacing, scale, boundary condition, and global sector. That statement remains open, and the canon explicitly does \textbf{not} claim the mass gap.
+
+\section{IDS Holography}\label{sec:holography}
+
+IDS holography is \emph{not} defined as ``boundary residuals encode the bulk,'' and a coarse-graining defect alone is never called holography --- a defect cannot distinguish holographic encoding from plain information loss. The canonical form requires three conditions at once:
+
+\begin{canonbox}
+global intertwining $+$ subregion nonclosure $+$ recoverability.
+\end{canonbox}
+
+\begin{enumerate}[itemsep=1pt,topsep=3pt]
+\item \textbf{Global intertwining.} An encoding $V:\mathcal H_{\mathrm{bulk}}^{\mathrm{code}}\to\mathcal H_\partial$ commutes with the dynamics: $U_\partial(t)V=VU_{\mathrm{bulk}}(t)$.
+\item \textbf{Subregion nonclosure.} Restricted to a boundary subregion, the dynamics generally fails to close: local pieces of the boundary do not autonomously carry the global logical information.
+\item \textbf{Recoverability.} A decoder exists: $D_A\Pi_AV=I_{\mathrm{code}}$. In the finite linear case, the canonical decoder is the pseudoinverse $\Gamma_K^+$ from the Type III theory.
+\end{enumerate}
+
+When a fine Type II sector is promoted to coarse Type I \emph{and} remains decodable, the promotion is called \textbf{holographic Type III} --- recoverable memory, as opposed to mere destruction. IDS holography is an abstract principle about structure surviving locally invisible encodings; it is not a derivation of AdS/CFT.
+
+\section{Time: How Future and Past Debug the Present}\label{sec:time}
+
+Nothing in IDS sends physical signals backward in time. The claim is different and more careful: \textbf{the present debugging trajectory is determined jointly by memory of the past and constraints from the future.}
+\begin{itemize}[itemsep=1pt,topsep=3pt]
+\item \textbf{The past} persists as harmonic residuals $h\in H^1$, memory kernels $a(t)$, observer histories, and accumulated latent weights.
+\item \textbf{The future} constrains as terminal conditions, objective functions, expected prediction errors, and desired fixed points.
+\end{itemize}
+Mathematically this is a \textbf{two-boundary problem} --- the same structure as forward--backward smoothing in statistics, where the state estimate at time $t$ uses both past and future observations:
+\begin{equation}
+\rho^\ast=\arg\min_{\rho}
+\left\{
+\int_{t_0}^{t_1}\tfrac12\|\dot\rho+L\rho-a\|^2\,dt
++\Phi_{\mathrm{past}}(\rho(t_0))
++\Phi_{\mathrm{future}}(\rho(t_1))
+\right\}.
+\end{equation}
+
+Two consequences are worth stating in plain language.
+
+\paragraph{Creative past reinterpretation.}
+The facts of the past do not change; the \emph{residual class} of the past changes when the coarse-graining or the observation metric changes: $[\omega_{\mathrm{past}}]_{X,g}\to[\omega_{\mathrm{past}}]_{X',g'}$. Psychological integration, scientific revolutions, institutional reform, and an AI revising its own logs all share this form.
+
+\paragraph{The arrow of time as creative oblivion.}
+Perfect memory is reversible and produces no macroscopic arrow. It is because coarse-graining erases information that entropy gradients --- and a direction of time --- exist. In IDS, forgetting is not a defect; it is a condition for the generation of structure.
+
+\section{What IDS Does Not Claim}\label{sec:notclaim}
+
+The honesty axiom (A13) requires the theory to be explicit about its own boundaries. This section is part of the canon, not an afterthought.
+
+\begin{itemize}[itemsep=2pt,topsep=3pt]
+\item \textbf{No Yang--Mills solution.} The mass gap is reformulated, not proven. The remaining obstacle (Physical Non-Abelian Tariff Descent) is stated as an open problem.
+\item \textbf{No universal golden ratio.} $\varphi$ is the signature of specific minimal architectures (Theorems 8, 9, 19). Bare geometry selects nothing (Theorem 18). Systems without those architectures have no reason to exhibit $\varphi$.
+\item \textbf{No AdS/CFT derivation.} IDS holography is an abstract encoding-recovery principle.
+\item \textbf{No retrocausality.} Future-boundary debugging is inference and control under two-point boundary conditions, not physical signaling into the past.
+\item \textbf{No dark-matter discovery claim.} The Causal-Hodge Bridge --- an additional physical model mapping residuals to galactic dynamics --- shows promising scaling relations, but the canon records that no $5\sigma$ discovery is claimed, that the amplitude is likely galaxy-dependent, and that lensing--dynamics consistency ($\Sigma=1$) is a high-leverage route to falsify it.
+\item \textbf{No self-regeneration from spectra alone.} A no-go theorem (canonical Theorem 38) proves that the observed return operator alone cannot distinguish endogenous self-renewal from an external oracle implementing the same map. Genuine self-regeneration requires independently verifiable causal closure --- stated as explicit, falsifiable constitutive conditions, not derived from operator theory.
+\item \textbf{No cryptographic threat.} The algorithmic branch (spectral folding, phase-preserving search) is treated as a mathematically stimulating application, with no security claims.
+\item \textbf{No claim that all systems self-regenerate, and no perpetual motion.} The self-regeneration axiom (A14) selects a model class; it forbids only free external template oracles, not energy and resource flows.
+\end{itemize}
+
+\section{How the Theory Could Be Wrong}\label{sec:falsify}
+
+Each core claim carries a prediction and a falsification condition. Table~\ref{tab:falsify} gives a condensed selection from the falsifiability ledger. The theory also names its own retreat positions: if self-coarse-graining only improves compression while prediction and control degrade, the self-coarse-graining claims fall; if coarse-graining-tower curvature can always be removed by reparametrization, the geometric stress claims fall.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}>{\RaggedRight}p{3.2cm} Y Y@{}}
+\toprule
+Claim & Prediction & Falsified if \\
+\midrule
+Natural gradient dissipation & $\mathcal S$ is non-increasing between events & $\mathcal S$ increases persistently \\
+Residual coarse-graining & Admissible maps kill gradient components & A gradient maps to a non-gradient \\
+$\varphi$ minimax & Binary self-similar cost minimized at $1/\varphi$ & The cost is not $\max\{1-\rho,\rho^2\}$ \\
+Perron ratio & Swap--aggregation ratios converge to $\varphi$ & The update matrix is not $F$, or not primitive \\
+Type II structure & Forcing sustains nonzero equilibrium & Drift when $a\notin\operatorname{Range}(L)$ \\
+Resilience gap & $\lambda^+_{\min}>0$ gives exponential recovery & Zero gap with power-law drifting \\
+Causal-Hodge Bridge & Non-integrable structure in closure residuals & Large-sample ratio at or below 1; $\Sigma\ne1$ in lensing vs.\ dynamics \\
+Type III promotion & Rank loss of constraints matches newborn harmonic dimensions & Orthogonal identification or semigroup limit fails \\
+Control quotient & Same class $\Rightarrow$ same future response under all admitted interventions & Response differs within an equivalence class \\
+Future-boundary debugging & Changing terminal conditions changes present optimal paths & Two-boundary models never improve on measured behavior \\
+\bottomrule
+\end{tabularx}
+\caption{Condensed falsifiability ledger.}
+\label{tab:falsify}
+\end{table}
+
+\section{Beyond Physics: The Same Mathematics Elsewhere}\label{sec:beyond}
+
+These applications are interpretations (layer C5) --- disciplined by the core, but not theorems.
+
+\paragraph{AI and self-debugging.}
+An IDS-style AI is not a machine that merely reduces wrong answers. It observes its residual classes (prediction error, normative error), coarse-grains them, re-encodes them, and updates its own response structure --- a self-debugging loop over its own logs. Hallucination, in this reading, is a non-integrable residual: an output that no consistent local potential over the model's knowledge can generate.
+
+\paragraph{Mind and body.}
+Psychological stress appears as experiential residue that the current self-model cannot gradient-ize. Trauma behaves like a closed-but-not-exact memory loop ($H^1$-like); repetition compulsion is re-excitation of the same residual class; integration is re-representation of the residual under a new coarse-graining --- a new language for the same history.
+
+\paragraph{Society and institutions.}
+Institutional bugs are non-integrable frictions that no local optimization removes. Scandal spikes are boundary-log residuals; revolutions are changes of coarse-graining coordinates. A resilient democracy, in IDS terms, is an institution that does not suppress residuals but renders them visible and guides them to stable co-fixed points.
+
+\paragraph{Life.}
+Life is the archetypal Type II structure: $\rho^\ast=L^+a$. Stop the flux and the structure decays; while flux persists, order is maintained as a balance between dissipation and re-injection.
+
+\paragraph{Cosmology.}
+A speculative bridge reinterprets dark-sector phenomenology via information loss and residual response. It is kept strictly modular: nothing in the core depends on it.
+
+\section{The Five Canonical Layers}\label{sec:layers}
+
+The mature theory has five load-bearing layers, built in order.
+
+\begin{enumerate}[itemsep=2pt,topsep=3pt]
+\item \textbf{The heart} --- the residual class $[\omega]\in C^1/\operatorname{im}d_0$ and its dynamics.
+\item \textbf{The vessel} --- gauge-information geometry: a hierarchical bundle of probability manifolds over scale space, Fisher/SPD metrics on fibers (canonical by Chentsov-type monotonicity), irreversible coarse-graining maps between fibers, and a gauge connection comparing surviving degrees of freedom across scales. One line: \emph{IDS is the gauge-information geometry of coarse-grained probability manifolds.} The proven commutative core survives unchanged as the flat, abelian, gauge-fixed limit.
+\item \textbf{The process} --- coarse-graining selects, transports, and sometimes generates obstruction classes, which become memory, structure, computation, and effective geometric stress.
+\item \textbf{The motion} --- residuals coupled to transport can be \emph{carrierized}: externalized as carrier states, propagated between systems and scales, and re-encoded as new residual classes in receivers, closing the cycle residual $\to$ carrier $\to$ new residual $\to$ geometry update.
+\item \textbf{The regeneration closure} --- a split residual bridge connects the static quotient to a full return cycle: an exact Feshbach reduction yields the self-energy $\Sigma_{\mathrm{br}}^{\mathrm{self}}(z)=\gamma(zI-\mathsf n)^{-1}\lambda$ describing how structure exits into hidden carriers and re-enters the same residual quotient --- together with the no-go theorem that spectra alone can never certify self-regeneration.
+\end{enumerate}
+
+On top of these, version 2.0 added a quantitative physical-closure toolkit (promotion of omitted channels, tail control, bounded decoders, defect transport), and version 2.1 added an \textbf{information-thermal connection layer}: hidden information-enthalpy exchange is treated as a connection on a bundle; zero curvature is locally equivalent to matrix integrating factors and adiabatic invariants; such invariants earn the name ``information entropy'' only after calibration; and flat connections can still carry global thermal memory, classified by twisted cohomology. No quantum extension and no Yang--Mills consequence are claimed there.
+
+\section{Hypotheses and Open Problems}\label{sec:open}
+
+\subsection{The main hypotheses}
+
+\begin{description}[itemsep=2pt,topsep=3pt]
+\item[H1 --- General attractor.] Persistent eliminative anomalies with a range condition force nonzero co-fixed points to exist.
+\item[H2 --- Holographic residual reconstruction.] Conditions exist under which globally intertwined, locally non-closed encodings are decoder-recoverable.
+\item[H3 --- Causal-resilience universality.] Resilience in living, social, artificial, and physical systems is classifiable by the Type I/II/III $+$ hypocoercive scheme.
+\item[H4 --- Noncommutative linearization.] Proven at finite flat layers; the continuum, non-flat, quantum extension is the open half.
+\item[H5 --- Future--past debugging.] Advanced intelligence and institutions are modelable as two-boundary debugging systems.
+\item[H6 --- Bridge amplitude law.] In the Causal-Hodge Bridge, $a_I=c_I^2/L_I$ with a near-universal $c_I$ and a system-dependent correlation length $L_I$.
+\item[H7 --- Scheme connection.] Families of coarse-graining schemes act as gauge transformations; scheme-independent quantities are gauge invariants, and residual non-triviality is curvature no scheme choice can remove.
+\item[H8 --- Covariant local complex structure.] Conservative sectors may carry a normalized local complex structure $\mathbb I=J(-J^2)^{-1/2}$ whose transport defects measure the failure to preserve rotational structure across scales.
+\end{description}
+
+\subsection{The open problems, grouped}
+
+The canon maintains some forty open problems; the main groups are:
+\begin{itemize}[itemsep=2pt,topsep=3pt]
+\item \textbf{Noncommutative and continuum closure} --- global BRST/BV construction, Gribov geometry, reflection-positive continuum limits, the full 4D renormalized block family.
+\item \textbf{Structure theory} --- the general attractor theorem, metric-independent characterization of circulation, continuum limits of strongly admissible generators.
+\item \textbf{Holography and mass gap} --- a genuine IDS holographic theorem; the No-Fake-Gap requirement that any claimed gap be uniform in cutoff, volume, and gauge-fixing; the mass-gap bridge itself.
+\item \textbf{Empirics} --- confirmation or refutation of the Causal-Hodge Bridge; lensing--dynamics consistency.
+\item \textbf{Formalism of time and ethics} --- a full two-boundary debug formalism; IDS ethics: which residuals a society may safely forget.
+\item \textbf{Computation} --- witness lifting for SAT-type coarse-grainings; conservation laws of computational resources.
+\end{itemize}
+
+\section{Outlook}\label{sec:outlook}
+
+\paragraph{Mathematics.} Full categorification of the residual quotient and admissible coarse-graining; anomalies as obstruction classes; the general attractor theorem; unified obstruction theory for transport defects.
+
+\paragraph{Physics.} Decisive tests of the Causal-Hodge Bridge ($5\sigma$ or refutation); strict separation of hierarchy-field branches from the mass-gap program; the tariff-descent program on actual transfer Hamiltonians.
+
+\paragraph{AI.} Self-debug sessions over residual logs; critical-information-event detectors; memory graphs that Hodge-decompose residual histories; hallucination diagnostics as non-integrable residual detection.
+
+\paragraph{Society.} Visualization of social stress residuals; institutions evaluated by their resilience gap; policy debugging that includes future generations as terminal conditions.
+
+\paragraph{Philosophy.} A precise theory of creative oblivion; reality as the co-fixed point of observers and structure; an ontology in which incompleteness is the condition for generation.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The canonical center of IDS theory is now clear:
+
+\begin{canonbox}
+Structure is a non-integrable information residual that appears on observational boundaries, is transported across coarse-graining, and is spectrally separated from zero.
+\end{canonbox}
+
+Stress is the pressure of what the current description cannot process. Debugging is not erasing that pressure but reorganizing it --- through dissipation, conservation, re-injection, and changes of coarse-graining. Resilience is the capacity of residuals to return after being broken. Holography is internal residue appearing as a boundary log. The mass gap is the spectral separation that keeps structure from dissolving. Future and past interact because memory and terminal conditions jointly select the present path.
+
+The golden ratio is beautiful. But the throne of the canon does not belong to the golden ratio:
+\begin{equation*}
+\boxed{\,[\omega]\in C^1/\operatorname{im}d_0\,.}
+\end{equation*}
+This is the heart of IDS --- and $\varphi$ is the first heartbeat heard when that heart is run on the smallest binary processor.
+
+The shortest canonical statement of the current version reads:
+
+\begin{canonbox}
+IDS is a theory that compares the exchange between inerasable residuals and hidden information enthalpy as a connection; separates its local curvature, flat global holonomy, and irreversible generation; organizes local adiabatic invariants into calibrated information entropy; and classifies global thermal memory by twisted cohomology classes.
+\end{canonbox}
+
+\appendix
+
+\section{About This Edition}\label{app:about}
+
+This public edition condenses the IDS Canonical Theory v2.1.0-r2 (public revision r6.2, frozen 2026-07-16) by roughly a factor of ten. It preserves the axioms, the core definitions, the principal theorems with proof sketches where they are short, the falsifiability commitments, and every honesty boundary. It omits: full proofs, the internal audit trails and freeze records, the canonical status ledgers, provenance indexes, numbered revision histories, and the detailed technical supplements on self-coarse-graining towers, non-abelian two-wall analysis, residual carrierization calculus, the v2.0 Yang--Mills multiscale layer, and the information-thermal theorem chain. Readers who need the full formal apparatus should consult the canonical document, which remains the single source of truth.
+
+\end{document}
