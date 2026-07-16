@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDS Theory — Information-Driven Stress, Debug, and Self-organization</title>
+<meta name="description" content="Public editions of the IDS (Information-Driven Stress) theory: a mathematical framework for open hierarchical systems under finite observational resources.">
+<style>
+:root{
+  --bg:#fdfdfa; --panel:#f4f3ee; --fg:#23241f; --soft:#5a5b52; --line:#dcdad0;
+  --accent:#1f6f8b; --accent-soft:#e3eef2; --thm:#8a4b2d;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme]){
+    --bg:#191a17; --panel:#21221e; --fg:#e6e4da; --soft:#a5a396; --line:#3a3b34;
+    --accent:#7fb8cc; --accent-soft:#24333a; --thm:#d09a70;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191a17; --panel:#21221e; --fg:#e6e4da; --soft:#a5a396; --line:#3a3b34;
+  --accent:#7fb8cc; --accent-soft:#24333a; --thm:#d09a70;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:Charter,"Bitstream Charter","Sitka Text",Cambria,Georgia,serif;
+  line-height:1.7; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:52rem; margin:0 auto; padding:clamp(1.5rem,5vw,4rem) clamp(1.1rem,4vw,2rem) 4rem}
+.topline{display:flex; justify-content:flex-end; margin-bottom:1rem}
+#theme{
+  background:none; border:1px solid var(--line); border-radius:6px; color:var(--fg);
+  cursor:pointer; padding:.25rem .6rem; font-size:.85rem;
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+#theme:hover{background:var(--panel)}
+header.hero{border-bottom:3px double var(--line); padding-bottom:1.6rem; margin-bottom:2rem}
+.kicker{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; font-size:.8rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin:0 0 .5rem;
+}
+h1{font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.2; margin:.2rem 0 .5rem}
+.sub{font-size:1.1rem; color:var(--soft); margin:0}
+.lead{margin:1.6rem 0}
+.lead p{margin:.8rem 0}
+.core{
+  background:var(--panel); border-left:4px solid var(--accent); border-radius:0 8px 8px 0;
+  padding:1rem 1.3rem; margin:1.4rem 0; font-size:1rem;
+}
+h2.section{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  font-size:.82rem; letter-spacing:.08em; text-transform:uppercase; color:var(--soft);
+  border-bottom:1px solid var(--line); padding-bottom:.4rem; margin:2.6rem 0 1.2rem;
+}
+.editions{display:grid; gap:1rem}
+.card{
+  display:block; text-decoration:none; color:inherit;
+  border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.3rem;
+  background:var(--panel); transition:border-color .15s, transform .15s;
+}
+.card:hover{border-color:var(--accent); transform:translateY(-2px)}
+.card .row{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.card h3{margin:0; font-size:1.15rem}
+.tag{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; font-size:.72rem; font-weight:600;
+  border:1px solid var(--accent); color:var(--accent); background:var(--accent-soft);
+  border-radius:999px; padding:.1rem .6rem; white-space:nowrap;
+}
+.tag.muted{border-color:var(--line); color:var(--soft); background:transparent}
+.card p{margin:.5rem 0 0; color:var(--soft); font-size:.95rem}
+.card .go{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; font-size:.85rem;
+  color:var(--accent); margin-top:.7rem; display:inline-block;
+}
+footer{margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line); font-size:.85rem; color:var(--soft)}
+footer a{color:var(--accent)}
+.equation{font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topline">
+    <button id="theme" aria-label="Toggle color scheme">◐ Theme</button>
+  </div>
+
+  <header class="hero">
+    <p class="kicker">A research program · public editions</p>
+    <h1>IDS Theory</h1>
+    <p class="sub">Information-Driven Stress, Debug, and Self-organization</p>
+  </header>
+
+  <div class="lead">
+    <p>
+      IDS theory is a mathematical framework for open hierarchical systems that observe the world
+      with <strong>finite resources</strong>, compress what they see, and accumulate tension where
+      their current description fails. Its central object is not a number but an equivalence class:
+      the non-integrable residual that coarse-graining cannot erase.
+    </p>
+    <div class="core">
+      The mathematical heart of the theory is the residual class
+      <span class="equation">[ω] ∈ C¹ ∕ im d₀</span> — the part of an observed flow that no local
+      potential can produce. Stress is the pressure of what the current description cannot resolve;
+      debugging is the reorganization, not the deletion, of that residue; resilience is its capacity
+      to persist across perturbation, observation, and coarse-graining.
+    </div>
+    <p>
+      The editions below present the theory at different depths. The full canonical text (Japanese)
+      is the authoritative source; the public edition is a condensed, general-audience account that
+      keeps the axioms, the principal theorems, the falsifiability commitments, and the theory's
+      honest boundaries.
+    </p>
+  </div>
+
+  <h2 class="section">Read</h2>
+  <div class="editions">
+
+    <a class="card" href="./IDS_Theory_Public_Edition_EN.pdf">
+      <div class="row">
+        <h3>Public Edition — Paper (PDF)</h3>
+        <span class="tag">English · print-ready</span>
+      </div>
+      <p>A condensed, formally typeset 14-page paper: axioms, core definitions, principal theorems
+        with short proofs, the falsifiability ledger, and what the theory does not claim.</p>
+      <span class="go">Open the PDF →</span>
+    </a>
+
+    <a class="card" href="./public-edition-en.html">
+      <div class="row">
+        <h3>Public Edition — Web</h3>
+        <span class="tag">English · web</span>
+      </div>
+      <p>The same condensed edition as a responsive web page, with a navigable table of contents and
+        all mathematics rendered inline.</p>
+      <span class="go">Read on the web →</span>
+    </a>
+
+    <a class="card" href="./canonical-full-ja.html">
+      <div class="row">
+        <h3>Canonical Theory v2.1.0-r2 — Full</h3>
+        <span class="tag muted">日本語 · complete</span>
+      </div>
+      <p>The complete canonical reconstruction: all axioms, theorems with full proofs, open problems,
+        and the information-thermal connection layer. The authoritative reference.</p>
+      <span class="go">全文を読む →</span>
+    </a>
+
+  </div>
+
+  <footer>
+    <p>
+      IDS theory is an ongoing mathematical research program under construction and review. These
+      documents do not claim that the physical implementation of consciousness or brain function has
+      been proven, nor do they claim a solution to the Yang–Mills mass gap.
+    </p>
+    <p>
+      Source and revision history:
+      <a href="https://github.com/akacola2006/ids-theory-2.0">github.com/akacola2006/ids-theory-2.0</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, saved=null;
+  try{saved=localStorage.getItem('ids-theme')}catch(e){}
+  if(saved)root.setAttribute('data-theme',saved);
+  document.getElementById('theme').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur)cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('ids-theme',next)}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
