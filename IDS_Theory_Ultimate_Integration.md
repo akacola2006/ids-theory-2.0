@@ -1,9 +1,9 @@
 # IDS理論：自己参照的誤差処理による万物の統一理論
 ## The Integrated Debug System Theory: A Universal Framework Through Self-Referential Error Processing
 
-**著者**: S. Kaneko¹ and International Collaborative Consortium²
-¹Department of Neurology, Shiga University of Medical Science, Japan
-²International Consciousness Research Consortium
+**著者**: ¹ and International Collaborative Consortium²
+¹
+²
 **日付**: 2025年9月
 **バージョン**: Ultimate Integrated Edition v1.0
 
