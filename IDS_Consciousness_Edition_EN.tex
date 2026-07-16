@@ -1,0 +1,358 @@
+% IDS Theory --- Consciousness Edition (formal paper format)
+% Derived from IDS Canonical Theory v2.1.0-r2 (public-r6.2)
+% Build: latexmk -pdf IDS_Consciousness_Edition_EN.tex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{booktabs,array,tabularx,xltabular}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[colorlinks=true,linkcolor=linknavy,citecolor=linknavy,urlcolor=linknavy]{hyperref}
+
+\definecolor{linknavy}{RGB}{31,79,111}
+\definecolor{boxline}{RGB}{110,100,80}
+\definecolor{boxbg}{RGB}{247,245,238}
+
+\emergencystretch=1.5em
+\setlength{\parskip}{0pt}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\mdfdefinestyle{canon}{%
+  linecolor=boxline,linewidth=0.9pt,
+  backgroundcolor=boxbg,
+  topline=false,bottomline=false,rightline=false,
+  innerleftmargin=10pt,innerrightmargin=10pt,
+  innertopmargin=7pt,innerbottommargin=7pt,
+  skipabove=10pt,skipbelow=10pt}
+\newenvironment{canonbox}{\begin{mdframed}[style=canon]\itshape}{\end{mdframed}}
+\newenvironment{defbox}[1]{\begin{mdframed}[style=canon]\textbf{\textsc{#1}.}\ \itshape}{\end{mdframed}}
+
+\newenvironment{namedthm}[1]{\par\addvspace{\medskipamount}\noindent\textbf{#1.}\ \itshape\ignorespaces}{\par\addvspace{\medskipamount}}
+
+\theoremstyle{plain}
+
+\title{\bfseries What Prediction Leaves Behind\\[6pt]
+\large An Information-Driven Stress account of memory, the self, and consciousness}
+\author{\normalsize A consciousness-oriented edition prepared from the IDS Canonical Theory, revision public-r6.2}
+\date{July 16, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+The predictive brain minimizes error; but error minimization does not, by itself, classify what a mind
+becomes. Two systems can lower the same objective and yet differ in what they remember, avoid, or fix
+in place. This essay develops a consciousness-oriented reading of Information-Driven Stress (IDS)
+theory around that gap. Its central object is not a scalar quantity but an equivalence class: the
+non-integrable \emph{structural residual} $[\omega]\in C^1/\operatorname{im}d_0$ --- the part of a
+mind's activity that no local adjustment can dissolve. Memory, individuality, trauma, and habit are
+read as residual structure that survived simplification rather than error that was eliminated. The
+edition makes one claim sharply. The free-energy view builds the subject into its primitives:
+``prediction error'' presupposes a predictor. IDS instead treats the observer as an explicit variable
+and the self as a \emph{regeneration closure} --- a rule that re-identifies itself from the inside ---
+and proves that this rule cannot be certified from the observed return dynamics alone. Consciousness is
+therefore approached not as a solved mechanism but as an explicit construction problem with a stated
+boundary. Nothing here claims that the physical implementation of consciousness has been demonstrated.
+\end{abstract}
+
+\medskip
+\tableofcontents
+
+\section{What does prediction leave behind?}\label{sec:question}
+
+A powerful picture organizes much of contemporary neuroscience: the brain holds a generative model of
+the world, predicts its sensory input, and revises perception and action to reduce the resulting
+prediction error. Sharpened, this becomes the free-energy principle (FEP), under which perception,
+learning, and action all descend a single variational functional. The picture explains a great deal.
+
+Yet a clinician watching a brain recover from injury sees something the objective alone does not name.
+After damage, a brain does not simply become a lower-performing version of itself. Some functions are
+lost; some migrate; circuits that were quiet come forward; and sometimes repetitions, fixations,
+sensations, or affects that did not exist in health settle in as a \emph{new stable state}. The brain
+looks less like a machine erasing its errors and more like one \emph{reworking} them into different
+structure.
+
+This motivates a question that a scalar objective cannot answer on its own:
+
+\begin{canonbox}
+When a mind lowers its prediction error, what was actually resolved --- and what was merely moved,
+hidden, externalized, or fixed in place as new structure?
+\end{canonbox}
+
+IDS theory is built to make that question precise. Its answer begins by refusing to identify the
+content of a mind with the \emph{size} of its error.
+
+\section{Two kinds of stress in a mind}\label{sec:stress}
+
+IDS distinguishes two fundamentally different notions of stress. The first is a scalar: a potential
+$\mathcal S$ on the space of a system's observable states, dissipated by gradient descent --- the
+formal cousin of free energy. It answers ``how much tension is there?'' The second is not a number at
+all.
+
+Represent a mind's interactions on a finite oriented complex $X$, with a cochain sequence
+$C^0(X)\xrightarrow{d_0}C^1(X)\xrightarrow{d_1}C^2(X)$ and $d_1d_0=0$; edges in $C^1$ carry flows of
+belief-update, prediction-error propagation, and response. Any observed flow $\omega\in C^1$ splits by
+the finite Hodge decomposition,
+\begin{equation}
+\omega=d_0\phi+h+\delta_1\psi,
+\end{equation}
+into a gradient part $d_0\phi$ (what a local potential can produce, hence dissipate), a harmonic part
+$h$ (closed but not exact --- circulation with no potential), and a coexact part $\delta_1\psi$. What no
+potential can generate is the \textbf{structural residual}, and its invariant is the quotient class
+\begin{equation}
+\boxed{\,[\omega]\in R^1(X):=C^1(X)/\operatorname{im}d_0\,.}
+\label{eq:residual}
+\end{equation}
+It answers the second question: ``what shape does the irreducible tension have?'' A \emph{bug}, in this
+language, is exactly a nonzero residual class relative to a given description --- not an absolute defect,
+since a change of description may dissolve it or amplify it.
+
+The consequence for the mind is immediate. \emph{Debugging} is not driving the residual to zero. It is
+any reorganization of residual structure, and stabilizing a nonzero structure $\rho^\ast\ne0$ counts as
+much as removing one. Recovery, compensation, adaptation, chronification, learning, and personality
+change all become moves in the same space --- transformations of $[\omega]$ --- rather than degrees of a
+single success measure.
+
+\begin{canonbox}
+$\mathcal S$ governs dissipation; $[\omega]$ governs structure. What a mind \emph{is} lives in the
+residual, not in the magnitude of its error.
+\end{canonbox}
+
+\section{The subject is not a premise}\label{sec:subject}
+
+Here the consciousness-oriented reading departs most sharply from the predictive-brain tradition. The
+basic quantity of FEP is the prediction error $\varepsilon = o - g(\mu)$, the discrepancy between input
+$o$ and what a generative map $g$ expects given internal state $\mu$. This quantity does not exist
+without $\mu$: an expecting subject is required for ``error'' to be defined at all. The boundary that
+separates inner from outer --- the Markov blanket --- is likewise assumed rather than derived. In short,
+the free-energy view weaves the core of the subject into its primitives.
+
+The residual class \eqref{eq:residual} is different. To say $[\omega]\ne0$ is to say that no potential
+$\phi$ makes $\omega=d_0\phi$: a cohomological fact fixed by $d_0$ alone, requiring no expectation and
+no subject. The observer enters only afterward, and as a \emph{variable}. An observer is a distribution
+$\mu\in\mathcal P(\mathcal O)$ whose kernels and metric,
+\begin{equation}
+\langle K\rangle_\mu=\int K_o\,d\mu(o),\qquad g_\mu,
+\end{equation}
+fix the inner product. This yields a clean separation:
+\begin{equation}
+\underbrace{[\omega]\in C^1/\operatorname{im}d_0}_{\text{observer-independent}}
+\qquad\text{versus}\qquad
+\underbrace{\mathfrak r=h+\delta_1\psi}_{\text{observer-dependent reading}}.
+\end{equation}
+The \emph{existence} of the residual is objective, independent of any metric; only its \emph{reading}
+--- how much looks like protected memory $h$ and how much like forced flux $\delta_1\psi$ --- is relative
+to the observer. What the predictive view hides inside the word ``error,'' IDS extracts as an explicit
+degree of freedom.
+
+\section{The self as a regeneration closure}\label{sec:self}
+
+If the subject is not a premise, what is it? IDS constructs the self not as a primitive but as a
+\textbf{regeneration closure}. Call a system self-regenerating when, with external template input set to
+zero, its autonomous update regenerates from its own internal state and resources not merely its state
+but the machinery of self-identification itself: the realization and read-out of its residual
+$(\iota,\varpi)$, the relevance projection $P_{\mathrm{ctrl}}$, the comparison metric $G$, the intrinsic
+return event $\tau$, and the rule $\mathscr R$ by which it recognizes a later state as \emph{itself}. The
+self, on this account, is the re-identification rule that survives the wholesale turnover of its own
+parts.
+
+Molecules, memories, values, and circuits all change; a self persists across that change not by
+conserving a substance but by continuously rebuilding the rule that decides what counts as the same
+self --- which changes to repair, which to accept, which to externalize, and where to draw its boundary.
+
+IDS then imposes a discipline that the predictive view does not. Writing $\mathscr R=DF|_{x_\ast}$ for
+the linearized return operator at a return fixed point, the following holds.
+
+\begin{namedthm}{No-go theorem (endogenous vs.\ external self-constitution)}
+An internal loop that regenerates a map $F$ and an external oracle that writes the same $F$ each cycle
+produce identical observed return dynamics. Hence no functional of the return operator $\mathscr R$
+alone can distinguish endogenous self-constitution from external reconstitution; the distinction
+requires causal-boundary information beyond the operator.
+\end{namedthm}
+
+\begin{proof}[Sketch]
+Both realizations share one $C^1$ input--output map $F$, so every invariant built from $F$ and its
+derivatives coincides. Only an intervention that zeroes the external input separates them; therefore the
+separation lies outside operator theory.
+\end{proof}
+
+The predictive view acquires the subject for free, by assumption. IDS records that the subject
+\emph{cannot} be obtained for free from the observed dynamics, and specifies instead what must be added
+--- externally template-free causal closure --- before a system's self-maintenance may be called its own.
+For a theory that reaches toward consciousness, this is the honest posture: the self is placed at the
+exit, as a conditional construction, not at the entrance as a given.
+
+\section{What survives simplification}\label{sec:coarse}
+
+No mind retains everything; it must coarse-grain. IDS does not treat coarse-graining as mere information
+loss but as a rule for which differences may be identified. A coarse-graining $\Phi$ is
+\emph{admissible} when it sends gradients to gradients, $\Phi(\operatorname{im}d_0)\subseteq
+\operatorname{im}d_0$, and then it descends to the residual quotient and transports $[\omega]$ faithfully.
+A coarse-graining that integrates out hidden degrees of freedom generally breaks this, and the defect
+\begin{equation}
+\mathfrak A_\Phi=q\circ\Phi\circ d_0\ne 0
+\end{equation}
+is an \emph{anomaly}: something microscopically exact reappears, after simplification, as genuine
+residual. The forgetting is not free; its cost returns as structure.
+
+The permissible boundary of forgetting has a crisp form: one may safely identify only those differences
+that do not change future response under admissible intervention. This is the formal core of a familiar
+clinical intuition --- that discarding a detail is harmless exactly when it never alters what the system
+will later do or need.
+
+Two consequences bear directly on mind. First, the arrow of time is a consequence of forgetting: perfect
+memory is reversible and yields no macroscopic direction; it is because coarse-graining erases that an
+entropy gradient, and a felt direction of time, exist. Second, the past is not rewritten but reread. The
+residual class of a memory changes when the coarse-graining or the observation metric changes,
+$[\omega_{\mathrm{past}}]_{X,g}\to[\omega_{\mathrm{past}}]_{X',g'}$; psychological integration and
+reinterpretation have exactly this form. Forgetting, in IDS, is not a defect but a condition for the
+generation of structure.
+
+\section{Memory with a history}\label{sec:types}
+
+Residual structure that persists comes in distinct kinds, and the distinctions map onto recognizable
+features of mind (Table~\ref{tab:types}). Writing the equilibrium of the residual dynamics
+$\dot\rho=-L\rho+a$ (with curvature Laplacian $L=\delta_1d_1$) as $\rho^\ast=h+L^{+}a$:
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+Kind & Structure & Reading in a mind \\
+\midrule
+Type I & Topological: $\rho^\ast=h\in H^1$ & A memory or identity protected because it is a closed loop nothing local can cut \\
+Type II & Forced: $\rho^\ast=L^{+}a$ & A state held only while input flows --- much of living, adaptive order \\
+Type III & Promoted: $\mathcal T_{\mathrm{III}}=\bar H^1\ominus H^1$ & A once-transient constraint that has become a permanent trait \\
+\bottomrule
+\end{tabularx}
+\caption{Three kinds of residual structure and their mental readings.}
+\label{tab:types}
+\end{table}
+
+Type III is the subtle one. It is not a third component at a fixed scale but a \emph{genealogical} type:
+a mode that decayed at the fine scale becomes harmonic --- protected --- at the coarse scale. When only
+the finest constraints are forgotten, the promoted sector is exactly the orthogonal complement
+$\bar H^1\ominus H^1$, and its canonical slogan reads
+\begin{equation}
+\boxed{\ \text{local fine curvature / constraint response}\ \longrightarrow\ \text{coarse global harmonic memory}.\ }
+\end{equation}
+A childhood constraint that is no longer active can nonetheless be locked into the adult as protected
+structure. Trauma fits the Type I picture --- a closed-but-not-exact loop of memory that pure dissipation
+cannot open; repetition is re-excitation of the same residual class; integration is re-representation of
+that class under a new coarse-graining, a new language for the same history.
+
+\section{Path-dependence: holonomy}\label{sec:holonomy}
+
+Returning to the same observable state does not return a mind to the same internal state. Passing through
+states and back, a system can respond differently than before: the path is written into the present rule,
+not just the present value. IDS models this with holonomy. On a bundle of belief/scale fibers carrying a
+comparison connection $A$, the transformation left after traversing a closed loop $\gamma$ is
+\begin{equation}
+\operatorname{Hol}_\gamma(A)=\mathcal P\exp\!\oint_\gamma A\ \ne\ \mathrm{id}.
+\end{equation}
+The base point returns; the fiber does not. Learned reactivity, post-traumatic vigilance, altered
+sensitivity after exposure, motor control after repeated training, and the history-dependence of trust
+and attachment are all describable this way: they cannot be read off the current stimulus, because the
+\emph{order} in which a mind engaged the world is retained in how it now transforms. Holonomy is not
+itself memory or awareness; it is the geometric vessel in which a history the present observation cannot
+recover may nonetheless be held.
+
+\section{The ledger of forgetting: information enthalpy}\label{sec:enthalpy}
+
+When a mind simplifies, information does not vanish for free. The predictive view works throughout with
+scalars --- free energy, surprisal, entropy --- but the existence of a global scalar potential is itself
+a strong assumption. IDS proposes that the object governing hidden information exchange is not a scalar
+but a connection: an exchange one-form $\Xi_I=d\mathcal H_I+W_I$, with information enthalpy
+$\mathcal H_I$, whose kernel defines an information-adiabatic comparison. A scalar ``information
+entropy'' is then well defined only under two conditions: flatness of this connection (the
+integrability that lets an entropy state-function exist, the information-geometric analogue of the second
+law's integrating factor), and calibration against a maximum-entropy reference. Even when flat, a global
+holonomy can remain --- a \emph{thermal memory} that no local reading detects.
+
+The reading for mind is that the entropy of a subjective state is a derived, conditional quantity, not a
+primitive; and that the cost of what a mind discards is generally carried not by a number but by the
+curvature and holonomy of this exchange. Uncertainty, bias, symptom, and bodily response are where the
+discarded degrees of freedom return.
+
+\section{Resilience of the self}\label{sec:resilience}
+
+Near a stable structure, linearized recovery obeys $\|y(t)\|\le e^{-\lambda^{+}_{\min}(L)\,t}\|y(0)\|$,
+so the positive spectral gap $\Delta_{\mathrm{res}}=\lambda^{+}_{\min}(L)$ measures how fast residual
+structure returns after perturbation. But directions with no direct dissipation can still recover, if a
+conservative rotation keeps turning them into dissipative ones until the whole space is reached --- a
+\emph{hypocoercive} resilience that formalizes the capacity to route damage that cannot be repaired
+directly toward a channel where it can. Clinically, this is why a recovered score must be read with care:
+the same improvement can be genuine repair of the original circuit, compensation by another, a changed
+strategy, avoidance of the eliciting situation, or a deficit invisible to the measure. What must be
+tracked is not whether the error fell but which structure formed while it fell.
+
+\section{What this does and does not claim}\label{sec:claims}
+
+This edition is an interpretive and mathematical framework, and its honesty is part of its content. It
+does \emph{not} claim that the physical implementation of consciousness has been demonstrated, nor that
+awareness has been reduced to residual cohomology. The clinical and psychological readings above are
+interpretations, disciplined by the mathematics but not theorems. Holonomy is offered as a vessel for
+history, not as an account of experience. The self is offered as a regeneration closure whose endogenous
+character, by the no-go theorem, cannot be certified from observed dynamics alone.
+
+The framework is nonetheless answerable. It earns an independent place only if systems that lower the
+same objective can be told apart by their residual structure: if the future response of equally
+optimized minds is predicted by their harmonic content, boundary flow, and holonomy; if locally resolved
+inconsistencies re-emerge at another level, in the body, or in the environment; and if forgetting
+information that changes future control produces long-run breakdown despite short-run fit. Where a
+residual measure adds no prediction beyond error, surprisal, and entropy, the extra apparatus should be
+discarded. Where it does, it names something the scalar view cannot.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The predictive brain lowers the error it can lower. What it cannot lower it carries, and where it carries
+its irreducible tension --- as protected loops, as promoted constraints, as path-written holonomy, as the
+returning cost of what was forgotten --- is where memory, individuality, and symptom take their shape.
+
+\begin{canonbox}
+A mind is not a machine that erases its errors. It reduces the errors it can, and transports, remembers,
+and re-forms the residues it cannot --- and the self is not the result of that process but the rule that
+keeps re-identifying itself while the process runs.
+\end{canonbox}
+
+The heart of the account is a single object,
+\[
+\boxed{\,[\omega]\in C^1/\operatorname{im}d_0\,,}
+\]
+the residue that no local correction dissolves. What we are made of is not only the information a mind
+could keep, but also what it could not erase --- reworked into new form, and carried forward as part of
+the self. Whether that self is conscious, and how, is left here as an open and explicitly bounded
+question, not a settled one.
+
+\section*{A note on this edition}
+\addcontentsline{toc}{section}{A note on this edition}
+
+This consciousness-oriented edition is a condensed, general-audience derivative of the IDS Canonical
+Theory v2.1.0-r2 (public revision r6.2). It re-centers the framework on mind, memory, and the self,
+keeping the residual core, the observer as an explicit variable, the regeneration closure with its no-go
+boundary, and the falsifiability commitments, while omitting the full proofs, audit ledgers, and the
+physical-bridge and gauge-theoretic layers. The canonical document remains the authoritative source.
+
+\bigskip
+\noindent\footnotesize\textbf{Selected references.}
+K.~Friston, \emph{The free-energy principle: a rough guide to the brain}, Trends Cogn.\ Sci.\ (2009);
+S.~J.~Gershman, \emph{What does the free energy principle tell us about the brain?}, Neural Comput.\ (2019);
+T.~Parr, L.~Da~Costa, K.~Friston, \emph{Markov blankets, information geometry and stochastic thermodynamics},
+Phil.\ Trans.\ R.\ Soc.\ A (2020);
+V.~Raja et al., \emph{The Markov blanket trick: on the scope of the free energy principle and active inference},
+Phys.\ Life Rev.\ (2021);
+M.~J.~D.~Ramstead et al., \emph{On Bayesian mechanics: a physics of and by beliefs}, Interface Focus (2023).
+
+\end{document}
