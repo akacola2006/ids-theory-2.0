@@ -38,6 +38,7 @@ jobs:
           cp site/index.html                          _site/index.html
           cp IDS_Theory_Public_Edition_EN.pdf         _site/IDS_Theory_Public_Edition_EN.pdf
           cp IDS_Theory_Public_Edition_EN.html        _site/public-edition-en.html
+          cp IDS_Consciousness_Edition_EN.pdf         _site/IDS_Consciousness_Edition_EN.pdf
           cp IDS_Canonical_Theory_v2_1_0_r2_JA.html   _site/canonical-full-ja.html
           # Prevent Jekyll from touching the static files
           touch _site/.nojekyll
